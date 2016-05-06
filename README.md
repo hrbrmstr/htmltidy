@@ -6,7 +6,7 @@ Inspired by [this SO question](http://stackoverflow.com/questions/37061873/ident
 
 NOTE: Requires [`libtidy`](http://www.html-tidy.org/) and presently is super-basic (no way to set options and pretty much only does HTML)
 
-`brew install tidy-html5` on OS X to get this to work. You'll have to do a bit more leg-work to get it to work on linux (`apt-get install libtidy-dev` on Ubuntu sticks the library in a `tidy` subdir off `/usr/lib` and I don't have a `configure` script setup yet).
+You'll need to first do a `brew install tidy-html5` on MacOS or `apt-get install libtidy-dev` on Ubuntu/Debian to get this to work.
 
 **SEEKING COLLABORATORS**
 
@@ -32,7 +32,7 @@ library(htmltidy)
 
 # current verison
 packageVersion("htmltidy")
-#> [1] '0.0.0.9000'
+#> [1] '0.1.0.9000'
 
 cat(tidy("<b><p><a href='http://google.com'>google &gt</a></p></b>"))
 #> <!DOCTYPE html>

@@ -8,6 +8,9 @@ output: rmarkdown::github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
   fig.retina=2,
   fig.path = "README-"
 )
@@ -19,7 +22,7 @@ Inspired by [this SO question](http://stackoverflow.com/questions/37061873/ident
 
 NOTE: Requires [`libtidy`](http://www.html-tidy.org/) and presently is super-basic (no way to set options and pretty much only does HTML)
 
-`brew install tidy-html5` on OS X to get this to work. You'll have to do a bit more leg-work to get it to work on linux (`apt-get install libtidy-dev` on Ubuntu sticks the library in a `tidy` subdir off `/usr/lib` and I don't have a `configure` script setup yet).
+You'll need to first do a `brew install tidy-html5` on MacOS or `apt-get install libtidy-dev` on Ubuntu/Debian to get this to work.
 
 **SEEKING COLLABORATORS**
 
@@ -38,7 +41,7 @@ The following functions are implemented:
 devtools::install_github("hrbrmstr/htmltidy")
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+```{r echo=FALSE}
 options(width=120)
 ```
 

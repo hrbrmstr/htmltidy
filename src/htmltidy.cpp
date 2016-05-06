@@ -32,15 +32,27 @@ std::string tidy(std::string source) {
 
   ok = tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
 
+  if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+
   rc = tidySetErrorBuffer(tdoc, &errbuf);
+
+  if (rc<0) Rcpp::stop("Error setting TidyHTML error buffer");
 
   rc = tidyParseString(tdoc, source.c_str());
 
+  if (rc<0) Rcpp::stop("Error parsing source document");
+
   rc = tidyCleanAndRepair(tdoc);
+
+  if (rc<0) Rcpp::stop("Error tidying source document");
 
   rc = tidyRunDiagnostics(tdoc);
 
+  if (rc<0) Rcpp::stop("Error generating tidy diagnostics");
+
   rc = tidySaveBuffer(tdoc, &output);
+
+  if (rc<0) Rcpp::stop("Error converting parsed document to character vector");
 
   std::string ret = std::string(reinterpret_cast<const char*>(output.bp));
 
