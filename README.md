@@ -6,6 +6,15 @@ Inspired by [this SO question](http://stackoverflow.com/questions/37061873/ident
 
 NOTE: Requires [`libtidy`](http://www.html-tidy.org/) and presently is super-basic (no way to set options and pretty much only does HTML)
 
+`brew install tidy-html5` on OS X to get this to work. You'll have to do a bit more leg-work to get it to work on linux (`apt-get install libtidy-dev` on Ubuntu sticks the library in a `tidy` subdir off `/usr/lib` and I don't have a `configure` script setup yet).
+
+**SEEKING COLLABORATORS**
+
+This works enough for me to use in a pinch. It should be straightforward (but tedious) to:
+
+-   enable passing options in a `list`
+-   bundle `libtidy` *with the package* and get it to work on Windows, linux & MacOS as the library compiles on all three with the necessary tools.
+
 The following functions are implemented:
 
 -   `tidy` : Clean up gnarly HTML/XML
