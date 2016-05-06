@@ -22,7 +22,7 @@ Inspired by [this SO question](http://stackoverflow.com/questions/37061873/ident
 
 NOTE: Requires [`libtidy`](http://www.html-tidy.org/) and presently is super-basic (no way to set options and pretty much only does HTML)
 
-You'll need to first do a `brew install tidy-html5` on MacOS or `apt-get install libtidy-dev` on Ubuntu/Debian to get this to work.
+You'll need to first do a `brew install tidy-html5` on MacOS or `apt-get install libtidy-dev` on Ubuntu/Debian to get this to work. NOTE that the linux libraries may be older and return slightly different (but no less tidy) HTML.
 
 **SEEKING COLLABORATORS**
 
