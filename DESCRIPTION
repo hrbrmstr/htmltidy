@@ -1,0 +1,11 @@
+Package: htmltidy
+Title: Clean up gnarly HTML/XML
+Version: 0.0.0.9000
+Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")))
+Description: Clean up gnarly HTML/XML
+Depends: R (>= 3.3.0)
+License: AGPL + file LICENSE
+LazyData: true
+Suggests: testthat
+LinkingTo: Rcpp
+Imports: Rcpp
