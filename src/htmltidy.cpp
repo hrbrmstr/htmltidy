@@ -1,6 +1,14 @@
 #include <Rcpp.h>
+
+#ifdef __linux__
+#include <tidy/tidy.h>
+#include <tidy/buffio.h>
+#endif
+
+#ifdef __APPLE__
 #include <tidy.h>
 #include <tidybuffio.h>
+#endif
 
 // libtidy docs:
 // http://api.html-tidy.org/tidy/tidylib_api_5.2.0/tidyenum_8h.html#a3a1401652599150188a168dade7dc150
