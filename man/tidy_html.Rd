@@ -12,9 +12,19 @@ tidy_html(content, options = list(TidyXhtmlOut = TRUE))
 \item{options}{named list of options}
 }
 \value{
-atomic character vector of tidy content
+Atomic character vector of tidy HTML/XML/XHTML content
 }
 \description{
-Tidy HTML/XML/XHTML Documents
+Currently supported options: \code{TidyAltText}, \code{TidyBodyOnly},
+\code{TidyBreakBeforeBR}, \code{TidyCoerceEndTags}, \code{TidyCoerceEndTags},
+\code{TidyDoctype}, \code{TidyDropEmptyElems}, \code{TidyDropEmptyParas},
+\code{TidyFixBackslash}, \code{TidyFixComments}, \code{TidyHideComments},
+\code{TidyHtmlOut}, \code{TidyIndentContent}, \code{TidyIndentSpaces},
+\code{TidyJoinClasses}, \code{TidyJoinStyles}, \code{TidyLogicalEmphasis},
+\code{TidyMakeBare}, \code{TidyMakeClean}, \code{TidyMark},
+\code{TidyOmitOptionalTags}, \code{TidyReplaceColor}, \code{TidyTabSize},
+\code{TidyUpperCaseAttrs}, \code{TidyUpperCaseTags}, \code{TidyWord2000},
+\code{TidyWrapLen}, \code{TidyXhtmlOut}, \code{TidyXmlDecl}, \code{TidyXmlOut},
+\code{TidyXmlTags}.
 }
 
