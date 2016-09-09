@@ -25,8 +25,8 @@ It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/
 
 This works enough for me to use in a pinch. It should be straightforward (but tedious) to:
 
-- enable passing options in a `list`
-- Getting it to work on Windows.
+- enable passing options in a `list` (IN PROGRESS)
+- Getting it to work on Windows (UNTESTED)
 
 The following functions are implemented:
 
