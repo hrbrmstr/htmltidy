@@ -1,3 +1,5 @@
+#include <Rcpp.h>
+
 /*
  *  SPRTF - Log output utility
  *
@@ -51,7 +53,7 @@
 #pragma warning( disable:4996 )
 #else
 #define strcmpi strcasecmp
-#endif 
+#endif
 
 #ifndef MX_ONE_BUF
 #define MX_ONE_BUF 1024
@@ -156,8 +158,7 @@ int   open_log_file( void )
    outfile = fopen(logfile, mode);
    if( outfile == 0 ) {
       outfile = (FILE *)-1;
-      sprtf("ERROR: Failed to open log file [%s] ...\n", logfile);
-      exit(1); /* failed */
+      Rcpp::stop("Failed to open log file");
       return 0;   /* failed */
    }
    return 1; /* success */
@@ -299,20 +300,19 @@ static void oi( char * psin )
          if( w != len ) {
             fclose(outfile);
             outfile = (FILE *)-1;
-            sprtf("WARNING: Failed write to log file [%s] ...\n", logfile);
-            exit(1);
+            Rcpp::stop("Failed write to log file");
          } else if (addflush) {
             fflush( outfile );
          }
       }
 
-      if( addstdout ) {
-         fwrite( ps, 1, len, stdout );
-      }
+      // if( addstdout ) {
+      //    fwrite( ps, 1, len, stdout );
+      // }
 #ifdef ADD_LISTVIEW
        if (add2listview) {
            LVInsertItem(ps);
-       } 
+       }
 #endif // ADD_LISTVIEW
 #ifdef ADD_SCREENOUT
        if (add2screen) {

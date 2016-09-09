@@ -180,7 +180,7 @@ void          tidyDocRelease( TidyDocImpl* doc )
         TY_(FreeConfig)( doc );
         TY_(FreeAttrTable)( doc );
         TY_(FreeTags)( doc );
-        /*\ 
+        /*\
          *  Issue #186 - Now FreeNode depend on the doctype, so the lexer is needed
          *  to determine which hash is to be used, so free it last.
         \*/
@@ -658,7 +658,7 @@ Bool TIDY_CALL        tidySetReportFilter( TidyDoc tdoc, TidyReportFilter filt )
 
 /* TidyReportFilter2 functions similar to TidyReportFilter, but provides the
 ** built-in English format string and va_list so that LibTidy users can use
-** the format string as a lookup key for providing their own error 
+** the format string as a lookup key for providing their own error
 ** localizations.
 */
 Bool TIDY_CALL        tidySetReportFilter2( TidyDoc tdoc, TidyReportFilter2 filt )
@@ -1081,35 +1081,17 @@ int         tidyDocSaveStdout( TidyDocImpl* doc )
     int status = 0;
     uint outenc = cfg( doc, TidyOutCharEncoding );
     uint nl = cfg( doc, TidyNewline );
-    StreamOut* out = TY_(FileOutput)( doc, stdout, outenc, nl );
+//    StreamOut* out = TY_(FileOutput)( doc, stdout, outenc, nl );
 
-#if !defined(NO_SETMODE_SUPPORT)
+//    if ( 0 == status )
+//      status = tidyDocSaveStream( doc, out );
 
-#if defined(_WIN32) || defined(OS2_OS)
-    oldstdoutmode = setmode( fileno(stdout), _O_BINARY );
-    oldstderrmode = setmode( fileno(stderr), _O_BINARY );
-#endif
+//    fflush(stdout);
+//    fflush(stderr);
 
-#endif
 
-    if ( 0 == status )
-      status = tidyDocSaveStream( doc, out );
 
-    fflush(stdout);
-    fflush(stderr);
-
-#if !defined(NO_SETMODE_SUPPORT)
-
-#if defined(_WIN32) || defined(OS2_OS)
-    if ( oldstdoutmode != -1 )
-        oldstdoutmode = setmode( fileno(stdout), oldstdoutmode );
-    if ( oldstderrmode != -1 )
-        oldstderrmode = setmode( fileno(stderr), oldstderrmode );
-#endif
-
-#endif
-
-    TidyDocFree( doc, out );
+//    TidyDocFree( doc, out );
     return status;
 }
 
@@ -1227,7 +1209,7 @@ int         TY_(DocParseStream)( TidyDocImpl* doc, StreamIn* in )
 
     if (doc->givenDoctype)
         TidyDocFree(doc, doc->givenDoctype);
-    /*\ 
+    /*\
      *  Issue #186 - Now FreeNode depend on the doctype, so the lexer is needed
      *  to determine which hash is to be used, so free it last.
     \*/
@@ -1389,7 +1371,7 @@ static Bool nodeHasAlignAttr( Node *node )
  *  and error output is given regardless of the new option, and ensure that
  *  cleanup takes place. This provides mostly consistent Tidy behavior even with
  *  the introduction of this new option. Note that strings have changed, though,
- *  in order to maintain consistency with the `--strict-tags-attributes` 
+ *  in order to maintain consistency with the `--strict-tags-attributes`
  *  messages.
  *
  *  See also: http://www.whatwg.org/specs/web-apps/current-work/multipage/obsolete.html#obsolete
@@ -1457,7 +1439,7 @@ void TY_(CheckHTML5)( TidyDocImpl* doc, Node* node )
             }
         } else
         if ( nodeIsBASEFONT(node) ) {
-            /* basefont: CSS equivalent 'font-size', 'font-family' and 'color' 
+            /* basefont: CSS equivalent 'font-size', 'font-family' and 'color'
              * on body or class on each subsequent element.
              * Difficult - If it is the first body element, then could consider
              * adding that to the <body> as a whole, else could perhaps apply it
@@ -1561,7 +1543,7 @@ void TY_(CheckHTML5)( TidyDocImpl* doc, Node* node )
 
         if (node->content)
             TY_(CheckHTML5)( doc, node->content );
-        
+
         node = node->next;
     }
 }
@@ -1656,7 +1638,7 @@ void TY_(CheckHTMLTagsAttribsVersions)( TidyDocImpl* doc, Node* node )
 
         if (node->content)
             TY_(CheckHTMLTagsAttribsVersions)( doc, node->content );
-        
+
         node = node->next;
     }
 }
@@ -1908,9 +1890,9 @@ int         tidyDocCleanAndRepair( TidyDocImpl* doc )
        it can ever be, so we can start detecting things that shouldn't
        be in this version of HTML
      */
-    if (doc->lexer) 
+    if (doc->lexer)
     {
-        /*\ 
+        /*\
          *  Issue #429 #426 - These services can only be used
          *  when there is a document loaded, ie a lexer created.
          *  But really should not be calling a Clean and Repair

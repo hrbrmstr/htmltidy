@@ -1,3 +1,5 @@
+#include <Rcpp.h>
+
 /* alloc.c -- Default memory allocation routines.
 
   (c) 1998-2006 (W3C) MIT, ERCIM, Keio University
@@ -44,14 +46,7 @@ static void TIDY_CALL defaultPanic( TidyAllocator* ARG_UNUSED(allocator), ctmbst
   if ( g_panic )
     g_panic( msg );
   else
-  {
-    /* 2 signifies a serious error */
-    fprintf( stderr, "Fatal error: %s\n", msg );
-#ifdef _DEBUG
-    assert(0);
-#endif
-    exit(2);
-  }
+    Rcpp::stop("Fatal memory error");
 }
 
 static void* TIDY_CALL defaultAlloc( TidyAllocator* allocator, size_t size )
