@@ -21,17 +21,11 @@ knitr::opts_chunk$set(
 
 Inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
 
-It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/) and presently is super-basic (no way to set options and pretty much only does HTML)
-
-This works enough for me to use in a pinch. It should be straightforward (but tedious) to:
-
-- enable passing options in a `list` (IN PROGRESS)
-- Getting it to work on Windows (UNTESTED)
+It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/) and works on macOS, Linux & Windows.
 
 The following functions are implemented:
 
 - `tidy_html` : Clean up gnarly HTML/XML
-
 
 ### Installation
 

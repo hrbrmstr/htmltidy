@@ -2,7 +2,7 @@ Package: htmltidy
 Title: Clean Up Gnarly HTML/XML
 Version: 0.2.0.9000
 Authors@R: c(
-  person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
+  person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
   person("Dave", "Dave", email = "dsr@w3.org", role = c("ctb", "aut"),
          comment="HTML Tidy library")
   )
