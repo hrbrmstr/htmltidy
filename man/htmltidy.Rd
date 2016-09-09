@@ -4,11 +4,13 @@
 \name{htmltidy}
 \alias{htmltidy}
 \alias{htmltidy-package}
-\title{Clean up gnarly HTML/XML}
+\title{Clean Up Gnarly HTML/XML}
 \description{
-Clean up gnarly HTML/XML
+HTML and XML documents can be beautiful and pristine. They can also be
+wretched, evil, malformed hellspawn. Now, you can tidy up that HTML and XML before
+processing it with your favorite angle-bracket parsing tools.
 }
 \author{
-Bob Rudis (@hrbrmstr)
+Bob Rudis (bob@rud.is)
 }
 

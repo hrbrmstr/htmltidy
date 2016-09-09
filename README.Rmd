@@ -32,6 +32,21 @@ The following functions are implemented:
 
 - `tidy_html` : Clean up gnarly HTML/XML
 
+### TODO
+
+Fix:
+
+```{text}
+* checking compiled code ... WARNING
+File ‘htmltidy/libs/htmltidy.so’:
+  Found ‘___stderrp’, possibly from ‘stderr’ (C)
+    Objects: ‘alloc.o’, ‘streamio.o’, ‘tidylib.o’
+  Found ‘___stdoutp’, possibly from ‘stdout’ (C)
+    Objects: ‘sprtf.o’, ‘tidylib.o’
+  Found ‘_exit’, possibly from ‘exit’ (C)
+    Objects: ‘alloc.o’, ‘sprtf.o’
+```
+
 ### Installation
 
 ```{r eval=FALSE}
