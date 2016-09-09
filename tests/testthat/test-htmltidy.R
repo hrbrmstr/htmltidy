@@ -1,7 +1,7 @@
 context("basic functionality")
-test_that("we can do something", {
+test_that("tidying works", {
 
-  expect_gte(nchar(tidy("<b><p><a href='http://google.com'>google &gt</a></p></b>")),
-             256)
+  expect_gte(nchar(tidy_html("<b><p><a href='http://google.com'>google &gt</a></p></b>")),
+             249)
 
 })

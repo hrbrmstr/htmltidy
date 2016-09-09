@@ -1,1 +1,2 @@
-PKG_LIBS=-ltidy
+PKG_CPPFLAGS = -I.
+PKG_CXXFLAGS = -I.

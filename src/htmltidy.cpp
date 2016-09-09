@@ -1,14 +1,16 @@
 #include <Rcpp.h>
-
-#ifdef __linux__
-#include <tidy/tidy.h>
-#include <tidy/buffio.h>
-#endif
-
-#ifdef __APPLE__
 #include <tidy.h>
 #include <tidybuffio.h>
-#endif
+
+// #ifdef __linux__
+// #include <tidy/tidy.h>
+// #include <tidy/buffio.h>
+// #endif
+//
+// #ifdef __APPLE__
+// #include <tidy.h>
+// #include <tidybuffio.h>
+// #endif
 
 // libtidy docs:
 // http://api.html-tidy.org/tidy/tidylib_api_5.2.0/tidyenum_8h.html#a3a1401652599150188a168dade7dc150
@@ -21,7 +23,7 @@
 //' @param source length 1 character vetor containing the HTML/XML source to process
 //' @export
 //[[Rcpp::export]]
-std::string tidy(std::string source) {
+std::string tidy_html(std::string source) {
 
   TidyBuffer output = {0};
   TidyBuffer errbuf = {0};

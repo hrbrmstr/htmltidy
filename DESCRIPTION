@@ -1,12 +1,20 @@
 Package: htmltidy
-Title: Clean up gnarly HTML/XML
-Version: 0.1.0.9000
-Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")))
-Description: Clean up gnarly HTML/XML
+Title: Clean Up Gnarly HTML/XML
+Version: 0.2.0.9000
+Authors@R: c(
+  person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
+  person("Dave", "Dave", email = "dsr@w3.org", role = c("ctb", "aut"),
+         comment="HTML Tidy library")
+  )
+Maintainer: Bob Rudis <bob@rud.is>
+Description: HTML and XML documents can be beautiful and pristine. They can also be
+    wretched, evil, malformed hellspawn. Now, you can tidy up that HTML and XML before
+    processing it with your favorite angle-bracket parsing tools.
 Depends:
     R (>= 3.3.0)
 License: AGPL + file LICENSE
 LazyData: true
+NeedsCompilation: yes
 Suggests:
     testthat,
     xml2
