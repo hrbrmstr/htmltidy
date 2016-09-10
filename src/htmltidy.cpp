@@ -21,28 +21,13 @@ std::string tidy_html_int(std::string source, Rcpp::List options) {
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
-  if (options.containsElementNamed("TidyXmlOut")) {
-    ok = tidyOptSetBool(tdoc, TidyXmlOut, options["TidyXmlOut"] ? yes : no);
-    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
-  }
-
   if (options.containsElementNamed("TidyHtmlOut")) {
     ok = tidyOptSetBool(tdoc, TidyHtmlOut, options["TidyHtmlOut"] ? yes : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
-  if (options.containsElementNamed("TidyXmlTags")) {
-    ok = tidyOptSetBool(tdoc, TidyXmlTags, options["TidyXmlTags"] ? yes : no);
-    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
-  }
-
   if (options.containsElementNamed("TidyOmitOptionalTags")) {
     ok = tidyOptSetBool(tdoc, TidyOmitOptionalTags, options["TidyOmitOptionalTags"] ? yes : no);
-    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
-  }
-
-  if (options.containsElementNamed("TidyXmlDecl")) {
-    ok = tidyOptSetBool(tdoc, TidyXmlDecl, options["TidyXmlDecl"] ? yes : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
@@ -87,7 +72,7 @@ std::string tidy_html_int(std::string source, Rcpp::List options) {
   }
 
   if (options.containsElementNamed("TidyHideComments")) {
-    ok = tidyOptSetBool(tdoc, TidyBodyOnly, options["TidyHideComments"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyHideComments, options["TidyHideComments"] ? yes : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
@@ -137,7 +122,7 @@ std::string tidy_html_int(std::string source, Rcpp::List options) {
   }
 
   if (options.containsElementNamed("TidyMakeClean")) {
-    ok = tidyOptSetValue(tdoc, TidyMakeClean, Rcpp::as<std::string>(options["TidyMakeClean"]).c_str());
+    ok = tidyOptSetBool(tdoc, TidyMakeClean, options["TidyMakeClean"] ? yes : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 

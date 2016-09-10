@@ -1,6 +1,8 @@
 # htmltidy 0.2.0.9000
 
 * Bundled tidy-html5 library with the package
+* Windows compatibility
+* Options handling
 * Modified tests
 
 

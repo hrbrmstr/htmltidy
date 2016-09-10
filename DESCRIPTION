@@ -1,5 +1,5 @@
 Package: htmltidy
-Title: Clean Up Gnarly HTML/XML
+Title: Clean Up Gnarly HTML and XHTML
 Version: 0.2.0.9000
 Authors@R: c(
   person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
@@ -7,18 +7,19 @@ Authors@R: c(
          comment="HTML Tidy library")
   )
 Maintainer: Bob Rudis <bob@rud.is>
-Description: HTML and XML documents can be beautiful and pristine. They can also be
-    wretched, evil, malformed hellspawn. Now, you can tidy up that HTML and XML before
-    processing it with your favorite angle-bracket parsing tools.
+Description: HTML documents can be beautiful and pristine. They can also be
+    wretched, evil, malformed demon-spawn. Now, you can tidy up that HTML and XHTML
+    before processing it with your favorite angle-bracket crunching tools.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 License: AGPL + file LICENSE
 LazyData: true
 NeedsCompilation: yes
 Suggests:
-    testthat,
-    xml2
+    testthat
 LinkingTo: Rcpp
 Imports:
-    Rcpp
+    Rcpp,
+    xml2,
+    XML
 RoxygenNote: 5.0.1

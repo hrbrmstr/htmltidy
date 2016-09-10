@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-`htmltidy` — Clean up gnarly HTML/XML
+`htmltidy` — Clean up gnarly HTML/XHTML
 
 Inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
 
@@ -25,7 +25,7 @@ It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/
 
 The following functions are implemented:
 
-- `tidy_html` : Clean up gnarly HTML/XML
+- `tidy_html` : Clean up gnarly HTML/XHTML
 
 ### Installation
 
@@ -39,13 +39,56 @@ options(width=120)
 
 ### Usage
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(htmltidy)
 
 # current verison
 packageVersion("htmltidy")
 
-cat(tidy_html("<b><p><a href='http://google.com'>google &gt</a></p></b>"))
+library(XML)
+library(xml2)
+library(httr)
+
+res <- GET("http://rud.is")
+
+head(tidy_html(res$content), 256)
+
+head(tidy_html(content(res, as="raw")), 256)
+
+(class(tidy_html(content(res, as="text", encoding="UTF-8")))) # output is too long to show
+
+tidy_html(content(res, as="parsed", encoding="UTF-8")) # same as tidy_html(read_html("http://rud.is"))
+
+(class(tidy_html(htmlParse("http://rud.is")))) # output is too long to show
+```
+
+### Testing Options
+
+```{r message=FALSE, warning=FALSE}
+
+opts <- list(TidyDocType="html5",
+             TidyMakeClean=TRUE,
+             TidyHideComments=TRUE,
+             TidyIndentContent=FALSE,
+             TidyWrapLen=200)
+
+txt <- "<html>
+    <head>
+      <style>
+        p { color: red; }
+      </style>
+    <body>
+          <!-- ===== body ====== -->
+         <p>Test</p>
+
+    </body>
+        <!--Default Zone
+        -->
+        <!--Default Zone End-->
+</html>"
+
+cat(tidy_html(txt, option=opts))
+
 ```
 
 ### Code of Conduct

@@ -1,4 +1,4 @@
-#' Tidy HTML/XHTML Documents
+#' Tidy XML Documents
 #'
 #' Currently supported options: \code{TidyAltText}, \code{TidyBodyOnly},
 #' \code{TidyBreakBeforeBR}, \code{TidyCoerceEndTags}, \code{TidyCoerceEndTags},
@@ -9,38 +9,36 @@
 #' \code{TidyMakeBare}, \code{TidyMakeClean}, \code{TidyMark},
 #' \code{TidyOmitOptionalTags}, \code{TidyReplaceColor}, \code{TidyTabSize},
 #' \code{TidyUpperCaseAttrs}, \code{TidyUpperCaseTags}, \code{TidyWord2000},
-#' \code{TidyWrapLen}, \code{TidyXhtmlOut}
+#' \code{TidyWrapLen}, \code{TidyXhtmlOut}, \code{TidyXmlDecl}, \code{TidyXmlOut},
+#' \code{TidyXmlTags}.
 #'
 #' @param content atomic character or raw vector of content to tidy
 #' @param options named list of options
-#' @return tidied HTML/XHTML content
+#' @return tidied XML content
 #' @references \url{https://github.com/htacg/tidy-html5/blob/master/include/tidyenum.h}
 #'  (for definitions of the options supported above).
 #' @export
-tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE)) {
-  UseMethod("tidy_html")
+tidy_xml <- function(content, options=list(TidyXmlOut=TRUE)) {
+  UseMethod("tidy_xml")
 }
 
 #' @export
-#' @rdname tidy_html
-tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE)) {
-  content <- content[1]
+#' @rdname tidy_xml
+tidy_xml.default <- function(content, options=list(TidyXmlOut=TRUE)) {
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
         source=content, options=options)
 }
 
 #' @export
-#' @rdname tidy_html
-tidy_html.character <- function(content, options=list(TidyXhtmlOut=TRUE)) {
-  content <- content[1]
+#' @rdname tidy_xml
+tidy_xml.character <- function(content, options=list(TidyXmlOut=TRUE)) {
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
         source=content, options=options)
 }
 
 #' @export
-#' @rdname tidy_html
-tidy_html.raw <- function(content, options=list(TidyXhtmlOut=TRUE)) {
-  content <- content[1]
+#' @rdname tidy_xml
+tidy_xml.raw <- function(content, options=list(TidyXmlOut=TRUE)) {
   content <- iconv(readBin(content, character()), to="UTF-8")
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
                source=content, options=options)
@@ -48,19 +46,19 @@ tidy_html.raw <- function(content, options=list(TidyXhtmlOut=TRUE)) {
 }
 
 #' @export
-#' @rdname tidy_html
-tidy_html.xml_document <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+#' @rdname tidy_xml
+tidy_xml.xml_document <- function(content, options=list(TidyXmlOut=TRUE)) {
   content <- toString(content)
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
                source=content, options=options)
-  xml2::read_html(out)
+  xml2::read_xml(out)
 }
 
 #' @export
-#' @rdname tidy_html
-tidy_html.HTMLInternalDocument <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+#' @rdname tidy_xml
+tidy_xml.XMLInternalDocument <- function(content, options=list(TidyXmlOut=TRUE)) {
   content <- saveXML(content)
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
                source=content, options=options)
-  XML::htmlParse(out)
+  XML::xmlParse(out)
 }
