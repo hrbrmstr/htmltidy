@@ -3,8 +3,7 @@
 #include <tidy.h>
 #include <tidybuffio.h>
 
-// NOTE: cannot do "using namespace Rcpp;" b/c of annoying warnings about the
-//       ambiguity of 'yes'.
+// NOTE: cannot do "using namespace Rcpp;" b/c of annoying warnings about the ambiguity of 'yes'.
 
 //[[Rcpp::export]]
 std::string tidy_html_int(std::string source, Rcpp::List options) {
@@ -111,11 +110,6 @@ std::string tidy_html_int(std::string source, Rcpp::List options) {
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
-  if (options.containsElementNamed("TidyCoerceEndTags")) {
-    ok = tidyOptSetBool(tdoc, TidyCoerceEndTags, options["TidyCoerceEndTags"] ? yes : no);
-    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
-  }
-
   if (options.containsElementNamed("TidyMakeBare")) {
     ok = tidyOptSetBool(tdoc, TidyMakeBare, options["TidyMakeBare"] ? yes : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
@@ -123,6 +117,16 @@ std::string tidy_html_int(std::string source, Rcpp::List options) {
 
   if (options.containsElementNamed("TidyMakeClean")) {
     ok = tidyOptSetBool(tdoc, TidyMakeClean, options["TidyMakeClean"] ? yes : no);
+    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+  }
+
+  if (options.containsElementNamed("TidyGDocClean")) {
+    ok = tidyOptSetBool(tdoc, TidyGDocClean, options["TidyGDocClean"] ? yes : no);
+    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+  }
+
+  if (options.containsElementNamed("TidyWord2000")) {
+    ok = tidyOptSetBool(tdoc, TidyWord2000, options["TidyWord2000"] ? yes : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
@@ -136,8 +140,23 @@ std::string tidy_html_int(std::string source, Rcpp::List options) {
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
-  if (options.containsElementNamed("TidyWord2000")) {
-    ok = tidyOptSetValue(tdoc, TidyWord2000, Rcpp::as<std::string>(options["TidyWord2000"]).c_str());
+  if (options.containsElementNamed("TidyInlineTags")) {
+    ok = tidyOptSetValue(tdoc, TidyInlineTags, Rcpp::as<std::string>(options["TidyInlineTags"]).c_str());
+    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+  }
+
+  if (options.containsElementNamed("TidyBlockTags")) {
+    ok = tidyOptSetValue(tdoc, TidyBlockTags, Rcpp::as<std::string>(options["TidyBlockTags"]).c_str());
+    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+  }
+
+  if (options.containsElementNamed("TidyPreTags")) {
+    ok = tidyOptSetValue(tdoc, TidyPreTags, Rcpp::as<std::string>(options["TidyPreTags"]).c_str());
+    if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+  }
+
+  if (options.containsElementNamed("TidyEmptyTags")) {
+    ok = tidyOptSetValue(tdoc, TidyEmptyTags, Rcpp::as<std::string>(options["TidyEmptyTags"]).c_str());
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 

@@ -73,7 +73,7 @@ opts <- list(TidyDocType="html5",
              TidyWrapLen=200)
 
 txt <- "<html>
-    <head>
+<head>
       <style>
         p { color: red; }
       </style>

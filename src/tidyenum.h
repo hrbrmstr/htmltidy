@@ -79,7 +79,7 @@ typedef enum
 
     These TidyOptionId are used throughout libtidy, and also
     have associated localized strings to describe them.
- 
+
     Note this enum MUST start at zero due to historical design-time
     decisions that make assumptions about this starting value.
 */
@@ -217,7 +217,7 @@ typedef enum
   N_TIDY_OPTIONS           /**< Must be last */
 } TidyOptionId;
 
-    
+
 /** Option data types
 */
 typedef enum
