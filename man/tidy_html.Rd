@@ -96,10 +96,11 @@ library(httr)
 res <- GET("http://rud.is/test/untidy.html")
 
 # look at the original, un-tidy source
-cat(content(res, as="text"))
+cat(content(res, as="text", encoding="UTF-8"))
 
 # see the tidied version
-cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
+cat(tidy_html(content(res, as="text", encoding="UTF-8"),
+              list(TidyDocType="html5", TidyWrapLen=200)))
 
 # but, you could also just do:
 cat(tidy_html(url("http://rud.is/test/untidy.html")))

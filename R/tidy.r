@@ -69,10 +69,11 @@
 #' res <- GET("http://rud.is/test/untidy.html")
 #'
 #' # look at the original, un-tidy source
-#' cat(content(res, as="text"))
+#' cat(content(res, as="text", encoding="UTF-8"))
 #'
 #' # see the tidied version
-#' cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
+#' cat(tidy_html(content(res, as="text", encoding="UTF-8"),
+#'               list(TidyDocType="html5", TidyWrapLen=200)))
 #'
 #' # but, you could also just do:
 #' cat(tidy_html(url("http://rud.is/test/untidy.html")))
@@ -128,8 +129,10 @@ tidy_html.HTMLInternalDocument <- function(content, options=list(TidyXhtmlOut=TR
 #' @rdname tidy_html
 tidy_html.connection <- function(content, options=list(TidyXhtmlOut=TRUE)) {
 
-  content <- paste0(readLines(content), collapse="")
+  html <- paste0(readLines(content, warn=FALSE), collapse="")
+  close(content)
+
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-        source=content, options=options)
+        source=html, options=options)
 
 }
