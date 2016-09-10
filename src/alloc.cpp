@@ -5,6 +5,8 @@
   (c) 1998-2006 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
 
+ Modified 2016-09-09 by Bob Rudis for the R package htmltidy
+
 */
 
 /* #define DEBUG_MEMORY very NOISY extra DEBUG of memory allocation, reallocation and free */

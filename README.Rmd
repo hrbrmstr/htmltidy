@@ -1,14 +1,14 @@
 ---
 output: rmarkdown::github_document
 ---
-[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy) 
+[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/htmltidy)](https://cran.r-project.org/package=htmltidy)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "##",
   message = FALSE,
   warning = FALSE,
   error = FALSE,
@@ -25,7 +25,7 @@ It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/
 
 The following functions are implemented:
 
-- `tidy_html` : Clean up gnarly HTML/XHTML
+- `tidy_html` : Tidy or "Pretty Print" HTML/XHTML Documents
 
 ### Installation
 
@@ -48,18 +48,46 @@ packageVersion("htmltidy")
 library(XML)
 library(xml2)
 library(httr)
+library(purrr)
+```
 
-res <- GET("http://rud.is")
+This is really "un-tidy" content:
 
-head(tidy_html(res$content), 256)
+```{r message=FALSE, warning=FALSE}
+res <- GET("http://rud.is/test/untidy.html")
+cat(content(res, as="text"))
+```
 
-head(tidy_html(content(res, as="raw")), 256)
+Let's see what `tidy_html()` does to it:
 
-(class(tidy_html(content(res, as="text", encoding="UTF-8")))) # output is too long to show
+```{r message=FALSE, warning=FALSE}
+cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
+```
 
-tidy_html(content(res, as="parsed", encoding="UTF-8")) # same as tidy_html(read_html("http://rud.is"))
+NOTE: you could also just have done:
 
-(class(tidy_html(htmlParse("http://rud.is")))) # output is too long to show
+```{r message=FALSE, warning=FALSE}
+cat(tidy_html(url("http://rud.is/test/untidy.html"), 
+              list(TidyDocType="html5", TidyWrapLen=200)))
+```
+
+You'll see that this differs substantially from the mangling `libxml2` does (via `read_html()`):
+
+```{r message=FALSE, warning=FALSE}
+pg <- read_html("http://rud.is/test/untidy.html")
+cat(toString(pg))
+```
+
+It can also deal with "raw" and parsed objects:
+
+```{r message=FALSE, warning=FALSE}
+tidy_html(content(res, as="raw"))
+
+tidy_html(content(res, as="text", encoding="UTF-8"))
+
+tidy_html(content(res, as="parsed", encoding="UTF-8"))
+
+tidy_html(htmlParse("http://rud.is/test/untidy.html"))
 ```
 
 ### Testing Options
@@ -90,6 +118,18 @@ txt <- "<html>
 cat(tidy_html(txt, option=opts))
 
 ```
+
+But, you're probably better off running it on plain HTML source.
+
+Since it's C/C++-backed, it's pretty fast:
+
+```{r message=FALSE, warning=FALSE}
+book <- readLines("http://singlepageappbook.com/single-page.html")
+sum(map_int(book, nchar))
+system.time(tidy_book <- tidy_html(book))
+```
+
+(It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.
 
 ### Code of Conduct
 

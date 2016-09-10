@@ -1,0 +1,22 @@
+All R source code and source file src/htmltidy.cpp are released under the GNU AGPL license.
+
+As per https://github.com/htacg/tidy-html5/blob/master/README/LICENSE.md, libtidy source
+code is:
+
+"Copyright (c) 1998-2016 World Wide Web Consortium (Massachusetts Institute of
+Technology, European Research Consortium for Informatics and Mathematics, Keio University).
+All Rights Reserved.
+
+Additional contributions (c) 2001-2016 University of Toronto, Terry Teague, @geoffmcl,
+HTACG, and others.""
+
+The authors of the libtidy sources also used other source code that is licensed GPL-2.
+
+All licenses in the included source files have been left intact. As required by the
+libtidy copyright notice, the following files are noted as being modified for use in
+this package:
+
+- src/alloc.cpp
+- src/sprtf.cpp
+
+Both of those files have been marked as modified in the license copyright header.

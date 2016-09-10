@@ -1,4 +1,4 @@
-#' Tidy HTML/XHTML Documents
+#' Tidy or "Pretty Print" HTML/XHTML Documents
 #'
 #' Pass in HTML content as either plain or raw text or parsed objects (either with the
 #' \code{XML} or \code{xml2} packages) along with an options list that specifies how
@@ -42,7 +42,8 @@
 #' @param content accepts a character vector, raw vector or parsed content from the \code{xml2}
 #'        or \code{XML} packages.
 #' @param options named list of options
-#' @return Tidied HTML/XHTML content. The object type will be the same as that of the input type.
+#' @return Tidied HTML/XHTML content. The object type will be the same as that of the input type
+#'         except when it is a \code{connection}, then a character vector will be returned.
 #' @references \url{http://api.html-tidy.org/tidy/quickref_5.1.25.html} &
 #'   \url{https://github.com/htacg/tidy-html5/blob/master/include/tidyenum.h}
 #'  for definitions of the options supported above and \url{https://www.w3.org/People/Raggett/tidy/}
@@ -63,6 +64,18 @@
 #'   collapse="")
 #'
 #' cat(tidy_html(txt, option=opts))
+#'
+#' library(httr)
+#' res <- GET("http://rud.is/test/untidy.html")
+#'
+#' # look at the original, un-tidy source
+#' cat(content(res, as="text"))
+#'
+#' # see the tidied version
+#' cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
+#'
+#' # but, you could also just do:
+#' cat(tidy_html(url("http://rud.is/test/untidy.html")))
 tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE)) {
   UseMethod("tidy_html")
 }
@@ -70,7 +83,7 @@ tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE)) {
 #' @export
 #' @rdname tidy_html
 tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE)) {
-  content <- content[1]
+  content <- paste0(content, collapse="")
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
         source=content, options=options)
 }
@@ -78,7 +91,7 @@ tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE)) {
 #' @export
 #' @rdname tidy_html
 tidy_html.character <- function(content, options=list(TidyXhtmlOut=TRUE)) {
-  content <- content[1]
+  content <- paste0(content, collapse="")
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
         source=content, options=options)
 }
@@ -109,4 +122,14 @@ tidy_html.HTMLInternalDocument <- function(content, options=list(TidyXhtmlOut=TR
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
                source=content, options=options)
   XML::htmlParse(out)
+}
+
+#' @export
+#' @rdname tidy_html
+tidy_html.connection <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+
+  content <- paste0(readLines(content), collapse="")
+  .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+        source=content, options=options)
+
 }

@@ -3,6 +3,7 @@
 * Bundled tidy-html5 library with the package
 * Windows compatibility
 * Options handling
+* Enabled generics
 * Modified tests
 
 

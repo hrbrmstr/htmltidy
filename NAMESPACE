@@ -2,6 +2,7 @@
 
 S3method(tidy_html,HTMLInternalDocument)
 S3method(tidy_html,character)
+S3method(tidy_html,connection)
 S3method(tidy_html,default)
 S3method(tidy_html,raw)
 S3method(tidy_html,xml_document)

@@ -16,6 +16,8 @@
 
   Created 2001-05-20 by Charles Reitzel
 
+  Modified 2016-09-09 by Bob Rudis for the R package htmltidy
+
 */
 
 #include <errno.h>
@@ -1072,10 +1074,6 @@ int         tidyDocSaveFile( TidyDocImpl* doc, ctmbstr filnam )
 int         tidyDocSaveStdout( TidyDocImpl* doc )
 {
 #if !defined(NO_SETMODE_SUPPORT)
-
-#if defined(_WIN32) || defined(OS2_OS)
-    int oldstdoutmode = -1, oldstderrmode = -1;
-#endif
 
 #endif
     int status = 0;

@@ -4,4 +4,4 @@
 ^README-.*\.png$
 ^\.travis\.yml$
 ^CONDUCT\.md$
-^README\.md$
+^README\.html$

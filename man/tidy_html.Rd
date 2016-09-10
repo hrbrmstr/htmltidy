@@ -4,10 +4,11 @@
 \alias{tidy_html}
 \alias{tidy_html.HTMLInternalDocument}
 \alias{tidy_html.character}
+\alias{tidy_html.connection}
 \alias{tidy_html.default}
 \alias{tidy_html.raw}
 \alias{tidy_html.xml_document}
-\title{Tidy HTML/XHTML Documents}
+\title{Tidy or "Pretty Print" HTML/XHTML Documents}
 \usage{
 tidy_html(content, options = list(TidyXhtmlOut = TRUE))
 
@@ -21,6 +22,8 @@ tidy_html(content, options = list(TidyXhtmlOut = TRUE))
 
 \method{tidy_html}{HTMLInternalDocument}(content, options = list(TidyXhtmlOut
   = TRUE))
+
+\method{tidy_html}{connection}(content, options = list(TidyXhtmlOut = TRUE))
 }
 \arguments{
 \item{content}{accepts a character vector, raw vector or parsed content from the \code{xml2}
@@ -29,7 +32,8 @@ or \code{XML} packages.}
 \item{options}{named list of options}
 }
 \value{
-Tidied HTML/XHTML content. The object type will be the same as that of the input type.
+Tidied HTML/XHTML content. The object type will be the same as that of the input type
+        except when it is a \code{connection}, then a character vector will be returned.
 }
 \description{
 Pass in HTML content as either plain or raw text or parsed objects (either with the
@@ -87,6 +91,18 @@ txt <- paste0(
   collapse="")
 
 cat(tidy_html(txt, option=opts))
+
+library(httr)
+res <- GET("http://rud.is/test/untidy.html")
+
+# look at the original, un-tidy source
+cat(content(res, as="text"))
+
+# see the tidied version
+cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
+
+# but, you could also just do:
+cat(tidy_html(url("http://rud.is/test/untidy.html")))
 }
 \references{
 \url{http://api.html-tidy.org/tidy/quickref_5.1.25.html} &
