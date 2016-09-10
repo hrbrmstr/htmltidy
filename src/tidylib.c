@@ -1079,8 +1079,8 @@ int         tidyDocSaveStdout( TidyDocImpl* doc )
 
 #endif
     int status = 0;
-    uint outenc = cfg( doc, TidyOutCharEncoding );
-    uint nl = cfg( doc, TidyNewline );
+//    uint outenc = cfg( doc, TidyOutCharEncoding );
+//    uint nl = cfg( doc, TidyNewline );
 //    StreamOut* out = TY_(FileOutput)( doc, stdout, outenc, nl );
 
 //    if ( 0 == status )

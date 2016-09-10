@@ -27,4 +27,8 @@ Currently supported options: \code{TidyAltText}, \code{TidyBodyOnly},
 \code{TidyWrapLen}, \code{TidyXhtmlOut}, \code{TidyXmlDecl}, \code{TidyXmlOut},
 \code{TidyXmlTags}.
 }
+\references{
+\url{https://github.com/htacg/tidy-html5/blob/master/include/tidyenum.h}
+ (for definitions of the options supported above).
+}
 

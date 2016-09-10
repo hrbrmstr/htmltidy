@@ -15,6 +15,8 @@
 #' @param content atomic character or raw vector of content to tidy
 #' @param options named list of options
 #' @return Atomic character vector of tidy HTML/XML/XHTML content
+#' @references \url{https://github.com/htacg/tidy-html5/blob/master/include/tidyenum.h}
+#'  (for definitions of the options supported above).
 #' @export
 tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE)) {
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy', source=content, options=options)
