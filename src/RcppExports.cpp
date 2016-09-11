@@ -6,14 +6,15 @@
 using namespace Rcpp;
 
 // tidy_html_int
-std::string tidy_html_int(std::string source, Rcpp::List options);
-RcppExport SEXP htmltidy_tidy_html_int(SEXP sourceSEXP, SEXP optionsSEXP) {
+Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options, bool show_errors);
+RcppExport SEXP htmltidy_tidy_html_int(SEXP sourceSEXP, SEXP optionsSEXP, SEXP show_errorsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type source(sourceSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type options(optionsSEXP);
-    rcpp_result_gen = Rcpp::wrap(tidy_html_int(source, options));
+    Rcpp::traits::input_parameter< bool >::type show_errors(show_errorsSEXP);
+    rcpp_result_gen = Rcpp::wrap(tidy_html_int(source, options, show_errors));
     return rcpp_result_gen;
 END_RCPP
 }

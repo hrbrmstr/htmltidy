@@ -25,7 +25,7 @@ library(htmltidy)
 
 # current verison
 packageVersion("htmltidy")
-## [1] '0.2.0'
+## [1] '0.3.0'
 
 library(XML)
 library(xml2)
@@ -146,6 +146,23 @@ tidy_html(htmlParse("http://rud.is/test/untidy.html"))
 ## 
 ```
 
+And, show the markup errors:
+
+``` r
+invisible(tidy_html(url("http://rud.is/test/untidy.html"), verbose=TRUE))
+## line 1 column 1 - Warning: missing <!DOCTYPE> declaration
+## line 1 column 68 - Warning: nested emphasis <b>
+## line 1 column 138 - Warning: missing </span> before <div>
+## line 1 column 68 - Warning: missing </b> before <div>
+## line 1 column 164 - Warning: inserting implicit <span>
+## line 1 column 164 - Warning: missing </span>
+## line 1 column 159 - Warning: missing </div>
+## line 1 column 1 - Warning: inserting missing 'title' element
+## line 1 column 164 - Warning: <span> anchor "sp" already defined
+## Info: Document content looks like XHTML5
+## Tidy found 9 warnings and 0 errors!
+```
+
 ### Testing Options
 
 ``` r
@@ -197,7 +214,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.021   0.000   0.021
+##   0.021   0.001   0.023
 ```
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.

@@ -91,6 +91,12 @@ tidy_html(content(res, as="parsed", encoding="UTF-8"))
 tidy_html(htmlParse("http://rud.is/test/untidy.html"))
 ```
 
+And, show the markup errors:
+
+```{r message=FALSE, warning=FALSE}
+invisible(tidy_html(url("http://rud.is/test/untidy.html"), verbose=TRUE))
+```
+
 ### Testing Options
 
 ```{r message=FALSE, warning=FALSE}

@@ -1,6 +1,6 @@
 Package: htmltidy
 Title: Clean Up or Pretty Print Gnarly HTML and XHTML
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
   person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
   person("Dave", "Dave", email = "dsr@w3.org", role = c("ctb", "aut"),

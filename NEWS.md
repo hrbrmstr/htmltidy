@@ -1,4 +1,10 @@
-# htmltidy 0.2.0.9000
+# htmltidy 0.3.0
+
+* Better error handling (fixed crashing bug)
+* New option to display document errors
+
+
+# htmltidy 0.2.0
 
 * Bundled tidy-html5 library with the package
 * Windows compatibility
@@ -7,7 +13,7 @@
 * Modified tests
 
 
-# htmltidy 0.1.0.9000
+# htmltidy 0.1.0
 
 * Added a `NEWS.md` file to track changes to the package.
 * Added Debian & Ubuntu compatibility

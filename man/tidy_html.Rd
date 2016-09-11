@@ -10,26 +10,33 @@
 \alias{tidy_html.xml_document}
 \title{Tidy or "Pretty Print" HTML/XHTML Documents}
 \usage{
-tidy_html(content, options = list(TidyXhtmlOut = TRUE))
+tidy_html(content, options = list(TidyXhtmlOut = TRUE), verbose = FALSE)
 
-\method{tidy_html}{default}(content, options = list(TidyXhtmlOut = TRUE))
+\method{tidy_html}{default}(content, options = list(TidyXhtmlOut = TRUE),
+  verbose = FALSE)
 
-\method{tidy_html}{character}(content, options = list(TidyXhtmlOut = TRUE))
+\method{tidy_html}{character}(content, options = list(TidyXhtmlOut = TRUE),
+  verbose = FALSE)
 
-\method{tidy_html}{raw}(content, options = list(TidyXhtmlOut = TRUE))
+\method{tidy_html}{raw}(content, options = list(TidyXhtmlOut = TRUE),
+  verbose = FALSE)
 
-\method{tidy_html}{xml_document}(content, options = list(TidyXhtmlOut = TRUE))
+\method{tidy_html}{xml_document}(content, options = list(TidyXhtmlOut = TRUE),
+  verbose = FALSE)
 
 \method{tidy_html}{HTMLInternalDocument}(content, options = list(TidyXhtmlOut
-  = TRUE))
+  = TRUE), verbose = FALSE)
 
-\method{tidy_html}{connection}(content, options = list(TidyXhtmlOut = TRUE))
+\method{tidy_html}{connection}(content, options = list(TidyXhtmlOut = TRUE),
+  verbose = FALSE)
 }
 \arguments{
 \item{content}{accepts a character vector, raw vector or parsed content from the \code{xml2}
 or \code{XML} packages.}
 
 \item{options}{named list of options}
+
+\item{verbose}{output document errors? (default: \code{FALSE})}
 }
 \value{
 Tidied HTML/XHTML content. The object type will be the same as that of the input type
@@ -75,6 +82,11 @@ You can clean up Microsoft Word (2000) and Google Docs HTML via logical settings
 \code{TidyWord2000} and \code{TidyGDocClean}, respectively.
 
 It may also be advantageous to remove all comments with \code{TidyHideComments}.
+}
+\note{
+If document parsing errors are severe enough, \code{tidy_html()} will not be able
+  to clean the document and will display the errors (this output can be captured with
+  \code{sink()} or \code{capture.output()}) along with a warning and return \code{NULL}.
 }
 \examples{
 opts <- list(

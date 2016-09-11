@@ -42,6 +42,10 @@
 #' @param content accepts a character vector, raw vector or parsed content from the \code{xml2}
 #'        or \code{XML} packages.
 #' @param options named list of options
+#' @param verbose output document errors? (default: \code{FALSE})
+#' @note If document parsing errors are severe enough, \code{tidy_html()} will not be able
+#'   to clean the document and will display the errors (this output can be captured with
+#'   \code{sink()} or \code{capture.output()}) along with a warning and return \code{NA}.
 #' @return Tidied HTML/XHTML content. The object type will be the same as that of the input type
 #'         except when it is a \code{connection}, then a character vector will be returned.
 #' @references \url{http://api.html-tidy.org/tidy/quickref_5.1.25.html} &
@@ -77,62 +81,68 @@
 #'
 #' # but, you could also just do:
 #' cat(tidy_html(url("http://rud.is/test/untidy.html")))
-tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE), verbose=FALSE) {
   UseMethod("tidy_html")
 }
 
 #' @export
 #' @rdname tidy_html
-tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE),
+                              verbose=FALSE) {
   content <- paste0(content, collapse="")
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-        source=content, options=options)
+        source=content, options=options, show_errors=verbose)
 }
 
 #' @export
 #' @rdname tidy_html
-tidy_html.character <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html.character <- function(content, options=list(TidyXhtmlOut=TRUE),
+                              verbose=FALSE) {
   content <- paste0(content, collapse="")
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-        source=content, options=options)
+        source=content, options=options, show_errors=verbose)
 }
 
 #' @export
 #' @rdname tidy_html
-tidy_html.raw <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html.raw <- function(content, options=list(TidyXhtmlOut=TRUE),
+                              verbose=FALSE) {
   content <- content[1]
   content <- iconv(readBin(content, character()), to="UTF-8")
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-               source=content, options=options)
+               source=content, options=options, show_errors=verbose)
   charToRaw(out)
 }
 
 #' @export
 #' @rdname tidy_html
-tidy_html.xml_document <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html.xml_document <- function(content, options=list(TidyXhtmlOut=TRUE),
+                              verbose=FALSE) {
   content <- toString(content)
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-               source=content, options=options)
+               source=content, options=options, show_errors=verbose)
   xml2::read_html(out)
 }
 
 #' @export
 #' @rdname tidy_html
-tidy_html.HTMLInternalDocument <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html.HTMLInternalDocument <- function(content, options=list(TidyXhtmlOut=TRUE),
+                              verbose=FALSE) {
   content <- XML::saveXML(content)
   out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-               source=content, options=options)
+               source=content, options=options, show_errors=verbose)
   XML::htmlParse(out)
 }
 
 #' @export
 #' @rdname tidy_html
-tidy_html.connection <- function(content, options=list(TidyXhtmlOut=TRUE)) {
+tidy_html.connection <- function(content, options=list(TidyXhtmlOut=TRUE),
+                              verbose=FALSE) {
 
   html <- paste0(readLines(content, warn=FALSE), collapse="")
   close(content)
 
   .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
-        source=html, options=options)
+        source=html, options=options, show_errors=verbose)
 
 }
