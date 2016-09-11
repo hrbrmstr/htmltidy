@@ -45,7 +45,8 @@
 #' @param verbose output document errors? (default: \code{FALSE})
 #' @note If document parsing errors are severe enough, \code{tidy_html()} will not be able
 #'   to clean the document and will display the errors (this output can be captured with
-#'   \code{sink()} or \code{capture.output()}) along with a warning and return \code{NA}.
+#'   \code{sink()} or \code{capture.output()}) along with a warning and return a "best effort"
+#'   cleaned version of the document.
 #' @return Tidied HTML/XHTML content. The object type will be the same as that of the input type
 #'         except when it is a \code{connection}, then a character vector will be returned.
 #' @references \url{http://api.html-tidy.org/tidy/quickref_5.1.25.html} &

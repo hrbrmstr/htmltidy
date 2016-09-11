@@ -176,6 +176,9 @@ Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options,
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
+  ok = tidyOptSetBool(tdoc, TidyForceOutput, yes);
+  if (ok == no) Rcpp::stop("Error setting TidyHTML options");
+
   rc = tidySetErrorBuffer(tdoc, &errbuf);
   max_rc = (rc > max_rc) ? rc : max_rc;
 
@@ -210,10 +213,14 @@ Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options,
     show_errors = true;
   }
 
-  if (show_errors & (errbuf.allocated > 0)) {
-    Rcpp::Rcout << std::string(reinterpret_cast<const char*>(errbuf.bp)) << std::endl;
+  if (max_rc > 1) show_errors = true;
+
+  if (show_errors) {
+    if (errbuf.allocated > 0) {
+      Rcpp::Rcout << std::string(reinterpret_cast<const char*>(errbuf.bp)) << std::endl;
+    }
     if (max_rc > 1) {
-      Rcpp::warning("\nSevere errors were generated during document evaluation.\nReturing original document");
+      Rcpp::warning("\nSevere errors were generated during document evaluation.\n");
     }
   }
 
@@ -222,6 +229,6 @@ Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options,
 
   tidyRelease(tdoc);
 
-  return((max_rc > 1) ? NA_STRING : Rcpp::wrap(ret));
+  return(Rcpp::wrap(ret));
 
 }

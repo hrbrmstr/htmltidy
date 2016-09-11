@@ -86,7 +86,8 @@ It may also be advantageous to remove all comments with \code{TidyHideComments}.
 \note{
 If document parsing errors are severe enough, \code{tidy_html()} will not be able
   to clean the document and will display the errors (this output can be captured with
-  \code{sink()} or \code{capture.output()}) along with a warning and return \code{NULL}.
+  \code{sink()} or \code{capture.output()}) along with a warning and return a "best effort"
+  cleaned version of the document.
 }
 \examples{
 opts <- list(
