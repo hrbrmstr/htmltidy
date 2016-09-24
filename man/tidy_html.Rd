@@ -12,7 +12,7 @@
 \title{Tidy or "Pretty Print" HTML/XHTML Documents}
 \usage{
 \method{tidy_html}{response}(content, options = list(TidyXhtmlOut = TRUE),
-  verbose = FALSE, encoding = "UTF-8")
+  verbose = FALSE)
 
 tidy_html(content, options = list(TidyXhtmlOut = TRUE), verbose = FALSE)
 
@@ -41,9 +41,6 @@ or \code{XML} packages.}
 \item{options}{named list of options}
 
 \item{verbose}{output document errors? (default: \code{FALSE})}
-
-\item{encoding}{specify the encoding when tidying an \code{httr} \code{response}
-object. Default to "\code{UTF-8}".}
 }
 \value{
 Tidied HTML/XHTML content. The object type will be the same as that of the input type
