@@ -49,7 +49,33 @@ cat(content(res, as="text"))
 ## as is this <span id="sp">portion<div>
 ```
 
-Let's see what `tidy_html()` does to it:
+Let's see what `tidy_html()` does to it.
+
+It can handle the `response` object directly:
+
+``` r
+cat(tidy_html(res, list(TidyDocType="html5", TidyWrapLen=200)))
+## <!DOCTYPE html>
+## <html xmlns="http://www.w3.org/1999/xhtml">
+## <head>
+## <meta name="generator" content=
+## "HTML Tidy for HTML5 for R version 5.0.0" />
+## <style>
+## <![CDATA[
+## body { font-family: sans-serif; }
+## ]]>
+## </style>
+## <title></title>
+## </head>
+## <body>
+## <b>This is some <i>really</i> poorly formatted HTML as is this
+## <span id="sp">portion</span></b>
+## <div><span id="sp"></span></div>
+## </body>
+## </html>
+```
+
+But, you'll probably mostly use it on HTML you've identified as gnarly and already have that HTML text content handy:
 
 ``` r
 cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
@@ -214,7 +240,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.022   0.002   0.024
+##   0.021   0.001   0.022
 ```
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.

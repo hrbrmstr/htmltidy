@@ -1,8 +1,16 @@
 language: R
-sudo: false
+sudo: required
 cache: packages
 
 r:
  - oldrel
  - release
  - devel
+
+notifications:
+  email:
+    - bob@rud.is
+  irc:
+    channels:
+      - "104.236.112.222#builds"
+    nick: travisci

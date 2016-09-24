@@ -1,7 +1,8 @@
 # htmltidy 0.3.0
 
-* Better error handling (fixed crashing bug)
+* Better error handling (fixed crashing bug in #1)
 * New option to display document errors
+* Support for directly tidying httr::response objects
 
 
 # htmltidy 0.2.0

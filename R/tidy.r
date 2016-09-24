@@ -1,9 +1,9 @@
 #' Tidy or "Pretty Print" HTML/XHTML Documents
 #'
 #' Pass in HTML content as either plain or raw text or parsed objects (either with the
-#' \code{XML} or \code{xml2} packages) along with an options list that specifies how
-#' the content will be tidied and get back tidied content of the same object type as passed
-#' in to the function.
+#' \code{XML} or \code{xml2} packages) or as an \code{httr} \code{response} object
+#' along with an options list that specifies how the content will be tidied and get back
+#' tidied content of the same object type as passed in to the function.
 #'
 #' The default option \code{TixyXhtmlOut} will convert the input content to XHTML.
 #'
@@ -147,3 +147,4 @@ tidy_html.connection <- function(content, options=list(TidyXhtmlOut=TRUE),
         source=html, options=options, show_errors=verbose)
 
 }
+

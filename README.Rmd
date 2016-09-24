@@ -59,7 +59,15 @@ res <- GET("http://rud.is/test/untidy.html")
 cat(content(res, as="text"))
 ```
 
-Let's see what `tidy_html()` does to it:
+Let's see what `tidy_html()` does to it.
+
+It can handle the `response` object directly:
+
+```{r message=FALSE, warning=FALSE}
+cat(tidy_html(res, list(TidyDocType="html5", TidyWrapLen=200)))
+```
+
+But, you'll probably mostly use it on HTML you've identified as gnarly and already have that HTML text content handy:
 
 ```{r message=FALSE, warning=FALSE}
 cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))

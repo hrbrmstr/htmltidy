@@ -3,8 +3,11 @@ Title: Clean Up or Pretty Print Gnarly HTML and XHTML
 Version: 0.3.0
 Authors@R: c(
   person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
-  person("Dave", "Dave", email = "dsr@w3.org", role = c("ctb", "aut"),
-         comment="HTML Tidy library")
+  person("Dave", "Raggett", email = "dsr@w3.org", role = c("ctb", "aut"),
+         comment="Original HTML Tidy library"),
+  person("Charles", "Reitzel", role = c("ctb", "aut"),
+         comment="Modern HTML Tidy library"),
+  person("Björn", "Höhrmann", role = c("ctb", "aut"), comment="HTML5 Support")
   )
 Maintainer: Bob Rudis <bob@rud.is>
 Description: HTML documents can be beautiful and pristine. They can also be

@@ -1,7 +1,7 @@
 ## Test environments
 
 * local OS X install, R 3.3.1 (clang)
-* ubuntu 12.04 (on travis-ci), R 3.3.1
+* ubuntu 12.04 (on travis-ci), oldrel, release & devel
 * win-builder (devel and release)
 * local 32-bit Windows 10 R 3.3.1
 * local ubuntu 14.04 R 3.3.1 & R-devel
@@ -17,7 +17,10 @@ This is a new release, so there are no reverse dependencies.
 
 ---
 
-There is an inst/COPYRIGHTS file. The libtidy library is used in a plethora
-of other packages/modules (see Perl, Python & npm for starters) and most 
-don't even bother acknowledging the efforts of the HTML Tidy working group
-but I wanted to make sure their efforts were credited appropriately.
+This fixes a fairly nasty bug that was 
+user-identfied fairly early after release 
+but I didn't want to bug the CRAN team 
+so quickly after the CRAN acceptange. This
+also addes new functionality and (optionally)
+provides more informaiton on the tidying 
+process.
