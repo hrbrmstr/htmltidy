@@ -1,5 +1,5 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/htmltidy)](https://cran.r-project.org/package=htmltidy) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/htmltidy)
+[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/htmltidy?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/htmltidy) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/htmltidy)](https://cran.r-project.org/package=htmltidy) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/htmltidy)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 `htmltidy` — Tidy Up and Test XPath Queries on HTML and XML Content
@@ -62,20 +62,16 @@ It can handle the `response` object directly:
 ``` r
 cat(tidy_html(res, list(TidyDocType="html5", TidyWrapLen=200)))
 ## <!DOCTYPE html>
-## <html xmlns="http://www.w3.org/1999/xhtml">
+## <html>
 ## <head>
-## <meta name="generator" content=
-## "HTML Tidy for HTML5 for R version 5.0.0" />
+## <meta name="generator" content="HTML Tidy for HTML5 for R version 5.0.0">
 ## <style>
-## <![CDATA[
 ## body { font-family: sans-serif; }
-## ]]>
 ## </style>
 ## <title></title>
 ## </head>
 ## <body>
-## <b>This is some <i>really</i> poorly formatted HTML as is this
-## <span id="sp">portion</span></b>
+## <b>This is some <i>really</i> poorly formatted HTML as is this <span id="sp">portion</span></b>
 ## <div><span id="sp"></span></div>
 ## </body>
 ## </html>
@@ -246,7 +242,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.022   0.000   0.022
+##   0.021   0.001   0.022
 ```
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.
