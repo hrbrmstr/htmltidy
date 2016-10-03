@@ -12,5 +12,5 @@ notifications:
     - bob@rud.is
   irc:
     channels:
-      - "104.236.112.222#builds"
+      - "irc.rud.is#builds"
     nick: travisci
