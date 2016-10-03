@@ -63,10 +63,10 @@ xml_view(doc, style="obsidian")
 xml_view(xml_find_all(doc, ".//to"), style="github-gist")
 
 # some more complex daata
-xml_view(read_xml(system.file("extdata/dwml.xml", package="xmlview")))
-xml_view(read_xml(system.file("extdata/getHistory.xml", package="xmlview")),
+xml_view(read_xml(system.file("extdata/dwml.xml", package="htmltidy")))
+xml_view(read_xml(system.file("extdata/getHistory.xml", package="htmltidy")),
          "androidstudio")
-xml_view(read_xml(system.file("extdata/input.xml", package="xmlview")),
+xml_view(read_xml(system.file("extdata/input.xml", package="htmltidy")),
          "sunburst")
 
 # filter + apply an initial XPath query string

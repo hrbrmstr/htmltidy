@@ -6,7 +6,7 @@
 #' @export
 xmlviewOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'xmlview', width, height,
-                                 package = 'xmlview')
+                                 package = 'htmltidy')
 }
 
 #' Widget render function for use in Shiny

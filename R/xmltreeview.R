@@ -45,7 +45,7 @@ xml_tree_view <- function(doc=NULL, scroll=FALSE,
     x = params,
     width = width,
     height = height,
-    package = 'xmlview',
+    package = 'htmltidy',
     elementId = elementId
   )
 

@@ -43,10 +43,10 @@
 #' xml_view(xml_find_all(doc, ".//to"), style="github-gist")
 #'
 #' # some more complex daata
-#' xml_view(read_xml(system.file("extdata/dwml.xml", package="xmlview")))
-#' xml_view(read_xml(system.file("extdata/getHistory.xml", package="xmlview")),
+#' xml_view(read_xml(system.file("extdata/dwml.xml", package="htmltidy")))
+#' xml_view(read_xml(system.file("extdata/getHistory.xml", package="htmltidy")),
 #'          "androidstudio")
-#' xml_view(read_xml(system.file("extdata/input.xml", package="xmlview")),
+#' xml_view(read_xml(system.file("extdata/input.xml", package="htmltidy")),
 #'          "sunburst")
 #'
 #' # filter + apply an initial XPath query string
@@ -92,7 +92,7 @@ xml_view <- function(doc, style="default", scroll=FALSE, add_filter=FALSE,
     params,
     width = width,
     height = height,
-    package = 'xmlview',
+    package = 'htmltidy',
     elementId = elementId
   )
 
@@ -115,6 +115,6 @@ html_view <- xml_view
 highlight_styles <- function() {
   gsub("\\.css$", "",
        grep("\\.css$",
-            list.files(system.file("htmlwidgets/lib/highlightjs/styles", package="xmlview")),
+            list.files(system.file("htmlwidgets/lib/highlightjs/styles", package="htmltidy")),
             value=TRUE))
 }
