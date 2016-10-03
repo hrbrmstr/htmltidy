@@ -1,0 +1,6 @@
+ dependencies:
+  - name: xml-viewer
+    version: 1.3.7
+    src: htmlwidgets/lib/xml-viewer
+    script: xml-viewer.js
+    stylesheet: treewdgt.css

@@ -2,15 +2,21 @@
 [![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/htmltidy)](https://cran.r-project.org/package=htmltidy) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/htmltidy)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-`htmltidy` — Clean up gnarly HTML/XHTML
+`htmltidy` — Tidy Up and Test XPath Queries on HTML and XML Content
 
-Inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
+Partly inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
 
 It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/) and works on macOS, Linux & Windows.
 
+It also incorporates an `htmlwidget` to view and test XPath queries on HTML/XML content.
+
 The following functions are implemented:
 
--   `tidy_html` : Tidy or "Pretty Print" HTML/XHTML Documents
+-   `tidy_html`: Tidy or "Pretty Print" HTML/XHTML Documents
+-   `html_view`: HTML/XML pretty printer and viewer
+-   `xml_view`: HTML/XML pretty printer and viewer
+-   `html_tree_view`: HTML/XML tree viewer
+-   `xml_tree_view`: HTML/XML tree viewer
 
 ### Installation
 
@@ -240,7 +246,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.021   0.001   0.022
+##   0.022   0.000   0.022
 ```
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.

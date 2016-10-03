@@ -1,0 +1,81 @@
+button:active {
+  color: #fff;
+  text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff;
+  box-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 2px 2px rgba(0,0,0,0.9);
+  -webkit-transform: translateY(3px);
+  -moz-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  -o-transform: translateY(3px);
+  transform: translateY(3px);
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none;
+}
+
+.msgdiv {
+  max-width:100%;
+  width:100%;
+  font-family:monospace;
+  display:none;
+  border: 1px solid;
+  margin:0;
+  margin-top:5px;
+  padding:5px;
+  color: #9f6000;
+  background-color: #feefb3;
+}
+
+.rcodediv {
+  max-width:100%;
+  width:100%;
+  font-family:monospace;
+  display:none;
+  border: 1px solid #2b2b2b;
+  margin:0;
+  margin-top:5px;
+  padding:5px;
+  color: #2b2b2b;
+  background-color: #ffffff;
+}
+
+.filterdiv {
+  width:100%;
+  max-width:100%;
+  height:30px;
+  padding-bottom:5px;
+}
+
+.xpathspan {
+  font-family:monospace;
+  font-weight:bold
+}
+
+.filterdiv {
+  clear:both;
+}
+
+.filterinput {
+  font-family: monospace;
+}
+
+.resetclass {
+  transition: all 150ms ease;
+  vertical-align: middle;
+  height:26px;
+  width:26px;
+  border: none;
+  background-color:#ffffff;
+  background-image: url(reset.png);
+  background-repeat: no-repeat;
+}
+
+.rcodeclass {
+  transition: all 150ms ease;
+  vertical-align: middle;
+  height:26px;
+  width:26px;
+  border: none;
+  background-color:#ffffff;
+  background-image: url(rlogo.png);
+  background-repeat: no-repeat;
+}

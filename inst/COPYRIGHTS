@@ -1,5 +1,7 @@
 All R source code and source file src/htmltidy.cpp are released under the GNU AGPL license.
 
+----
+
 As per https://github.com/htacg/tidy-html5/blob/master/README/LICENSE.md, libtidy source
 code is:
 
@@ -20,3 +22,11 @@ this package:
 - src/sprtf.cpp
 
 Both of those files have been marked as modified in the license copyright header.
+
+------
+
+xml-viewer is MIT licensed
+
+------
+
+vkbeautify is MIT licensed
