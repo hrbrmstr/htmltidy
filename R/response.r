@@ -8,7 +8,7 @@ tidy_html.response <- function(content, options=list(TidyXhtmlOut=TRUE),
          call.=FALSE)
   }
 
-  html_txt <- httr::content(content, as="text", encoding=encoding)
+  html_txt <- suppressMessages(httr::content(content, as="text"))
 
   tidy_html(html_txt)
 

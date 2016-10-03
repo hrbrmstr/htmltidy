@@ -18,15 +18,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-`htmltidy` — Clean up gnarly HTML/XHTML
+`htmltidy` — Tidy Up and Test XPath Queries on HTML and XML Content
 
-Inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
+Partly inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
 
 It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/) and works on macOS, Linux & Windows.
 
+It also incorporates an `htmlwidget` to view and test XPath queries on HTML/XML content.
+
 The following functions are implemented:
 
-- `tidy_html` : Tidy or "Pretty Print" HTML/XHTML Documents
+- `tidy_html`: Tidy or "Pretty Print" HTML/XHTML Documents
+- `html_view`:	HTML/XML pretty printer and viewer
+- `xml_view`:	HTML/XML pretty printer and viewer
+- `html_tree_view`:	HTML/XML tree viewer
+- `xml_tree_view`:	HTML/XML tree viewer
 
 ### Installation
 

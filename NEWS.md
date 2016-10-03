@@ -3,6 +3,7 @@
 * Better error handling (fixed crashing bug in #1)
 * New option to display document errors
 * Support for directly tidying httr::response objects
+* Added XML/HTML viewer & XPath query widgets
 
 
 # htmltidy 0.2.0

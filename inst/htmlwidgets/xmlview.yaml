@@ -1,0 +1,10 @@
+dependencies:
+- name: highlightjs
+  version: 9.0.0
+  src: htmlwidgets/lib/highlightjs
+  script: highlight.pack.min.js
+- name: vkbeautify
+  version: 0.99.00
+  src: htmlwidgets/lib/vkbeautify
+  script: vkbeautify.js
+  stylesheet: wdgt.css
