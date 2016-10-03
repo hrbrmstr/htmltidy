@@ -38,6 +38,7 @@ Large HTML or XML content may take some time to render properly. It is suggested
       or used in a browser context vs an IDE viewer context.
 }
 \examples{
+\dontrun{
 library(htmltidy)
 
 # from ?xml2::read_xml
@@ -51,6 +52,7 @@ htmltools::browsable(
     xml_view(cd)
   )
 )
+}
 }
 \references{
 \href{https://github.com/juliangruber/xml-viewer}{xml-viewer}

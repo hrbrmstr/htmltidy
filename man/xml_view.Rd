@@ -48,6 +48,7 @@ Large HTML or XML content may take some time to render properly. It is suggested
       or used in a browser context vs an IDE viewer context.
 }
 \examples{
+\dontrun{
 library(xml2)
 
 # plain text
@@ -72,6 +73,16 @@ xml_view(read_xml(system.file("extdata/input.xml", package="htmltidy")),
 # filter + apply an initial XPath query string
 xml_view(read_xml(system.file("extdata/dwml.xml", package="xmlview")),
          add_filter=TRUE, apply_xpath=".//temperature")
+
+doc <- read_xml("http://www.npr.org/rss/rss.php?id=1001")
+
+str(doc)
+
+xml_view(doc, add_filter=TRUE)
+xml2::xml_find_all(doc, './/dc:creator', ns=xml2::xml_ns(doc))
+
+xml_text(xml2::xml_find_all(doc, './/link[contains(., "soccer")]', ns=xml2::xml_ns(doc)))
+}
 }
 \references{
 \href{https://highlightjs.org/}{highlight.js},

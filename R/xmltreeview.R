@@ -19,7 +19,21 @@
 #'       or used in a browser context vs an IDE viewer context.
 #' @export
 #' @references \href{https://github.com/juliangruber/xml-viewer}{xml-viewer}
-#' @example inst/examples/examples-xml_tree_view.R
+#' @examples \dontrun{
+#' library(htmltidy)
+#'
+#' # from ?xml2::read_xml
+#' cd <- xml2::read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
+#'
+#' xml_tree_view(cd)
+#'
+#' htmltools::browsable(
+#'   htmltools::tagList(
+#'     xml_tree_view(cd, width = "100%", height = "300px"),
+#'     xml_view(cd)
+#'   )
+#' )
+#' }
 xml_tree_view <- function(doc=NULL, scroll=FALSE,
                           elementId=NULL, width="100%", height=NULL) {
 

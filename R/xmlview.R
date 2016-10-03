@@ -27,7 +27,7 @@
 #' @export
 #' @references \href{https://highlightjs.org/}{highlight.js},
 #'             \href{http://www.eslinstructor.net/vkbeautify/}{vkbeautify}
-#' @examples
+#' @examples \dontrun{
 #' library(xml2)
 #'
 #' # plain text
@@ -52,6 +52,16 @@
 #' # filter + apply an initial XPath query string
 #' xml_view(read_xml(system.file("extdata/dwml.xml", package="xmlview")),
 #'          add_filter=TRUE, apply_xpath=".//temperature")
+#'
+#' doc <- read_xml("http://www.npr.org/rss/rss.php?id=1001")
+#'
+#' str(doc)
+#'
+#' xml_view(doc, add_filter=TRUE)
+#' xml2::xml_find_all(doc, './/dc:creator', ns=xml2::xml_ns(doc))
+#'
+#' xml_text(xml2::xml_find_all(doc, './/link[contains(., "soccer")]', ns=xml2::xml_ns(doc)))
+#' }
 xml_view <- function(doc, style="default", scroll=FALSE, add_filter=FALSE,
                      apply_xpath=NULL, elementId=NULL,
                      width="100%", height=NULL) {
