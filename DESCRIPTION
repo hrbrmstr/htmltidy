@@ -41,6 +41,7 @@ Depends:
     R (>= 3.2.0)
 License: MIT + file LICENSE
 LazyData: true
+Encoding: UTF-8
 NeedsCompilation: yes
 Suggests:
     testthat,
