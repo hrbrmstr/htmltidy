@@ -38,8 +38,7 @@ Large HTML or XML content may take some time to render properly. It is suggested
       or used in a browser context vs an IDE viewer context.
 }
 \examples{
-\dontrun{
-library(htmltidy)
+if (interactive()) {
 
 # from ?xml2::read_xml
 cd <- xml2::read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")

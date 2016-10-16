@@ -48,7 +48,7 @@ Large HTML or XML content may take some time to render properly. It is suggested
       or used in a browser context vs an IDE viewer context.
 }
 \examples{
-\dontrun{
+if (interactive()) {
 library(xml2)
 
 # plain text
