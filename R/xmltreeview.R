@@ -19,8 +19,8 @@
 #'       or used in a browser context vs an IDE viewer context.
 #' @export
 #' @references \href{https://github.com/juliangruber/xml-viewer}{xml-viewer}
-#' @examples \dontrun{
-#' library(htmltidy)
+#' @examples
+#' if (interactive()) {
 #'
 #' # from ?xml2::read_xml
 #' cd <- xml2::read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")

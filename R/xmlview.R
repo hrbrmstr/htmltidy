@@ -27,7 +27,8 @@
 #' @export
 #' @references \href{https://highlightjs.org/}{highlight.js},
 #'             \href{http://www.eslinstructor.net/vkbeautify/}{vkbeautify}
-#' @examples \dontrun{
+#' @examples
+#' if (interactive()) {
 #' library(xml2)
 #'
 #' # plain text
