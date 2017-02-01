@@ -10,17 +10,13 @@
 
 0 errors | 0 warnings | 2 notes
 
-* This is a new release.
-* XHTML is a valid and widely used acronym
-
-This is a new release, so there are no reverse dependencies.
-
 ---
 
 This fixes a fairly nasty bug that was 
 user-identfied fairly early after release 
 but I didn't want to bug the CRAN team 
-so quickly after the CRAN acceptange. This
-also addes new functionality and (optionally)
+so quickly after the CRAN acceptance. This
+also addes new functionality (widgets for
+viewing & querying XML/HTML) and (optionally)
 provides more informaiton on the tidying 
-process.
+process. 
