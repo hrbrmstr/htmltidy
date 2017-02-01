@@ -1,6 +1,7 @@
 Package: htmltidy
 Title: Tidy Up and Test XPath Queries on HTML and XML Content
-Version: 0.3.0
+Version: 0.3.1
+Encoding: UTF-8
 Authors@R: c(
   person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
   person("Dave", "Raggett", email = "dsr@w3.org", role = c("ctb", "aut"),
@@ -53,4 +54,4 @@ Imports:
     XML,
     htmlwidgets,
     htmltools
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

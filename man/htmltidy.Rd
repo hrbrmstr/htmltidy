@@ -25,4 +25,3 @@ and 'xml-viewer', respectively.
 \author{
 Bob Rudis (bob@rud.is)
 }
-

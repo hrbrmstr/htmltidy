@@ -1,3 +1,7 @@
+# htmltidy 0.3.1
+
+* Fix warnings coming from URL redirection in examples
+
 # htmltidy 0.3.0
 
 * Better error handling (fixed crashing bug in #1)

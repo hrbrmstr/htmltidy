@@ -17,4 +17,3 @@ highlight_styles()
 See \url{https://highlightjs.org/static/demo/} for a demo of all
             highlight.js styles
 }
-
