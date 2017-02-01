@@ -71,7 +71,7 @@
 #' cat(tidy_html(txt, option=opts))
 #'
 #' library(httr)
-#' res <- GET("http://rud.is/test/untidy.html")
+#' res <- GET("https://rud.is/test/untidy.html")
 #'
 #' # look at the original, un-tidy source
 #' cat(content(res, as="text", encoding="UTF-8"))
@@ -81,7 +81,7 @@
 #'               list(TidyDocType="html5", TidyWrapLen=200)))
 #'
 #' # but, you could also just do:
-#' cat(tidy_html(url("http://rud.is/test/untidy.html")))
+#' cat(tidy_html(url("https://rud.is/test/untidy.html")))
 tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE), verbose=FALSE) {
   UseMethod("tidy_html")
 }

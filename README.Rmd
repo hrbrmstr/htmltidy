@@ -64,7 +64,7 @@ library(purrr)
 This is really "un-tidy" content:
 
 ```{r message=FALSE, warning=FALSE}
-res <- GET("http://rud.is/test/untidy.html")
+res <- GET("https://rud.is/test/untidy.html")
 cat(content(res, as="text"))
 ```
 
@@ -85,14 +85,14 @@ cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200
 NOTE: you could also just have done:
 
 ```{r message=FALSE, warning=FALSE}
-cat(tidy_html(url("http://rud.is/test/untidy.html"), 
+cat(tidy_html(url("https://rud.is/test/untidy.html"), 
               list(TidyDocType="html5", TidyWrapLen=200)))
 ```
 
 You'll see that this differs substantially from the mangling `libxml2` does (via `read_html()`):
 
 ```{r message=FALSE, warning=FALSE}
-pg <- read_html("http://rud.is/test/untidy.html")
+pg <- read_html("https://rud.is/test/untidy.html")
 cat(toString(pg))
 ```
 
@@ -105,13 +105,13 @@ tidy_html(content(res, as="text", encoding="UTF-8"))
 
 tidy_html(content(res, as="parsed", encoding="UTF-8"))
 
-tidy_html(htmlParse("http://rud.is/test/untidy.html"))
+tidy_html(htmlParse("https://rud.is/test/untidy.html"))
 ```
 
 And, show the markup errors:
 
 ```{r message=FALSE, warning=FALSE}
-invisible(tidy_html(url("http://rud.is/test/untidy.html"), verbose=TRUE))
+invisible(tidy_html(url("https://rud.is/test/untidy.html"), verbose=TRUE))
 ```
 
 ### Testing Options

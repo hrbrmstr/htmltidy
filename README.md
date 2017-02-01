@@ -31,7 +31,7 @@ library(htmltidy)
 
 # current verison
 packageVersion("htmltidy")
-## [1] '0.3.0'
+## [1] '0.3.1'
 
 library(XML)
 library(xml2)
@@ -42,7 +42,7 @@ library(purrr)
 This is really "un-tidy" content:
 
 ``` r
-res <- GET("http://rud.is/test/untidy.html")
+res <- GET("https://rud.is/test/untidy.html")
 cat(content(res, as="text"))
 ## <head>
 ## <style>
@@ -62,16 +62,20 @@ It can handle the `response` object directly:
 ``` r
 cat(tidy_html(res, list(TidyDocType="html5", TidyWrapLen=200)))
 ## <!DOCTYPE html>
-## <html>
+## <html xmlns="http://www.w3.org/1999/xhtml">
 ## <head>
-## <meta name="generator" content="HTML Tidy for HTML5 for R version 5.0.0">
+## <meta name="generator" content=
+## "HTML Tidy for HTML5 for R version 5.0.0" />
 ## <style>
+## <![CDATA[
 ## body { font-family: sans-serif; }
+## ]]>
 ## </style>
 ## <title></title>
 ## </head>
 ## <body>
-## <b>This is some <i>really</i> poorly formatted HTML as is this <span id="sp">portion</span></b>
+## <b>This is some <i>really</i> poorly formatted HTML as is this
+## <span id="sp">portion</span></b>
 ## <div><span id="sp"></span></div>
 ## </body>
 ## </html>
@@ -100,7 +104,7 @@ cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200
 NOTE: you could also just have done:
 
 ``` r
-cat(tidy_html(url("http://rud.is/test/untidy.html"), 
+cat(tidy_html(url("https://rud.is/test/untidy.html"), 
               list(TidyDocType="html5", TidyWrapLen=200)))
 ## <!DOCTYPE html>
 ## <html>
@@ -121,16 +125,22 @@ cat(tidy_html(url("http://rud.is/test/untidy.html"),
 You'll see that this differs substantially from the mangling `libxml2` does (via `read_html()`):
 
 ``` r
-pg <- read_html("http://rud.is/test/untidy.html")
+pg <- read_html("https://rud.is/test/untidy.html")
 cat(toString(pg))
-## <?xml version="1.0" standalone="yes"?>
 ## <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-## <html><head><style><![CDATA[
+## <html>
+## <head>
+## <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+## <style>
 ## body { font-family: sans-serif; }
-## ]]></style></head><body>
+## </style>
+## </head>
+## <body>
 ## <b>This is <b>some <i>really </i> poorly formatted HTML</b>
 ## 
-## as is this <span id="sp">portion<div/></span></b></body></html>
+## as is this <span id="sp">portion<div></div></span></b>
+## </body>
+## </html>
 ```
 
 It can also deal with "raw" and parsed objects:
@@ -150,25 +160,18 @@ tidy_html(content(res, as="text", encoding="UTF-8"))
 tidy_html(content(res, as="parsed", encoding="UTF-8"))
 ## {xml_document}
 ## <html xmlns="http://www.w3.org/1999/xhtml">
-## [1] <head>\n  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n  <meta name="generator" content ...
-## [2] <body>\n<b>This is some <i>really</i> poorly formatted HTML as is this\n<span id="sp">portion</span></b>\n</body>
+## [1] <head>\n<meta name="generator" content="HTML Tidy for HTML5 for R version 5.0.0">\n<meta http-equiv="Content-Type ...
+## [2] <body>\n<b>This is some <i>really</i> poorly formatted HTML as is this\n<span id="sp">portion</span></b>\n<div><s ...
 
-tidy_html(htmlParse("http://rud.is/test/untidy.html"))
-## <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+tidy_html(htmlParse("https://rud.is/test/untidy.html"))
+## <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 ## <html xmlns="http://www.w3.org/1999/xhtml">
 ## <head>
 ## <meta name="generator" content="HTML Tidy for HTML5 for R version 5.0.0">
-## <style>
-## <![CDATA[
-## body { font-family: sans-serif; }
-## ]]>
-## </style>
 ## <title></title>
 ## </head>
 ## <body>
-## <b>This is some <i>really</i> poorly formatted HTML as is this
-## <span id="sp">portion</span></b>
-## <div><span id="sp"></span></div>
+## <p>https://rud.is/test/untidy.html</p>
 ## </body>
 ## </html>
 ## 
@@ -177,7 +180,7 @@ tidy_html(htmlParse("http://rud.is/test/untidy.html"))
 And, show the markup errors:
 
 ``` r
-invisible(tidy_html(url("http://rud.is/test/untidy.html"), verbose=TRUE))
+invisible(tidy_html(url("https://rud.is/test/untidy.html"), verbose=TRUE))
 ## line 1 column 1 - Warning: missing <!DOCTYPE> declaration
 ## line 1 column 68 - Warning: nested emphasis <b>
 ## line 1 column 138 - Warning: missing </span> before <div>
@@ -242,7 +245,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.021   0.001   0.022
+##   0.023   0.001   0.024
 ```
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.
