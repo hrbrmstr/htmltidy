@@ -12,9 +12,14 @@
 ---
 
 Fix per note from CRAN regarding 
-checks failing, htmltidy C[++] 
+checks failing: htmltidy C[++] 
 code has been updated and examples
 that required internet access to
 successfully complete have been
 re-worked to use the system.file()
-package exmaple files.
+package example files.
+
+Also switched to lettting Rcpp create
+the registration code vs the self-
+generated one that was in the
+(now removed) init.c.
