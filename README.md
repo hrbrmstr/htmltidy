@@ -31,7 +31,7 @@ library(htmltidy)
 
 # current verison
 packageVersion("htmltidy")
-## [1] '0.3.1'
+## [1] '0.4.0'
 
 library(XML)
 library(xml2)
@@ -245,7 +245,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.023   0.001   0.024
+##   0.023   0.001   0.025
 ```
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.
