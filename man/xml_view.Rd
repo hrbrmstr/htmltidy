@@ -6,10 +6,10 @@
 \title{HTML/XML pretty printer and viewer}
 \usage{
 xml_view(doc, style = "default", scroll = FALSE, add_filter = FALSE,
-  apply_xpath = NULL, elementId = NULL, width = "100\%", height = NULL)
+  apply_xpath = NULL, width = "100\%", height = NULL)
 
 html_view(doc, style = "default", scroll = FALSE, add_filter = FALSE,
-  apply_xpath = NULL, elementId = NULL, width = "100\%", height = NULL)
+  apply_xpath = NULL, width = "100\%", height = NULL)
 }
 \arguments{
 \item{doc}{\code{xml2} document/node/nodeset, an \code{HTMLInternalDocument}/
@@ -30,8 +30,6 @@ other than \code{NULL}.}
 \code{add_filter} is \code{TRUE} then this query string will
 appear in the filter box and be applied to the passed in document.}
 
-\item{elementId}{element id}
-
 \item{width}{widget width (best to keep it at 100\%)}
 
 \item{height}{widget height (kinda only useful for knitting since this is
@@ -49,39 +47,9 @@ Large HTML or XML content may take some time to render properly. It is suggested
 }
 \examples{
 if (interactive()) {
-library(xml2)
-
-# plain text
 txt <- paste0("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading>",
               "<body>Don't forget me this weekend!</body></note>")
-xml_view(txt)
-
-# xml object
-doc <- read_xml(txt)
-xml_view(doc, style="obsidian")
-
-# different style
-xml_view(xml_find_all(doc, ".//to"), style="github-gist")
-
-# some more complex daata
-xml_view(read_xml(system.file("extdata/dwml.xml", package="htmltidy")))
-xml_view(read_xml(system.file("extdata/getHistory.xml", package="htmltidy")),
-         "androidstudio")
-xml_view(read_xml(system.file("extdata/input.xml", package="htmltidy")),
-         "sunburst")
-
-# filter + apply an initial XPath query string
-xml_view(read_xml(system.file("extdata/dwml.xml", package="xmlview")),
-         add_filter=TRUE, apply_xpath=".//temperature")
-
-doc <- read_xml("http://www.npr.org/rss/rss.php?id=1001")
-
-str(doc)
-
-xml_view(doc, add_filter=TRUE)
-xml2::xml_find_all(doc, './/dc:creator', ns=xml2::xml_ns(doc))
-
-xml_text(xml2::xml_find_all(doc, './/link[contains(., "soccer")]', ns=xml2::xml_ns(doc)))
+# xml_view(txt)
 }
 }
 \references{

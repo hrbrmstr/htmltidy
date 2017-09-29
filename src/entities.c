@@ -4,7 +4,7 @@
   See tidy.h for the copyright notice.
 
   Entity handling can be static because there are no config or
-  document-specific values.  Lookup table is 100% defined at 
+  document-specific values.  Lookup table is 100% defined at
   compile time.
 
 */
@@ -137,7 +137,7 @@ static const entity entities[] =
     { "yuml",     VERS_ALL,      255 },
 
     /*
-    ** Extended Entities defined in HTML 4: Symbols 
+    ** Extended Entities defined in HTML 4: Symbols
     */
     { "fnof",     VERS_FROM40,   402 },
     { "Alpha",    VERS_FROM40,   913 },
@@ -373,7 +373,7 @@ Bool TY_(EntityInfo)( ctmbstr name, Bool isXml, uint* code, uint* versions )
         {
             *code = c;
             *versions = VERS_ALL;
-            return yes;
+            return aye;
         }
         else
         {
@@ -388,7 +388,7 @@ Bool TY_(EntityInfo)( ctmbstr name, Bool isXml, uint* code, uint* versions )
     {
         *code = np->code;
         *versions = np->versions;
-        return yes;
+        return aye;
     }
 
     *code = 0;

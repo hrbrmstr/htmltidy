@@ -204,7 +204,7 @@ static struct _charsetInfo
   {  54, "roman8",                                            0,  no }, /* IANA */
   {  54, "r8",                                                0,  no }, /* IANA */
   {  54, "cshproman8",                                        0,  no }, /* IANA */
-  {  55, "hz-gb-2312",                                    52936, yes }, /* IANA */
+  {  55, "hz-gb-2312",                                    52936, aye }, /* IANA */
   {  56, "ibm-symbols",                                       0,  no }, /* IANA */
   {  56, "csibmsymbols",                                      0,  no }, /* IANA */
   {  57, "ibm-thai",                                      20838,  no }, /* IANA */
@@ -486,14 +486,14 @@ static struct _charsetInfo
   { 122, "csunicodelatin1",                                   0,  no }, /* IANA */
   { 123, "iso-10646-utf-1",                                   0,  no }, /* IANA */
   { 123, "csiso10646utf1",                                    0,  no }, /* IANA */
-  { 124, "iso-2022-cn",                                       0, yes }, /* IANA */
-  { 125, "iso-2022-cn-ext",                                   0, yes }, /* IANA */
-  { 126, "iso-2022-jp",                                   50220, yes }, /* IANA */
-  { 126, "csiso2022jp",                                   50220, yes }, /* IANA */
-  { 127, "iso-2022-jp-2",                                     0, yes }, /* IANA */
-  { 127, "csiso2022jp2",                                      0, yes }, /* IANA */
-  { 128, "iso-2022-kr",                                   50225, yes }, /* IANA */
-  { 128, "csiso2022kr",                                   50225, yes }, /* IANA */
+  { 124, "iso-2022-cn",                                       0, aye }, /* IANA */
+  { 125, "iso-2022-cn-ext",                                   0, aye }, /* IANA */
+  { 126, "iso-2022-jp",                                   50220, aye }, /* IANA */
+  { 126, "csiso2022jp",                                   50220, aye }, /* IANA */
+  { 127, "iso-2022-jp-2",                                     0, aye }, /* IANA */
+  { 127, "csiso2022jp2",                                      0, aye }, /* IANA */
+  { 128, "iso-2022-kr",                                   50225, aye }, /* IANA */
+  { 128, "csiso2022kr",                                   50225, aye }, /* IANA */
   { 129, "iso-8859-1-windows-3.0-latin-1",                    0,  no }, /* IANA */
   { 129, "cswindows30latin1",                                 0,  no }, /* IANA */
   { 130, "iso-8859-1-windows-3.1-latin-1",                    0,  no }, /* IANA */
@@ -859,9 +859,9 @@ static struct _charsetInfo
   { 217, "dos-874",                                         874,  no }, /* MICROSOFT */
   { 218, "unicode-1-1",                                       0,  no }, /* IANA */
   { 218, "csunicode11",                                       0,  no }, /* IANA */
-  { 219, "unicode-1-1-utf-7",                             65000, yes }, /* IANA */
-  { 219, "csunicode11utf7",                               65000, yes }, /* IANA */
-  { 219, "x-unicode-2-0-utf-7",                           65000, yes }, /* MICROSOFT */
+  { 219, "unicode-1-1-utf-7",                             65000, aye }, /* IANA */
+  { 219, "csunicode11utf7",                               65000, aye }, /* IANA */
+  { 219, "x-unicode-2-0-utf-7",                           65000, aye }, /* MICROSOFT */
   { 220, "unknown-8bit",                                      0,  no }, /* IANA */
   { 220, "csunknown8bit",                                     0,  no }, /* IANA */
   { 221, "us-dk",                                             0,  no }, /* IANA */
@@ -875,8 +875,8 @@ static struct _charsetInfo
   { 225, "utf-32",                                            0,  no }, /* IANA */
   { 226, "utf-32be",                                          0,  no }, /* IANA */
   { 227, "utf-32le",                                          0,  no }, /* IANA */
-  { 228, "utf-7",                                         65000, yes }, /* IANA */
-  { 228, "x-unicode-2-0-utf-7",                           65000, yes }, /* MICROSOFT */
+  { 228, "utf-7",                                         65000, aye }, /* IANA */
+  { 228, "x-unicode-2-0-utf-7",                           65000, aye }, /* MICROSOFT */
   { 229, "utf-8",                                         65001,  no }, /* IANA */
   { 229, "unicode-2-0-utf-8",                             65001,  no }, /* MICROSOFT */
   { 229, "unicode-1-1-utf-8",                             65001,  no }, /* MICROSOFT */

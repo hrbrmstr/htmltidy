@@ -322,7 +322,7 @@ int TY_(DocParseFileWithMappedFile)( TidyDocImpl* doc, ctmbstr filnam ) {
         }
 
         status = TY_(DocParseStream)( doc, in );
-        freeMappedFileSource( &in->source, yes );
+        freeMappedFileSource( &in->source, aye );
         TY_(freeStreamIn)( in );
     }
     else /* Error message! */

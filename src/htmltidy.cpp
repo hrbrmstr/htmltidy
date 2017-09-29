@@ -1,12 +1,12 @@
 #include <Rcpp.h>
+using namespace Rcpp;
 
 #include <tidy.h>
 #include <tidybuffio.h>
 
-// NOTE: cannot do "using namespace Rcpp;" b/c of annoying warnings about the ambiguity of 'yes'.
-
-//[[Rcpp::export]]
-Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options,
+// [[Rcpp::export]]
+Rcpp::CharacterVector do_the_tidy(std::string source,
+                                    Rcpp::List options,
                                     bool show_errors) {
 
   TidyBuffer output = {0};
@@ -17,117 +17,117 @@ Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options,
   TidyDoc tdoc = tidyCreate();
 
   if (options.containsElementNamed("TidyXhtmlOut")) {
-    ok = tidyOptSetBool(tdoc, TidyXhtmlOut, options["TidyXhtmlOut"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyXhtmlOut, options["TidyXhtmlOut"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyHtmlOut")) {
-    ok = tidyOptSetBool(tdoc, TidyHtmlOut, options["TidyHtmlOut"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyHtmlOut, options["TidyHtmlOut"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyOmitOptionalTags")) {
-    ok = tidyOptSetBool(tdoc, TidyOmitOptionalTags, options["TidyOmitOptionalTags"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyOmitOptionalTags, options["TidyOmitOptionalTags"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyBreakBeforeBR")) {
-    ok = tidyOptSetBool(tdoc, TidyBreakBeforeBR, options["TidyBreakBeforeBR"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyBreakBeforeBR, options["TidyBreakBeforeBR"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyUpperCaseTags")) {
-    ok = tidyOptSetBool(tdoc, TidyUpperCaseTags, options["TidyUpperCaseTags"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyUpperCaseTags, options["TidyUpperCaseTags"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyUpperCaseAttrs")) {
-    ok = tidyOptSetBool(tdoc, TidyUpperCaseAttrs, options["TidyUpperCaseAttrs"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyUpperCaseAttrs, options["TidyUpperCaseAttrs"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyDropEmptyElems")) {
-    ok = tidyOptSetBool(tdoc, TidyDropEmptyElems, options["TidyDropEmptyElems"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyDropEmptyElems, options["TidyDropEmptyElems"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyDropEmptyParas")) {
-    ok = tidyOptSetBool(tdoc, TidyDropEmptyParas, options["TidyDropEmptyParas"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyDropEmptyParas, options["TidyDropEmptyParas"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyFixComments")) {
-    ok = tidyOptSetBool(tdoc, TidyFixComments, options["TidyFixComments"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyFixComments, options["TidyFixComments"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyLogicalEmphasis")) {
-    ok = tidyOptSetBool(tdoc, TidyLogicalEmphasis, options["TidyLogicalEmphasis"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyLogicalEmphasis, options["TidyLogicalEmphasis"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyBodyOnly")) {
-    ok = tidyOptSetBool(tdoc, TidyBodyOnly, options["TidyBodyOnly"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyBodyOnly, options["TidyBodyOnly"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyHideComments")) {
-    ok = tidyOptSetBool(tdoc, TidyHideComments, options["TidyHideComments"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyHideComments, options["TidyHideComments"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyJoinClasses")) {
-    ok = tidyOptSetBool(tdoc, TidyJoinClasses, options["TidyJoinClasses"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyJoinClasses, options["TidyJoinClasses"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyJoinStyles")) {
-    ok = tidyOptSetBool(tdoc, TidyJoinStyles, options["TidyJoinStyles"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyJoinStyles, options["TidyJoinStyles"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyFixBackslash")) {
-    ok = tidyOptSetBool(tdoc, TidyFixBackslash, options["TidyFixBackslash"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyFixBackslash, options["TidyFixBackslash"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyMark")) {
-    ok = tidyOptSetBool(tdoc, TidyMark, options["TidyMark"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyMark, options["TidyMark"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyReplaceColor")) {
-    ok = tidyOptSetBool(tdoc, TidyReplaceColor, options["TidyReplaceColor"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyReplaceColor, options["TidyReplaceColor"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyIndentContent")) {
-    ok = tidyOptSetBool(tdoc, TidyIndentContent, options["TidyIndentContent"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyIndentContent, options["TidyIndentContent"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyCoerceEndTags")) {
-    ok = tidyOptSetBool(tdoc, TidyCoerceEndTags, options["TidyCoerceEndTags"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyCoerceEndTags, options["TidyCoerceEndTags"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyMakeBare")) {
-    ok = tidyOptSetBool(tdoc, TidyMakeBare, options["TidyMakeBare"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyMakeBare, options["TidyMakeBare"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyMakeClean")) {
-    ok = tidyOptSetBool(tdoc, TidyMakeClean, options["TidyMakeClean"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyMakeClean, options["TidyMakeClean"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyGDocClean")) {
-    ok = tidyOptSetBool(tdoc, TidyGDocClean, options["TidyGDocClean"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyGDocClean, options["TidyGDocClean"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
   if (options.containsElementNamed("TidyWord2000")) {
-    ok = tidyOptSetBool(tdoc, TidyWord2000, options["TidyWord2000"] ? yes : no);
+    ok = tidyOptSetBool(tdoc, TidyWord2000, options["TidyWord2000"] ? aye : no);
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
@@ -176,7 +176,7 @@ Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options,
     if (ok == no) Rcpp::stop("Error setting TidyHTML options");
   }
 
-  ok = tidyOptSetBool(tdoc, TidyForceOutput, yes);
+  ok = tidyOptSetBool(tdoc, TidyForceOutput, aye);
   if (ok == no) Rcpp::stop("Error setting TidyHTML options");
 
   rc = tidySetErrorBuffer(tdoc, &errbuf);

@@ -109,6 +109,7 @@ txt <- paste0(
 
 cat(tidy_html(txt, option=opts))
 
+\dontrun{
 library(httr)
 res <- GET("https://rud.is/test/untidy.html")
 
@@ -121,6 +122,7 @@ cat(tidy_html(content(res, as="text", encoding="UTF-8"),
 
 # but, you could also just do:
 cat(tidy_html(url("https://rud.is/test/untidy.html")))
+}
 }
 \references{
 \url{http://api.html-tidy.org/tidy/quickref_5.1.25.html} &

@@ -25,10 +25,10 @@
 #endif
 
 /*
-  Issue #72 - Need to know to avoid error-reporting - no warning only if --show-body-only yes
+  Issue #72 - Need to know to avoid error-reporting - no warning only if --show-body-only aye
   Issue #132 - likewise avoid warning if showing body only
  */
-#define showingBodyOnly(doc) (cfgAutoBool(doc,TidyBodyOnly) == TidyYesState) ? yes : no
+#define showingBodyOnly(doc) (cfgAutoBool(doc,TidyBodyOnly) == TidyYesState) ? aye : no
 
 
 Bool TY_(CheckNodeIntegrity)(Node *node)
@@ -62,7 +62,7 @@ Bool TY_(CheckNodeIntegrity)(Node *node)
             return no;
 
 #endif
-    return yes;
+    return aye;
 }
 
 /*
@@ -77,7 +77,7 @@ Bool TY_(IsNewNode)(Node *node)
     {
         return (node->tag->model & CM_NEW);
     }
-    return yes;
+    return aye;
 }
 
 void TY_(CoerceNode)(TidyDocImpl* doc, Node *node, TidyTagId tid, Bool obsolete, Bool unexpected)
@@ -98,7 +98,7 @@ void TY_(CoerceNode)(TidyDocImpl* doc, Node *node, TidyTagId tid, Bool obsolete,
     node->was = node->tag;
     node->tag = tag;
     node->type = StartTag;
-    node->implicit = yes;
+    node->implicit = aye;
     TidyDocFree(doc, node->element);
     node->element = TY_(tmbstrdup)(doc->allocator, tag->name);
 }
@@ -252,7 +252,7 @@ static Bool CanPrune( TidyDocImpl* doc, Node *element )
         return no;
 
     if ( TY_(nodeIsText)(element) )
-        return yes;
+        return aye;
 
     if ( element->content )
         return no;
@@ -298,7 +298,7 @@ static Bool CanPrune( TidyDocImpl* doc, Node *element )
     /* fix for ISSUE #7 https://github.com/w3c/tidy-html5/issues/7 */
     if (nodeIsCANVAS(element))
         return no;
-    
+
     if (nodeIsPROGRESS(element))
         return no;
 
@@ -328,7 +328,7 @@ static Bool CanPrune( TidyDocImpl* doc, Node *element )
     if (nodeIsDD(element))
         return no;
 
-    return yes;
+    return aye;
 }
 
 /* return next element */
@@ -369,7 +369,7 @@ Node* TY_(DropEmptyElements)(TidyDocImpl* doc, Node* node)
     return node;
 }
 
-/* 
+/*
   errors in positioning of form start or end tags
   generally require human intervention to fix
   Issue #166 - repeated <main> element also uses this flag
@@ -382,7 +382,7 @@ static void BadForm( TidyDocImpl* doc )
 }
 
 /*
-  This maps 
+  This maps
        <em>hello </em><strong>world</strong>
   to
        <em>hello</em> <strong>world</strong>
@@ -410,8 +410,8 @@ static void TrimTrailingSpace( TidyDocImpl* doc, Node *element, Node *last )
             {
 #ifdef COMMENT_NBSP_FIX
                 /* take care with <td>&nbsp;</td> */
-                if ( c == 160 && 
-                     ( element->tag == doc->tags.tag_td || 
+                if ( c == 160 &&
+                     ( element->tag == doc->tags.tag_td ||
                        element->tag == doc->tags.tag_th )
                    )
                 {
@@ -424,7 +424,7 @@ static void TrimTrailingSpace( TidyDocImpl* doc, Node *element, Node *last )
                     last->end -= 1;
                     if ( (element->tag->model & CM_INLINE) &&
                          !(element->tag->model & CM_FIELD) )
-                        lexer->insertspace = yes;
+                        lexer->insertspace = aye;
                 }
             }
         }
@@ -478,7 +478,7 @@ Bool TY_(IsBlank)(Lexer *lexer, Node *node)
 }
 
 /*
-  This maps 
+  This maps
        <p>hello<em> world</em>
   to
        <p>hello <em>world</em>
@@ -492,8 +492,8 @@ static void TrimInitialSpace( TidyDocImpl* doc, Node *element, Node *text )
     Lexer* lexer = doc->lexer;
     Node *prev, *node;
 
-    if ( TY_(nodeIsText)(text) && 
-         lexer->lexbuf[text->start] == ' ' && 
+    if ( TY_(nodeIsText)(text) &&
+         lexer->lexbuf[text->start] == ' ' &&
          text->start < text->end )
     {
         if ( (element->tag->model & CM_INLINE) &&
@@ -516,7 +516,7 @@ static void TrimInitialSpace( TidyDocImpl* doc, Node *element, Node *text )
                 lexer->lexbuf[node->start] = ' ';
                 TY_(InsertNodeBeforeElement)(element ,node);
 #if !defined(NDEBUG) && defined(_MSC_VER)
-                SPRTF("TrimInitialSpace: Created text node, inserted before <%s>\n", 
+                SPRTF("TrimInitialSpace: Created text node, inserted before <%s>\n",
                     (element->element ? element->element : "unknown"));
 #endif
             }
@@ -534,7 +534,7 @@ static Bool IsPreDescendant(Node* node)
     while (parent)
     {
         if (parent->tag && parent->tag->parser == TY_(ParsePre))
-            return yes;
+            return aye;
 
         parent = parent->parent;
     }
@@ -562,33 +562,33 @@ static Bool CleanTrailingWhitespace(TidyDocImpl* doc, Node* node)
 
     /* <p>... </p> */
     if (!next && !TY_(nodeHasCM)(node->parent, CM_INLINE))
-        return yes;
+        return aye;
 
     /* <div><small>... </small><h3>...</h3></div> */
     if (!next && node->parent->next && !TY_(nodeHasCM)(node->parent->next, CM_INLINE))
-        return yes;
+        return aye;
 
     if (!next)
         return no;
 
     if (nodeIsBR(next))
-        return yes;
+        return aye;
 
     if (TY_(nodeHasCM)(next, CM_INLINE))
         return no;
 
     /* <a href='/'>...</a> <p>...</p> */
     if (next->type == StartTag)
-        return yes;
+        return aye;
 
     /* <strong>...</strong> <hr /> */
     if (next->type == StartEndTag)
-        return yes;
+        return aye;
 
     /* evil adjacent text nodes, Tidy should not generate these :-( */
     if (TY_(nodeIsText)(next) && next->start < next->end
         && TY_(IsWhite)(doc->lexer->lexbuf[next->start]))
-        return yes;
+        return aye;
 
     return no;
 }
@@ -609,20 +609,20 @@ static Bool CleanLeadingWhitespace(TidyDocImpl* ARG_UNUSED(doc), Node* node)
 
     /* <p>...<br> <em>...</em>...</p> */
     if (nodeIsBR(node->prev))
-        return yes;
+        return aye;
 
     /* <p> ...</p> */
     if (node->prev == NULL && !TY_(nodeHasCM)(node->parent, CM_INLINE))
-        return yes;
+        return aye;
 
     /* <h4>...</h4> <em>...</em> */
     if (node->prev && !TY_(nodeHasCM)(node->prev, CM_INLINE) &&
         TY_(nodeIsElement)(node->prev))
-        return yes;
+        return aye;
 
     /* <p><span> ...</span></p> */
     if (!node->prev && !node->parent->prev && !TY_(nodeHasCM)(node->parent->parent, CM_INLINE))
-        return yes;
+        return aye;
 
     return no;
 }
@@ -659,7 +659,7 @@ static void CleanSpaces(TidyDocImpl* doc, Node* node)
     }
 }
 
-/* 
+/*
   Move initial and trailing space out.
   This routine maps:
 
@@ -695,7 +695,7 @@ static Bool DescendantOf( Node *element, TidyTagId tid )
           parent = parent->parent )
     {
         if ( TagIsId(parent, tid) )
-            return yes;
+            return aye;
     }
     return no;
 }
@@ -711,7 +711,7 @@ static Bool InsertMisc(Node *element, Node *node)
         node->type == PhpTag )
     {
         TY_(InsertNodeAtEnd)(element, node);
-        return yes;
+        return aye;
     }
 
     if ( node->type == XmlDecl )
@@ -722,7 +722,7 @@ static Bool InsertMisc(Node *element, Node *node)
         if ( root && !(root->content && root->content->type == XmlDecl))
         {
           TY_(InsertNodeAtStart)( root, node );
-          return yes;
+          return aye;
         }
     }
 
@@ -736,7 +736,7 @@ static Bool InsertMisc(Node *element, Node *node)
          (node->tag->versions & VERS_PROPRIETARY) != 0 )
     {
         TY_(InsertNodeAtEnd)(element, node);
-        return yes;
+        return aye;
     }
 
     return no;
@@ -751,7 +751,7 @@ static void ParseTag( TidyDocImpl* doc, Node *node, GetTokenMode mode )
         return;
 
     /*
-       Fix by GLP 2000-12-21.  Need to reset insertspace if this 
+       Fix by GLP 2000-12-21.  Need to reset insertspace if this
        is both a non-inline and empty tag (base, link, meta, isindex, hr, area).
     */
     if (node->tag->model & CM_EMPTY)
@@ -861,7 +861,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
 #endif
     Lexer* lexer = doc->lexer;
     Node *node;
-    Bool checkstack = yes;
+    Bool checkstack = aye;
     uint istackbase = 0;
 #if !defined(NDEBUG) && defined(_MSC_VER)
     in_parse_block++;
@@ -878,7 +878,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
         return;
     }
 
-    if ( nodeIsFORM(element) && 
+    if ( nodeIsFORM(element) &&
          DescendantOf(element, TidyTag_FORM) )
         TY_(ReportError)(doc, element, NULL, ILLEGAL_NESTING );
 
@@ -913,7 +913,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
     else if (mode == IgnoreWhitespace)
     {
         /* Issue #212 - Further fix in case ParseBlock() is called with 'IgnoreWhitespace'
-           when such a leading space may need to be inserted before this element to 
+           when such a leading space may need to be inserted before this element to
            preverve the browser view */
         mode = MixedContent;
     }
@@ -934,7 +934,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
                 lexer->istackbase = istackbase;
             }
 
-            element->closed = yes;
+            element->closed = aye;
             TrimSpaces( doc, element );
 #if !defined(NDEBUG) && defined(_MSC_VER)
             in_parse_block--;
@@ -987,7 +987,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
                    options
                 */
                 node->type = StartEndTag;
-                node->implicit = yes;
+                node->implicit = aye;
 #if OBSOLETE
                 TY_(CoerceNode)(doc, node, TidyTag_BR, no, no);
                 TY_(FreeAttrs)( doc, node ); /* discard align attribute etc. */
@@ -997,7 +997,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
             }
             else if (DescendantOf( element, node->tag->id ))
             {
-                /* 
+                /*
                   if this is the end tag for an ancestor element
                   then infer end tag for this element
                 */
@@ -1006,7 +1006,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
 #if OBSOLETE
                 Node *parent;
                 for ( parent = element->parent;
-                      parent != NULL; 
+                      parent != NULL;
                       parent = parent->parent )
                 {
                     if (node->tag == parent->tag)
@@ -1125,7 +1125,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
           Allow CM_INLINE elements here.
 
           Allow CM_BLOCK elements here unless
-          lexer->excludeBlocks is yes.
+          lexer->excludeBlocks is aye.
 
           LI and DD are special cased.
 
@@ -1188,13 +1188,13 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
                     TY_(UngetToken)( doc );
                     node = TY_(InferredTag)(doc, TidyTag_UL);
                     AddClassNoIndent(doc, node);
-                    lexer->excludeBlocks = yes;
+                    lexer->excludeBlocks = aye;
                 }
                 else if ( TY_(nodeHasCM)(node, CM_DEFLIST) )
                 {
                     TY_(UngetToken)( doc );
                     node = TY_(InferredTag)(doc, TidyTag_DL);
-                    lexer->excludeBlocks = yes;
+                    lexer->excludeBlocks = aye;
                 }
 
                 /* infer end of current table cell */
@@ -1303,7 +1303,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
                 else if ( TY_(nodeHasCM)(node, CM_TABLE) || TY_(nodeHasCM)(node, CM_ROW) )
                 {
                     /* http://tidy.sf.net/issue/1316307 */
-                    /* In exiled mode, return so table processing can 
+                    /* In exiled mode, return so table processing can
                        continue. */
                     if (lexer->exiled) {
 #if !defined(NDEBUG) && defined(_MSC_VER)
@@ -1347,7 +1347,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
          *  href: http://www.w3.org/TR/html-markup/a.html
          *  The interactive element a must not appear as a descendant of the a element.
         \*/
-        if ( nodeIsA(node) && !node->implicit && 
+        if ( nodeIsA(node) && !node->implicit &&
              (nodeIsA(element) || DescendantOf(element, TidyTag_A)) )
         {
             if (node->type != EndTag && node->attributes == NULL
@@ -1395,7 +1395,7 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
             }
             else
             {
-                checkstack = yes;
+                checkstack = aye;
                 mode = IgnoreWhitespace;
             }
 
@@ -1404,11 +1404,11 @@ void TY_(ParseBlock)( TidyDocImpl* doc, Node *element, GetTokenMode mode)
                 TrimSpaces( doc, element );
 
             TY_(InsertNodeAtEnd)(element, node);
-            
+
             if (node->implicit)
                 TY_(ReportError)(doc, element, node, INSERTING_TAG );
 
-            /* Issue #212 - WHY is this hard coded to 'IgnoreWhitespace' while an 
+            /* Issue #212 - WHY is this hard coded to 'IgnoreWhitespace' while an
                effort has been made above to set a 'MixedContent' mode in some cases?
                WHY IS THE 'mode' VARIABLE NOT USED HERE???? */
             ParseTag( doc, node, IgnoreWhitespace /*MixedContent*/ );
@@ -1474,7 +1474,7 @@ static NodeTraversalSignal FindDescendant_cb(TidyDocImpl* ARG_UNUSED(doc), Node*
     }
 
     if (cb_data->passed_marker_node && node == cb_data->marker_node)
-        *cb_data->passed_marker_node = yes;
+        *cb_data->passed_marker_node = aye;
 
     return VisitParent;
 }
@@ -1485,7 +1485,7 @@ given 'node'.
 
 When the search passes beyond the 'marker_node' (which is assumed to sit in the
 parent chain), this will be flagged by setting the boolean referenced by
-'is_parent_of_marker' to yes.
+'is_parent_of_marker' to aye.
 
 'is_parent_of_marker' and 'marker_node' are optional parameters and may be NULL.
 */
@@ -1559,8 +1559,8 @@ void TY_(ParseNamespace)(TidyDocImpl* doc, Node *basenode, GetTokenMode mode)
                      n != NULL && n != basenode->parent && n != mp;
                      n = n->parent)
                 {
-                    /* n->implicit = yes; */
-                    n->closed = yes;
+                    /* n->implicit = aye; */
+                    n->closed = aye;
                     TY_(ReportError)(doc, n->parent, n, MISSING_ENDTAG_BEFORE);
                 }
 
@@ -1568,13 +1568,13 @@ void TY_(ParseNamespace)(TidyDocImpl* doc, Node *basenode, GetTokenMode mode)
                    simple cases where these can be fired, removing them
                    pending feedback from the original author!
                    assert(outside == no ? n == mp : 1);
-                   assert(outside == yes ? n == basenode->parent : 1);
+                   assert(outside == aye ? n == basenode->parent : 1);
                    =================================================== */
 
                 if (outside == no)
                 {
                     /* EndTag for a node within the basenode subtree. Roll on... */
-                    n->closed = yes;
+                    n->closed = aye;
                     TY_(FreeNode)(doc, node);
 
                     node = n;
@@ -1592,7 +1592,7 @@ void TY_(ParseNamespace)(TidyDocImpl* doc, Node *basenode, GetTokenMode mode)
                 if (node == basenode)
                 {
                     lexer->istackbase = istackbase;
-                    assert(basenode->closed == yes);
+                    assert(basenode->closed == aye);
                     return;
                 }
             }
@@ -1608,7 +1608,7 @@ void TY_(ParseNamespace)(TidyDocImpl* doc, Node *basenode, GetTokenMode mode)
         }
         else if (node->type == StartTag)
         {
-            /* #130 MathML attr and entity fix! 
+            /* #130 MathML attr and entity fix!
                care if it has attributes, and 'accidently' any of those attributes match known */
             for ( av = node->attributes; av; av = av->next )
             {
@@ -1620,7 +1620,7 @@ void TY_(ParseNamespace)(TidyDocImpl* doc, Node *basenode, GetTokenMode mode)
         }
         else
         {
-            /* #130 MathML attr and entity fix! 
+            /* #130 MathML attr and entity fix!
                care if it has attributes, and 'accidently' any of those attributes match known */
             for ( av = node->attributes; av; av = av->next )
             {
@@ -1662,7 +1662,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
      This test is carried out in PushInline and PopInline, see istack.c
 
      InlineDup(...) is not called for elements with a CM_MIXED (inline and
-     block) content model, e.g. <del> or <ins>, otherwise constructs like 
+     block) content model, e.g. <del> or <ins>, otherwise constructs like
 
        <p>111<a name='foo'>222<del>333</del>444</a>555</p>
        <p>111<span>222<del>333</del>444</span>555</p>
@@ -1703,7 +1703,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
              then move the font element inside the anchor since
              otherwise it won't alter the anchor text color
             */
-            if ( nodeIsFONT(element) && 
+            if ( nodeIsFONT(element) &&
                  element->content && element->content == element->last )
             {
                 Node *child = element->content;
@@ -1727,7 +1727,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
                 }
             }
 
-            element->closed = yes;
+            element->closed = aye;
             TrimSpaces( doc, element );
 #if !defined(NDEBUG) && defined(_MSC_VER)
             in_parse_inline--;
@@ -1772,14 +1772,14 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
             if (node->attributes == NULL || element->attributes == NULL)
                 TY_(ReportWarning)(doc, element, node, NESTED_EMPHASIS);
         }
-        else if ( TY_(IsPushed)(doc, node) && node->type == StartTag && 
+        else if ( TY_(IsPushed)(doc, node) && node->type == StartTag &&
                   nodeIsQ(node) )
         {
             /*\
              * Issue #215 - such nested quotes are NOT a problem if HTML5, so
              * only issue this warning if NOT HTML5 mode.
             \*/
-            if (TY_(HTMLVersion)(doc) != HT50) 
+            if (TY_(HTMLVersion)(doc) != HT50)
             {
                 TY_(ReportWarning)(doc, element, node, NESTED_QUOTATION);
             }
@@ -1831,7 +1831,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
         if ( nodeIsP(node) &&
              node->type == StartTag &&
              ( (mode & Preformatted) ||
-               nodeIsDT(element) || 
+               nodeIsDT(element) ||
                DescendantOf(element, TidyTag_DT )
              )
            )
@@ -1990,7 +1990,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
         */
         /* #427827 - fix by Randy Waki and Bjoern Hoehrmann 23 Aug 00 */
         /* if (node->tag == doc->tags.tag_a && !node->implicit && TY_(IsPushed)(doc, node)) */
-        if ( nodeIsA(node) && !node->implicit && 
+        if ( nodeIsA(node) && !node->implicit &&
              (nodeIsA(element) || DescendantOf(element, TidyTag_A)) )
         {
             /* coerce <a> to </a> unless it has some attributes */
@@ -2119,7 +2119,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
         }
 
 
-        /* 
+        /*
           if this is the end tag for an ancestor element
           then infer end tag for this element
         */
@@ -2133,7 +2133,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
                     if (!(element->tag->model & CM_OPT) && !element->implicit)
                         TY_(ReportError)(doc, element, node, MISSING_ENDTAG_BEFORE);
 
-                    if( TY_(IsPushedLast)( doc, element, node ) ) 
+                    if( TY_(IsPushedLast)( doc, element, node ) )
                         TY_(PopInline)( doc, element );
                     TY_(UngetToken)( doc );
 
@@ -2213,7 +2213,7 @@ void TY_(ParseInline)( TidyDocImpl* doc, Node *element, GetTokenMode mode )
             /* trim white space before <br> */
             if ( nodeIsBR(node) )
                 TrimSpaces(doc, element);
-            
+
             TY_(InsertNodeAtEnd)(element, node);
             ParseTag(doc, node, mode);
             continue;
@@ -2270,7 +2270,7 @@ void TY_(ParseDefList)(TidyDocImpl* doc, Node *list, GetTokenMode mode)
         if (node->tag == list->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            list->closed = yes;
+            list->closed = aye;
             return;
         }
 
@@ -2292,7 +2292,7 @@ void TY_(ParseDefList)(TidyDocImpl* doc, Node *list, GetTokenMode mode)
             continue;
         }
 
-        /* 
+        /*
           if this is the end tag for an ancestor element
           then infer end tag for this element
         */
@@ -2315,7 +2315,7 @@ void TY_(ParseDefList)(TidyDocImpl* doc, Node *list, GetTokenMode mode)
                   See http://tidy.sf.net/bug/1098012. */
                 if (nodeIsBODY(parent))
                 {
-                    discardIt = yes;
+                    discardIt = aye;
                     break;
                 }
                 if (node->tag == parent->tag)
@@ -2361,7 +2361,7 @@ void TY_(ParseDefList)(TidyDocImpl* doc, Node *list, GetTokenMode mode)
             /* and parse contents of center */
             lexer->excludeBlocks = no;
             ParseTag( doc, node, mode);
-            lexer->excludeBlocks = yes;
+            lexer->excludeBlocks = aye;
 
             /* now create a new dl element,
              * unless node has been blown away because the
@@ -2399,7 +2399,7 @@ void TY_(ParseDefList)(TidyDocImpl* doc, Node *list, GetTokenMode mode)
             TY_(FreeNode)( doc, node);
             continue;
         }
-        
+
         /* node should be <DT> or <DD>*/
         TY_(InsertNodeAtEnd)(list, node);
         ParseTag( doc, node, IgnoreWhitespace);
@@ -2416,7 +2416,7 @@ static Bool FindLastLI( Node *list, Node **lastli )
     for ( node = list->content; node ; node = node->next )
         if ( nodeIsLI(node) && node->type == StartTag )
             *lastli=node;
-    return *lastli ? yes:no;
+    return *lastli ? aye:no;
 }
 
 void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
@@ -2447,7 +2447,7 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
         if (node->tag == list->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            list->closed = yes;
+            list->closed = aye;
 #if !defined(NDEBUG) && defined(_MSC_VER)
             in_parse_list--;
             SPRTF("Exit ParseList 2 %d... Endtag\n",in_parse_list);
@@ -2466,7 +2466,7 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
             continue;
         }
 
-        /* 
+        /*
           if this is the end tag for an ancestor element
           then infer end tag for this element
         */
@@ -2515,7 +2515,7 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
 
         if ( nodeIsLI(node) || TY_(IsHTML5Mode)(doc))
         {
-            /* node is <LI> 
+            /* node is <LI>
                Issue #396 - A <ul> can have Zero or more li elements
              */
             TY_(InsertNodeAtEnd)(list,node);
@@ -2546,9 +2546,9 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
                 return;
             }
             /* http://tidy.sf.net/issue/836462
-               If "list" is an unordered list, insert the next tag within 
-               the last <li> to preserve the numbering to match the visual 
-               rendering of most browsers. */    
+               If "list" is an unordered list, insert the next tag within
+               the last <li> to preserve the numbering to match the visual
+               rendering of most browsers. */
             if ( nodeIsOL(list) && FindLastLI(list, &lastli) )
             {
                 /* Create a node for error reporting */
@@ -2562,12 +2562,12 @@ void TY_(ParseList)(TidyDocImpl* doc, Node *list, GetTokenMode ARG_UNUSED(mode))
                 /* Add an inferred <li> */
                 wasblock = TY_(nodeHasCM)(node,CM_BLOCK);
                 node = TY_(InferredTag)(doc, TidyTag_LI);
-                /* Add "display: inline" to avoid a blank line after <li> with 
+                /* Add "display: inline" to avoid a blank line after <li> with
                    Internet Explorer. See http://tidy.sf.net/issue/836462 */
                 TY_(AddStyleProperty)( doc, node,
                                        wasblock
                                        ? "list-style: none; display: inline"
-                                       : "list-style: none" 
+                                       : "list-style: none"
                                        );
                 TY_(ReportError)(doc, list, node, MISSING_STARTTAG );
                 TY_(InsertNodeAtEnd)(list,node);
@@ -2640,7 +2640,7 @@ void TY_(ParseRow)(TidyDocImpl* doc, Node *row, GetTokenMode ARG_UNUSED(mode))
             if (node->type == EndTag)
             {
                 TY_(FreeNode)( doc, node);
-                row->closed = yes;
+                row->closed = aye;
                 FixEmptyRow( doc, row);
                 return;
             }
@@ -2651,7 +2651,7 @@ void TY_(ParseRow)(TidyDocImpl* doc, Node *row, GetTokenMode ARG_UNUSED(mode))
             return;
         }
 
-        /* 
+        /*
           if this is the end tag for an ancestor element
           then infer end tag for this element
         */
@@ -2734,7 +2734,7 @@ void TY_(ParseRow)(TidyDocImpl* doc, Node *row, GetTokenMode ARG_UNUSED(mode))
             {
                 MoveBeforeTable( doc, row, node );
                 TY_(ReportError)(doc, row, node, TAG_NOT_ALLOWED_IN);
-                lexer->exiled = yes;
+                lexer->exiled = aye;
                 exclude_state = lexer->excludeBlocks;
                 lexer->excludeBlocks = no;
 
@@ -2759,7 +2759,7 @@ void TY_(ParseRow)(TidyDocImpl* doc, Node *row, GetTokenMode ARG_UNUSED(mode))
             TY_(FreeNode)( doc, node);
             continue;
         }
-        
+
         /* node should be <TD> or <TH> */
         TY_(InsertNodeAtEnd)(row, node);
         exclude_state = lexer->excludeBlocks;
@@ -2789,7 +2789,7 @@ void TY_(ParseRowGroup)(TidyDocImpl* doc, Node *rowgroup, GetTokenMode ARG_UNUSE
         {
             if (node->type == EndTag)
             {
-                rowgroup->closed = yes;
+                rowgroup->closed = aye;
                 TY_(FreeNode)( doc, node);
                 return;
             }
@@ -2836,7 +2836,7 @@ void TY_(ParseRowGroup)(TidyDocImpl* doc, Node *rowgroup, GetTokenMode ARG_UNUSE
             {
                 MoveBeforeTable( doc, rowgroup, node );
                 TY_(ReportError)(doc, rowgroup, node, TAG_NOT_ALLOWED_IN);
-                lexer->exiled = yes;
+                lexer->exiled = aye;
 
                 if (node->type != TextNode)
                     ParseTag(doc, node, IgnoreWhitespace);
@@ -2852,7 +2852,7 @@ void TY_(ParseRowGroup)(TidyDocImpl* doc, Node *rowgroup, GetTokenMode ARG_UNUSE
             }
         }
 
-        /* 
+        /*
           if this is the end tag for ancestor element
           then infer end tag for this element
         */
@@ -2906,7 +2906,7 @@ void TY_(ParseRowGroup)(TidyDocImpl* doc, Node *rowgroup, GetTokenMode ARG_UNUSE
             TY_(FreeNode)( doc, node);
             continue;
         }
-        
+
         if ( !nodeIsTR(node) )
         {
             node = TY_(InferredTag)(doc, TidyTag_TR);
@@ -2933,11 +2933,11 @@ void TY_(ParseColGroup)(TidyDocImpl* doc, Node *colgroup, GetTokenMode ARG_UNUSE
         if (node->tag == colgroup->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            colgroup->closed = yes;
+            colgroup->closed = aye;
             return;
         }
 
-        /* 
+        /*
           if this is the end tag for an ancestor element
           then infer end tag for this element
         */
@@ -2993,7 +2993,7 @@ void TY_(ParseColGroup)(TidyDocImpl* doc, Node *colgroup, GetTokenMode ARG_UNUSE
             TY_(FreeNode)( doc, node);
             continue;
         }
-        
+
         /* node should be <COL> */
         TY_(InsertNodeAtEnd)(colgroup, node);
         ParseTag(doc, node, IgnoreWhitespace);
@@ -3016,14 +3016,14 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
     in_parse_table++;
     SPRTF("Entering ParseTableTag %d...\n",in_parse_table);
 #endif
-    
+
     while ((node = TY_(GetToken)(doc, IgnoreWhitespace)) != NULL)
     {
         if (node->tag == table->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
             lexer->istackbase = istackbase;
-            table->closed = yes;
+            table->closed = aye;
 #if !defined(NDEBUG) && defined(_MSC_VER)
             in_parse_table--;
             SPRTF("Exit ParseTableTag 1 %d... EndTag\n",in_parse_table);
@@ -3057,9 +3057,9 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
             {
                 TY_(InsertNodeBeforeElement)(table, node);
                 TY_(ReportError)(doc, table, node, TAG_NOT_ALLOWED_IN);
-                lexer->exiled = yes;
+                lexer->exiled = aye;
 
-                if (node->type != TextNode) 
+                if (node->type != TextNode)
                     ParseTag(doc, node, IgnoreWhitespace);
 
                 lexer->exiled = no;
@@ -3072,7 +3072,7 @@ void TY_(ParseTableTag)(TidyDocImpl* doc, Node *table, GetTokenMode ARG_UNUSED(m
             }
         }
 
-        /* 
+        /*
           if this is the end tag for an ancestor element
           then infer end tag for this element
         */
@@ -3150,14 +3150,14 @@ static Bool PreContent( TidyDocImpl* ARG_UNUSED(doc), Node* node )
 {
     /* p is coerced to br's, Text OK too */
     if ( nodeIsP(node) || TY_(nodeIsText)(node) )
-        return yes;
+        return aye;
 
     if ( node->tag == NULL ||
          nodeIsPARAM(node) ||
          !TY_(nodeHasCM)(node, CM_INLINE|CM_NEW) )
         return no;
 
-    return yes;
+    return aye;
 }
 
 void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
@@ -3171,7 +3171,7 @@ void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
 
     while ((node = TY_(GetToken)(doc, Preformatted)) != NULL)
     {
-        if ( node->type == EndTag && 
+        if ( node->type == EndTag &&
              (node->tag == pre->tag || DescendantOf(pre, TagId(node))) )
         {
             if (nodeIsBODY(node) || nodeIsHTML(node))
@@ -3189,7 +3189,7 @@ void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
                 TY_(ReportError)(doc, pre, node, MISSING_ENDTAG_BEFORE );
                 TY_(UngetToken)( doc );
             }
-            pre->closed = yes;
+            pre->closed = aye;
             TrimSpaces(doc, pre);
             return;
         }
@@ -3219,7 +3219,7 @@ void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
             /* fix for http://tidy.sf.net/bug/772205 */
             if (node->type == EndTag)
             {
-                /* http://tidy.sf.net/issue/1590220 */ 
+                /* http://tidy.sf.net/issue/1590220 */
                if ( doc->lexer->exiled
                    && (TY_(nodeHasCM)(node, CM_TABLE) || nodeIsTABLE(node)) )
                {
@@ -3270,7 +3270,7 @@ void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
                 <pre>...<br>...<br>...</pre>         (Internet Explorer)
                 <pre>...<br><br>...<br><br>...</pre> (Mozilla, Opera 6)
                 <pre>...<br>...<br><br>...</pre>     (Opera 7)
-                
+
               or something similar, they could also be closing the <pre> and propagate
               the <pre> into the newly opened <p>.
 
@@ -3301,7 +3301,7 @@ void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
 
                 /* trim white space before <p> in <pre>*/
                 TrimSpaces(doc, pre);
-            
+
                 /* coerce both <p> and </p> to <br> */
                 TY_(CoerceNode)(doc, node, TidyTag_BR, no, no);
                 TY_(FreeAttrs)( doc, node ); /* discard align attribute etc. */
@@ -3320,7 +3320,7 @@ void TY_(ParsePre)( TidyDocImpl* doc, Node *pre, GetTokenMode ARG_UNUSED(mode) )
             /* trim white space before <br> */
             if ( nodeIsBR(node) )
                 TrimSpaces(doc, pre);
-            
+
             TY_(InsertNodeAtEnd)(pre, node);
             ParseTag(doc, node, Preformatted);
             continue;
@@ -3346,7 +3346,7 @@ void TY_(ParseOptGroup)(TidyDocImpl* doc, Node *field, GetTokenMode ARG_UNUSED(m
         if (node->tag == field->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            field->closed = yes;
+            field->closed = aye;
             TrimSpaces(doc, field);
             return;
         }
@@ -3355,7 +3355,7 @@ void TY_(ParseOptGroup)(TidyDocImpl* doc, Node *field, GetTokenMode ARG_UNUSED(m
         if (InsertMisc(field, node))
             continue;
 
-        if ( node->type == StartTag && 
+        if ( node->type == StartTag &&
              (nodeIsOPTION(node) || nodeIsOPTGROUP(node)) )
         {
             if ( nodeIsOPTGROUP(node) )
@@ -3392,7 +3392,7 @@ void TY_(ParseSelect)(TidyDocImpl* doc, Node *field, GetTokenMode ARG_UNUSED(mod
         if (node->tag == field->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            field->closed = yes;
+            field->closed = aye;
             TrimSpaces(doc, field);
 #if !defined(NDEBUG) && defined(_MSC_VER)
             in_parse_select--;
@@ -3405,11 +3405,11 @@ void TY_(ParseSelect)(TidyDocImpl* doc, Node *field, GetTokenMode ARG_UNUSED(mod
         if (InsertMisc(field, node))
             continue;
 
-        if ( node->type == StartTag && 
+        if ( node->type == StartTag &&
              ( nodeIsOPTION(node)   ||
                nodeIsOPTGROUP(node) ||
                nodeIsDATALIST(node) ||
-               nodeIsSCRIPT(node)) 
+               nodeIsSCRIPT(node))
            )
         {
             TY_(InsertNodeAtEnd)(field, node);
@@ -3449,7 +3449,7 @@ void TY_(ParseDatalist)(TidyDocImpl* doc, Node *field, GetTokenMode ARG_UNUSED(m
         if (node->tag == field->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            field->closed = yes;
+            field->closed = aye;
             TrimSpaces(doc, field);
 #if !defined(NDEBUG) && defined(_MSC_VER)
             in_parse_datalist--;
@@ -3462,11 +3462,11 @@ void TY_(ParseDatalist)(TidyDocImpl* doc, Node *field, GetTokenMode ARG_UNUSED(m
         if (InsertMisc(field, node))
             continue;
 
-        if ( node->type == StartTag && 
+        if ( node->type == StartTag &&
              ( nodeIsOPTION(node)   ||
                nodeIsOPTGROUP(node) ||
                nodeIsDATALIST(node) ||
-               nodeIsSCRIPT(node)) 
+               nodeIsSCRIPT(node))
            )
         {
             TY_(InsertNodeAtEnd)(field, node);
@@ -3506,7 +3506,7 @@ void TY_(ParseText)(TidyDocImpl* doc, Node *field, GetTokenMode mode)
         if (node->tag == field->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            field->closed = yes;
+            field->closed = aye;
             TrimSpaces(doc, field);
             return;
         }
@@ -3534,7 +3534,7 @@ void TY_(ParseText)(TidyDocImpl* doc, Node *field, GetTokenMode mode)
         /* for textarea should all cases of < and & be escaped? */
 
         /* discard inline tags e.g. font */
-        if (   node->tag 
+        if (   node->tag
             && node->tag->model & CM_INLINE
             && !(node->tag->model & CM_FIELD)) /* #487283 - fix by Lee Passey 25 Jan 02 */
         {
@@ -3573,7 +3573,7 @@ void TY_(ParseTitle)(TidyDocImpl* doc, Node *title, GetTokenMode ARG_UNUSED(mode
         else if (node->tag == title->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            title->closed = yes;
+            title->closed = aye;
             TrimSpaces(doc, title);
             return;
         }
@@ -3626,7 +3626,7 @@ void TY_(ParseTitle)(TidyDocImpl* doc, Node *title, GetTokenMode ARG_UNUSED(mode
 void TY_(ParseScript)(TidyDocImpl* doc, Node *script, GetTokenMode ARG_UNUSED(mode))
 {
     Node *node;
-    
+
     doc->lexer->parent = script;
     node = TY_(GetToken)(doc, CdataContent);
     doc->lexer->parent = NULL;
@@ -3664,14 +3664,14 @@ Bool TY_(IsJavaScript)(Node *node)
     AttVal *attr;
 
     if (node->attributes == NULL)
-        return yes;
+        return aye;
 
     for (attr = node->attributes; attr; attr = attr->next)
     {
         if ( (attrIsLANGUAGE(attr) || attrIsTYPE(attr))
              && AttrContains(attr, "javascript") )
         {
-            result = yes;
+            result = aye;
             break;
         }
     }
@@ -3694,7 +3694,7 @@ void TY_(ParseHead)(TidyDocImpl* doc, Node *head, GetTokenMode ARG_UNUSED(mode))
         if (node->tag == head->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            head->closed = yes;
+            head->closed = aye;
             break;
         }
 
@@ -3710,7 +3710,7 @@ void TY_(ParseHead)(TidyDocImpl* doc, Node *head, GetTokenMode ARG_UNUSED(mode))
         if (TY_(nodeIsText)(node))
         {
             /*\ Issue #132 - avoid warning for missing body tag,
-             *  if configured to --omit-otpional-tags yes
+             *  if configured to --omit-otpional-tags aye
              *  Issue #314 - and if --show-body-only
             \*/
             if (!cfgBool( doc, TidyOmitOptionalTags ) &&
@@ -3747,7 +3747,7 @@ void TY_(ParseHead)(TidyDocImpl* doc, Node *head, GetTokenMode ARG_UNUSED(mode))
             TY_(FreeNode)( doc, node);
             continue;
         }
-        
+
         /*
          if it doesn't belong in the head then
          treat as implicit end of head and deal
@@ -3795,7 +3795,7 @@ void TY_(ParseHead)(TidyDocImpl* doc, Node *head, GetTokenMode ARG_UNUSED(mode))
                     val = charset = TY_(tmbstrdup)(doc->allocator, content->value);
                     val = TY_(tmbstrtolower)(val);
                     val = strstr(content->value, "charset");
-                    
+
                     if (val)
                         val += 7;
 
@@ -3840,7 +3840,7 @@ void TY_(ParseHead)(TidyDocImpl* doc, Node *head, GetTokenMode ARG_UNUSED(mode))
 #endif
 }
 
-/*\ 
+/*\
  *  Issue #166 - repeated <main> element
  *  But this service is generalised to check for other duplicate elements
 \*/
@@ -3850,11 +3850,11 @@ Bool TY_(FindNodeWithId)( Node *node, TidyTagId tid )
     while (node)
     {
         if (TagIsId(node,tid))
-            return yes;
+            return aye;
         for (content = node->content; content; content = content->content)
         {
             if (TY_(FindNodeWithId)(content,tid))
-                return yes;
+                return aye;
         }
         node = node->next;
     }
@@ -3862,7 +3862,7 @@ Bool TY_(FindNodeWithId)( Node *node, TidyTagId tid )
 }
 
 
-/*\ 
+/*\
  *  Issue #166 - repeated <main> element
  *  Do a global search for an element
 \*/
@@ -3880,7 +3880,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
     Bool checkstack, iswhitenode;
 
     mode = IgnoreWhitespace;
-    checkstack = yes;
+    checkstack = aye;
 
     TY_(BumpObject)( doc, body->parent );
 #if !defined(NDEBUG) && defined(_MSC_VER)
@@ -3900,7 +3900,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
         /* #538536 Extra endtags not detected */
         if ( nodeIsHTML(node) )
         {
-            if (TY_(nodeIsElement)(node) || lexer->seenEndHtml) 
+            if (TY_(nodeIsElement)(node) || lexer->seenEndHtml)
                 TY_(ReportError)(doc, body, node, DISCARDING_UNEXPECTED);
             else
                 lexer->seenEndHtml = 1;
@@ -3909,7 +3909,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
             continue;
         }
 
-        if ( lexer->seenEndBody && 
+        if ( lexer->seenEndBody &&
              ( node->type == StartTag ||
                node->type == EndTag   ||
                node->type == StartEndTag ) )
@@ -3919,7 +3919,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
 
         if ( node->tag == body->tag && node->type == EndTag )
         {
-            body->closed = yes;
+            body->closed = aye;
             TrimSpaces(doc, body);
             TY_(FreeNode)( doc, node);
             lexer->seenEndBody = 1;
@@ -3955,13 +3955,13 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
             TY_(UngetToken)( doc );
             break;
         }
-        
+
         iswhitenode = no;
 
         if ( TY_(nodeIsText)(node) &&
              node->end <= node->start + 1 &&
              lexer->lexbuf[node->start] == ' ' )
-            iswhitenode = yes;
+            iswhitenode = aye;
 
         /* deal with comments etc. */
         if (InsertMisc(body, node))
@@ -4021,7 +4021,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
           to match Netscape's observed behaviour.
         */
         lexer->excludeBlocks = no;
-        
+
         if ( nodeIsINPUT(node) ||
              (!TY_(nodeHasCM)(node, CM_BLOCK) && !TY_(nodeHasCM)(node, CM_INLINE))
            )
@@ -4033,7 +4033,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
             if (node->tag->model & CM_HTML)
             {
                 /* copy body attributes if current body was inferred */
-                if ( nodeIsBODY(node) && body->implicit 
+                if ( nodeIsBODY(node) && body->implicit
                      && body->attributes == NULL )
                 {
                     body->attributes = node->attributes;
@@ -4055,13 +4055,13 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
                 TY_(UngetToken)( doc );
                 node = TY_(InferredTag)(doc, TidyTag_UL);
                 AddClassNoIndent(doc, node);
-                lexer->excludeBlocks = yes;
+                lexer->excludeBlocks = aye;
             }
             else if (node->tag->model & CM_DEFLIST)
             {
                 TY_(UngetToken)( doc );
                 node = TY_(InferredTag)(doc, TidyTag_DL);
-                lexer->excludeBlocks = yes;
+                lexer->excludeBlocks = aye;
             }
             else if (node->tag->model & (CM_TABLE | CM_ROWGRP | CM_ROW))
             {
@@ -4070,13 +4070,13 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
                     TY_(UngetToken)( doc );
                     node = TY_(InferredTag)(doc, TidyTag_TABLE);
                 }
-                lexer->excludeBlocks = yes;
+                lexer->excludeBlocks = aye;
             }
             else if ( nodeIsINPUT(node) )
             {
                 TY_(UngetToken)( doc );
                 node = TY_(InferredTag)(doc, TidyTag_FORM);
-                lexer->excludeBlocks = yes;
+                lexer->excludeBlocks = aye;
             }
             else
             {
@@ -4099,7 +4099,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
             else if ( nodeIsP(node) )
             {
                 node->type = StartEndTag;
-                node->implicit = yes;
+                node->implicit = aye;
 #if OBSOLETE
                 TY_(CoerceNode)(doc, node, TidyTag_BR, no, no);
                 FreeAttrs( doc, node ); /* discard align attribute etc. */
@@ -4149,7 +4149,7 @@ void TY_(ParseBody)(TidyDocImpl* doc, Node *body, GetTokenMode mode)
             }
             else
             {
-                checkstack = yes;
+                checkstack = aye;
                 mode = IgnoreWhitespace;
             }
 
@@ -4186,7 +4186,7 @@ void TY_(ParseNoFrames)(TidyDocImpl* doc, Node *noframes, GetTokenMode mode)
         if ( node->tag == noframes->tag && node->type == EndTag )
         {
             TY_(FreeNode)( doc, node);
-            noframes->closed = yes;
+            noframes->closed = aye;
             TrimSpaces(doc, noframes);
             return;
         }
@@ -4285,13 +4285,13 @@ void TY_(ParseFrameSet)(TidyDocImpl* doc, Node *frameset, GetTokenMode ARG_UNUSE
     {
         doc->badAccess |= BA_USING_FRAMES;
     }
-    
+
     while ((node = TY_(GetToken)(doc, IgnoreWhitespace)) != NULL)
     {
         if (node->tag == frameset->tag && node->type == EndTag)
         {
             TY_(FreeNode)( doc, node);
-            frameset->closed = yes;
+            frameset->closed = aye;
             TrimSpaces(doc, frameset);
             return;
         }
@@ -4304,7 +4304,7 @@ void TY_(ParseFrameSet)(TidyDocImpl* doc, Node *frameset, GetTokenMode ARG_UNUSE
         {
             TY_(ReportError)(doc, frameset, node, DISCARDING_UNEXPECTED);
             TY_(FreeNode)( doc, node);
-            continue; 
+            continue;
         }
 
         if (TY_(nodeIsElement)(node))
@@ -4574,7 +4574,7 @@ void TY_(ParseHTML)(TidyDocImpl* doc, Node *html, GetTokenMode mode)
 
         node = TY_(InferredTag)(doc, TidyTag_BODY);
         /* Issue #132 - disable inserting BODY tag warning
-           BUT only if NOT --show-body-only yes */
+           BUT only if NOT --show-body-only aye */
         if (!showingBodyOnly(doc))
             TY_(ReportError)(doc, html, node, INSERTING_TAG );
         TY_(ConstrainVersion)(doc, ~VERS_FRAMESET);
@@ -4683,11 +4683,11 @@ static void ReplaceObsoleteElements(TidyDocImpl* doc, Node* node)
         /* if (nodeIsDIR(node) || nodeIsMENU(node)) */
         /* HTML5 - <menu ... > is no longer obsolete */
         if (nodeIsDIR(node))
-            TY_(CoerceNode)(doc, node, TidyTag_UL, yes, yes);
+            TY_(CoerceNode)(doc, node, TidyTag_UL, aye, aye);
 
         if (nodeIsXMP(node) || nodeIsLISTING(node) ||
             (node->tag && node->tag->id == TidyTag_PLAINTEXT))
-            TY_(CoerceNode)(doc, node, TidyTag_PRE, yes, yes);
+            TY_(CoerceNode)(doc, node, TidyTag_PRE, aye, aye);
 
         if (node->content)
             ReplaceObsoleteElements(doc, node->content);
@@ -4794,7 +4794,7 @@ void TY_(ParseDocument)(TidyDocImpl* doc)
             if (AttrValueIs(xmlns, XHTML_NAMESPACE))
             {
                 Bool htmlOut = cfgBool( doc, TidyHtmlOut );
-                doc->lexer->isvoyager = yes;                  /* Unless plain HTML */
+                doc->lexer->isvoyager = aye;                  /* Unless plain HTML */
                 TY_(SetOptionBool)( doc, TidyXhtmlOut, !htmlOut ); /* is specified, output*/
                 TY_(SetOptionBool)( doc, TidyXmlOut, !htmlOut );   /* will be XHTML. */
 
@@ -4816,11 +4816,11 @@ void TY_(ParseDocument)(TidyDocImpl* doc)
             html = node;
 
         /*\
-         *  #72, avoid MISSING_DOCTYPE if show-body-only. 
+         *  #72, avoid MISSING_DOCTYPE if show-body-only.
          *  #191, also if --doctype omit, that is TidyDoctypeOmit
          *  #342, adjust tags to html4-- if not 'auto' or 'html5'
         \*/
-        if (!TY_(FindDocType)(doc)) 
+        if (!TY_(FindDocType)(doc))
         {
             ulong dtmode = cfg( doc, TidyDoctypeMode );
             if ((dtmode != TidyDoctypeOmit) && !showingBodyOnly(doc))
@@ -4885,7 +4885,7 @@ Bool TY_(XMLPreserveWhiteSpace)( TidyDocImpl* doc, Node *element)
         if (attrIsXML_SPACE(attribute))
         {
             if (AttrValueIs(attribute, "preserve"))
-                return yes;
+                return aye;
 
             return no;
         }
@@ -4893,17 +4893,17 @@ Bool TY_(XMLPreserveWhiteSpace)( TidyDocImpl* doc, Node *element)
 
     if (element->element == NULL)
         return no;
-        
+
     /* kludge for html docs without explicit xml:space attribute */
     if (nodeIsPRE(element)    ||
         nodeIsSCRIPT(element) ||
         nodeIsSTYLE(element)  ||
         TY_(FindParser)(doc, element) == TY_(ParsePre))
-        return yes;
+        return aye;
 
     /* kludge for XSL docs */
     if ( TY_(tmbstrcasecmp)(element->element, "xsl:text") == 0 )
-        return yes;
+        return aye;
 
     return no;
 }
@@ -4928,7 +4928,7 @@ static void ParseXMLElement(TidyDocImpl* doc, Node *element, GetTokenMode mode)
            TY_(tmbstrcmp)(node->element, element->element) == 0)
         {
             TY_(FreeNode)( doc, node);
-            element->closed = yes;
+            element->closed = aye;
             break;
         }
 
@@ -4992,7 +4992,7 @@ void TY_(ParseXMLDocument)(TidyDocImpl* doc)
 {
     Node *node, *doctype = NULL;
 
-    TY_(SetOptionBool)( doc, TidyXmlTags, yes );
+    TY_(SetOptionBool)( doc, TidyXmlTags, aye );
 
     while ((node = TY_(GetToken)(doc, IgnoreWhitespace)) != NULL)
     {

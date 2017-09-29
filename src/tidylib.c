@@ -222,7 +222,7 @@ Bool TIDY_CALL        tidySetOptionCallback( TidyDoc tdoc, TidyOptCallback pOptC
   if ( impl )
   {
     impl->pOptCallback = pOptCallback;
-    return yes;
+    return aye;
   }
   return no;
 }
@@ -371,7 +371,7 @@ Bool TIDY_CALL          tidyOptGetDefaultBool( TidyOption topt )
 {
     const TidyOptionImpl* option = tidyOptionToImpl( topt );
     if ( option && option->type != TidyString )
-        return ( option->dflt ? yes : no );
+        return ( option->dflt ? aye : no );
     return no;
 }
 Bool TIDY_CALL          tidyOptIsReadOnly( TidyOption topt )
@@ -379,7 +379,7 @@ Bool TIDY_CALL          tidyOptIsReadOnly( TidyOption topt )
     const TidyOptionImpl* option = tidyOptionToImpl( topt );
     if ( option  )
         return ( option->parser == NULL );
-    return yes;
+    return aye;
 }
 
 
@@ -569,7 +569,7 @@ Bool TIDY_CALL tidyOptSnapshot( TidyDoc tdoc )
     if ( impl )
     {
         TY_(TakeConfigSnapshot)( impl );
-        return yes;
+        return aye;
     }
     return no;
 }
@@ -579,7 +579,7 @@ Bool TIDY_CALL tidyOptResetToSnapshot( TidyDoc tdoc )
     if ( impl )
     {
         TY_(ResetConfigToSnapshot)( impl );
-        return yes;
+        return aye;
     }
     return no;
 }
@@ -589,7 +589,7 @@ Bool TIDY_CALL tidyOptResetAllToDefault( TidyDoc tdoc )
     if ( impl )
     {
         TY_(ResetConfigToDefault)( impl );
-        return yes;
+        return aye;
     }
     return no;
 }
@@ -624,7 +624,7 @@ Bool TIDY_CALL tidyOptCopyConfig( TidyDoc to, TidyDoc from )
     if ( docTo && docFrom )
     {
         TY_(CopyConfig)( docTo, docFrom );
-        return yes;
+        return aye;
     }
     return no;
 }
@@ -653,7 +653,7 @@ Bool TIDY_CALL        tidySetReportFilter( TidyDoc tdoc, TidyReportFilter filt )
   if ( impl )
   {
     impl->mssgFilt = filt;
-    return yes;
+    return aye;
   }
   return no;
 }
@@ -669,7 +669,7 @@ Bool TIDY_CALL        tidySetReportFilter2( TidyDoc tdoc, TidyReportFilter2 filt
   if ( impl )
   {
     impl->mssgFilt2 = filt;
-    return yes;
+    return aye;
   }
   return no;
 }
@@ -685,7 +685,7 @@ Bool TIDY_CALL        tidySetReportFilter3( TidyDoc tdoc, TidyReportFilter3 filt
   if ( impl )
   {
     impl->mssgFilt3 = filt;
-    return yes;
+    return aye;
   }
   return no;
 }
@@ -782,7 +782,7 @@ Bool TIDY_CALL        tidySetPrettyPrinterCallback(TidyDoc tdoc, TidyPPProgress 
     if ( impl )
     {
         impl->progressCallback = callback;
-        return yes;
+        return aye;
     }
     return no;
 }
@@ -929,7 +929,7 @@ int   tidyDocParseFile( TidyDocImpl* doc, ctmbstr filnam )
             return status;
         }
         status = TY_(DocParseStream)( doc, in );
-        TY_(freeFileSource)(&in->source, yes);
+        TY_(freeFileSource)(&in->source, aye);
         TY_(freeStreamIn)(in);
     }
     else /* Error message! */
@@ -1300,7 +1300,7 @@ static void list_not_html5(void)
 {
     static Bool done_list = no;
     if (done_list == no) {
-        done_list = yes;
+        done_list = aye;
         show_not_html5();
     }
 }
@@ -1333,7 +1333,7 @@ Bool inRemovedInfo( uint tid )
         if (html5Info[i].tag == 0)
             break;
         if (html5Info[i].id == tid)
-            return yes;
+            return aye;
     }
     return no;
 }
@@ -1358,14 +1358,14 @@ static Bool nodeHasAlignAttr( Node *node )
     AttVal* av;
     for ( av = node->attributes; av != NULL; av = av->next ) {
         if (attrIsALIGN(av))
-            return yes;
+            return aye;
     }
     return no;
 }
 
 /*
  *  Perform special checks for HTML, even when we're not using the default
- *  option `--strict-tags-attributes yes`. This will ensure that HTML5 warning
+ *  option `--strict-tags-attributes aye`. This will ensure that HTML5 warning
  *  and error output is given regardless of the new option, and ensure that
  *  cleanup takes place. This provides mostly consistent Tidy behavior even with
  *  the introduction of this new option. Note that strings have changed, though,
@@ -1379,7 +1379,7 @@ void TY_(CheckHTML5)( TidyDocImpl* doc, Node* node )
     Bool clean = cfgBool( doc, TidyMakeClean );
     Bool already_strict = cfgBool( doc, TidyStrictTagsAttr );
     Node* body = TY_(FindBody)( doc );
-    Bool warn = yes;    /* should this be a warning, error, or report??? */
+    Bool warn = aye;    /* should this be a warning, error, or report??? */
     AttVal* attr = NULL;
     int i = 0;
 #if !defined(NDEBUG) && defined(_MSC_VER)
@@ -1393,7 +1393,7 @@ void TY_(CheckHTML5)( TidyDocImpl* doc, Node* node )
              */
 
             /* We will only emit this message if `--strict-tags-attributes==no`;
-             * otherwise if yes this message will be output during later
+             * otherwise if aye this message will be output during later
              * checking.
              */
             if ( !already_strict )
@@ -1402,7 +1402,7 @@ void TY_(CheckHTML5)( TidyDocImpl* doc, Node* node )
         if ( node == body ) {
             i = 0;
             /* We will only emit these messages if `--strict-tags-attributes==no`;
-             * otherwise if yes these messages will be output during later
+             * otherwise if aye these messages will be output during later
              * checking.
              */
             if ( !already_strict ) {
@@ -1572,7 +1572,7 @@ void TY_(CheckHTMLTagsAttribsVersions)( TidyDocImpl* doc, Node* node )
     Bool check_versions = cfgBool( doc, TidyStrictTagsAttr );
     AttVal *next_attr, *attval;
     Bool attrIsProprietary = no;
-    Bool attrIsMismatched = yes;
+    Bool attrIsMismatched = aye;
 
     while (node)
     {
@@ -1864,16 +1864,16 @@ int         tidyDocCleanAndRepair( TidyDocImpl* doc )
         if (xhtmlOut && !htmlOut)
         {
             TY_(SetXHTMLDocType)(doc);
-            TY_(FixAnchors)(doc, &doc->root, wantNameAttr, yes);
-            TY_(FixXhtmlNamespace)(doc, yes);
-            TY_(FixLanguageInformation)(doc, &doc->root, yes, yes);
+            TY_(FixAnchors)(doc, &doc->root, wantNameAttr, aye);
+            TY_(FixXhtmlNamespace)(doc, aye);
+            TY_(FixLanguageInformation)(doc, &doc->root, aye, aye);
         }
         else
         {
             TY_(FixDocType)(doc);
-            TY_(FixAnchors)(doc, &doc->root, wantNameAttr, yes);
+            TY_(FixAnchors)(doc, &doc->root, wantNameAttr, aye);
             TY_(FixXhtmlNamespace)(doc, no);
-            TY_(FixLanguageInformation)(doc, &doc->root, no, yes);
+            TY_(FixLanguageInformation)(doc, &doc->root, no, aye);
         }
 
         if (tidyMark )
@@ -1918,11 +1918,11 @@ Bool showBodyOnly( TidyDocImpl* doc, TidyTriState bodyOnly )
     case TidyNoState:
         return no;
     case TidyYesState:
-        return yes;
+        return aye;
     default:
         node = TY_(FindBody)( doc );
         if (node && node->implicit )
-            return yes;
+            return aye;
     }
     return no;
 }
@@ -1990,7 +1990,7 @@ int         tidyDocSaveStream( TidyDocImpl* doc, StreamOut* out )
         ** which gives you only the basic character entities,
         ** which are safe in any browser.
         ** if ( !TY_(FindDocType)(doc) )
-        **    TY_(SetOptionBool)( doc, TidyNumEntities, yes );
+        **    TY_(SetOptionBool)( doc, TidyNumEntities, aye );
         */
 
         doc->docOut = out;
@@ -2156,7 +2156,7 @@ Bool TIDY_CALL  tidyNodeGetText( TidyDoc tdoc, TidyNode tnod, TidyBuffer* outbuf
       doc->docOut = NULL;
 
       TidyDocFree( doc, out );
-      return yes;
+      return aye;
   }
   return no;
 }
@@ -2188,13 +2188,13 @@ Bool TIDY_CALL tidyNodeGetValue( TidyDoc tdoc, TidyNode tnod, TidyBuffer* buf )
         return no;
     }
 
-    return yes;
+    return aye;
 }
 
 Bool TIDY_CALL tidyNodeIsProp( TidyDoc ARG_UNUSED(tdoc), TidyNode tnod )
 {
   Node* nimp = tidyNodeToImpl( tnod );
-  Bool isProprietary = yes;
+  Bool isProprietary = aye;
   if ( nimp )
   {
     switch ( nimp->type )
@@ -2213,7 +2213,7 @@ Bool TIDY_CALL tidyNodeIsProp( TidyDoc ARG_UNUSED(tdoc), TidyNode tnod )
     case AspTag:
     case JsteTag:
     case PhpTag:
-        isProprietary = yes;
+        isProprietary = aye;
         break;
 
     case StartTag:
@@ -2221,7 +2221,7 @@ Bool TIDY_CALL tidyNodeIsProp( TidyDoc ARG_UNUSED(tdoc), TidyNode tnod )
     case StartEndTag:
         isProprietary = ( nimp->tag
                           ? (nimp->tag->versions&VERS_PROPRIETARY)!=0
-                          : yes );
+                          : aye );
         break;
     }
   }

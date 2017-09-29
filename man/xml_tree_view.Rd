@@ -5,11 +5,11 @@
 \alias{html_tree_view}
 \title{HTML/XML tree viewer}
 \usage{
-xml_tree_view(doc = NULL, scroll = FALSE, elementId = NULL,
-  width = "100\%", height = NULL)
+xml_tree_view(doc = NULL, scroll = FALSE, width = "100\%",
+  height = NULL)
 
-html_tree_view(doc = NULL, scroll = FALSE, elementId = NULL,
-  width = "100\%", height = NULL)
+html_tree_view(doc = NULL, scroll = FALSE, width = "100\%",
+  height = NULL)
 }
 \arguments{
 \item{doc}{\code{xml2} document/node/nodeset, an \code{HTMLInternalDocument}/
@@ -20,8 +20,6 @@ html_tree_view(doc = NULL, scroll = FALSE, elementId = NULL,
 Default is \code{FALSE} (take up the full viewer/browser window). If
 this is set to \code{TRUE}, \code{height} should be set to a value
 other than \code{NULL}.}
-
-\item{elementId}{element id}
 
 \item{width}{widget \code{div} width}
 
@@ -38,19 +36,10 @@ Large HTML or XML content may take some time to render properly. It is suggested
       or used in a browser context vs an IDE viewer context.
 }
 \examples{
-if (interactive()) {
-
-# from ?xml2::read_xml
-cd <- xml2::read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
-
-xml_tree_view(cd)
-
-htmltools::browsable(
-  htmltools::tagList(
-    xml_tree_view(cd, width = "100\%", height = "300px"),
-    xml_view(cd)
-  )
-)
+if(interactive()) {
+txt <- paste0("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading>",
+              "<body>Don't forget me this weekend!</body></note>")
+# xml_tree_view(txt)
 }
 }
 \references{
