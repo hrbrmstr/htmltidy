@@ -25,22 +25,22 @@ static TidyPanic   g_panic   = NULL;
 Bool TIDY_CALL tidySetMallocCall( TidyMalloc fmalloc )
 {
   g_malloc  = fmalloc;
-  return yes;
+  return aye;
 }
 Bool TIDY_CALL tidySetReallocCall( TidyRealloc frealloc )
 {
   g_realloc = frealloc;
-  return yes;
+  return aye;
 }
 Bool TIDY_CALL tidySetFreeCall( TidyFree ffree )
 {
   g_free    = ffree;
-  return yes;
+  return aye;
 }
 Bool TIDY_CALL tidySetPanicCall( TidyPanic fpanic )
 {
   g_panic   = fpanic;
-  return yes;
+  return aye;
 }
 
 static void TIDY_CALL defaultPanic( TidyAllocator* ARG_UNUSED(allocator), ctmbstr msg )

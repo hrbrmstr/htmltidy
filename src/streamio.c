@@ -322,7 +322,7 @@ uint TY_(ReadChar)( StreamIn *in )
         if (c == '\n')
         {
 #ifdef TIDY_STORE_ORIGINAL_TEXT
-            added = yes;
+            added = aye;
             TY_(AddCharToOriginalText)(in, (tchar)c);
 #endif
             in->curcol = 1;
@@ -333,7 +333,7 @@ uint TY_(ReadChar)( StreamIn *in )
         if (c == '\t')
         {
 #ifdef TIDY_STORE_ORIGINAL_TEXT
-            added = yes;
+            added = aye;
             TY_(AddCharToOriginalText)(in, (tchar)c);
 #endif
             in->tabs = tabsize > 0 ?
@@ -348,7 +348,7 @@ uint TY_(ReadChar)( StreamIn *in )
         if (c == '\r')
         {
 #ifdef TIDY_STORE_ORIGINAL_TEXT
-            added = yes;
+            added = aye;
             TY_(AddCharToOriginalText)(in, (tchar)c);
 #endif
             c = ReadCharFromStream(in);
@@ -410,7 +410,7 @@ uint TY_(ReadChar)( StreamIn *in )
             if ( !TY_(IsValidUTF16FromUCS4)(c) )
             {
                 /* invalid UTF-16 value */
-                TY_(ReportEncodingError)(in->doc, INVALID_UTF16, c, yes);
+                TY_(ReportEncodingError)(in->doc, INVALID_UTF16, c, aye);
                 c = 0;
             }
             else if ( TY_(IsLowSurrogate)(c) )
@@ -429,7 +429,7 @@ uint TY_(ReadChar)( StreamIn *in )
                 }
                 /* not a valid pair */
                 if ( 0 == c )
-                    TY_(ReportEncodingError)( in->doc, INVALID_UTF16, c, yes );
+                    TY_(ReportEncodingError)( in->doc, INVALID_UTF16, c, aye );
             }
         }
 #endif
@@ -525,7 +525,7 @@ void TY_(UngetChar)( uint c, StreamIn *in )
         return;
     }
 
-    in->pushed = yes;
+    in->pushed = aye;
 
     if (in->bufpos + 1 >= in->bufsize)
         in->charbuf = (tchar*)TidyRealloc(in->allocator, in->charbuf, sizeof(tchar) * ++(in->bufsize));

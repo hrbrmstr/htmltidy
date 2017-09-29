@@ -11,7 +11,6 @@
 #'        Default is \code{FALSE} (take up the full viewer/browser window). If
 #'        this is set to \code{TRUE}, \code{height} should be set to a value
 #'        other than \code{NULL}.
-#' @param elementId element id
 #' @param width widget \code{div} width
 #' @param height widget \code{div} height
 #' @note Large HTML or XML content may take some time to render properly. It is suggested
@@ -20,22 +19,12 @@
 #' @export
 #' @references \href{https://github.com/juliangruber/xml-viewer}{xml-viewer}
 #' @examples
-#' if (interactive()) {
-#'
-#' # from ?xml2::read_xml
-#' cd <- xml2::read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
-#'
-#' xml_tree_view(cd)
-#'
-#' htmltools::browsable(
-#'   htmltools::tagList(
-#'     xml_tree_view(cd, width = "100%", height = "300px"),
-#'     xml_view(cd)
-#'   )
-#' )
+#' if(interactive()) {
+#' txt <- paste0("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading>",
+#'               "<body>Don't forget me this weekend!</body></note>")
+#' # xml_tree_view(txt)
 #' }
-xml_tree_view <- function(doc=NULL, scroll=FALSE,
-                          elementId=NULL, width="100%", height=NULL) {
+xml_tree_view <- function(doc=NULL, scroll=FALSE, width="100%", height=NULL) {
 
   if (inherits(doc, "character")) {
     doc <- paste0(doc, collapse="")
@@ -59,8 +48,7 @@ xml_tree_view <- function(doc=NULL, scroll=FALSE,
     x = params,
     width = width,
     height = height,
-    package = 'htmltidy',
-    elementId = elementId
+    package = 'htmltidy'
   )
 
 }

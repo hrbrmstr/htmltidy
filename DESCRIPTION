@@ -1,6 +1,6 @@
 Package: htmltidy
 Title: Tidy Up and Test XPath Queries on HTML and XML Content
-Version: 0.3.2
+Version: 0.4.0
 Encoding: UTF-8
 Authors@R: c(
   person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),

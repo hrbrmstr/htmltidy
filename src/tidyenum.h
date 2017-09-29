@@ -150,11 +150,11 @@ typedef enum
   TidyWrapPhp,         /**< Wrap within PHP pseudo elements */
   TidyFixBackslash,    /**< Fix URLs by replacing \ with / */
   TidyIndentAttributes,/**< Newline+indent before each attribute */
-  TidyXmlPIs,          /**< If set to yes PIs must end with ?> */
-  TidyXmlSpace,        /**< If set to yes adds xml:space attr as needed */
-  TidyEncloseBodyText, /**< If yes text at body is wrapped in P's */
-  TidyEncloseBlockText,/**< If yes text in blocks is wrapped in P's */
-  TidyKeepFileTimes,   /**< If yes last modied time is preserved */
+  TidyXmlPIs,          /**< If set to aye PIs must end with ?> */
+  TidyXmlSpace,        /**< If set to aye adds xml:space attr as needed */
+  TidyEncloseBodyText, /**< If aye text at body is wrapped in P's */
+  TidyEncloseBlockText,/**< If aye text in blocks is wrapped in P's */
+  TidyKeepFileTimes,   /**< If aye last modied time is preserved */
   TidyWord2000,        /**< Draconian cleaning for Word2000 */
   TidyMark,            /**< Add meta element indicating tidied doc */
   TidyEmacs,           /**< If true format error output for GNU Emacs */
@@ -233,7 +233,7 @@ typedef enum
 typedef enum
 {
    TidyNoState,     /**< maps to 'no' */
-   TidyYesState,    /**< maps to 'yes' */
+   TidyYesState,    /**< maps to 'aye' */
    TidyAutoState    /**< Automatic */
 } TidyTriState;
 

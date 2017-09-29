@@ -159,11 +159,11 @@ static CheckAttribs CheckHTML;
 #define VERS_ELEM_VIDEO      (xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50)
 #define VERS_ELEM_WBR        (xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|xxxx|HT50|XH50)
 
-/*\ 
+/*\
  * Issue #167 & #169 & #232
  * Tidy defaults to HTML5 mode
  * but allow this table to be ADJUSTED if NOT HTML5
- * was static const Dict tag_defs[] = 
+ * was static const Dict tag_defs[] =
 \*/
 static Dict tag_defs[] =
 {
@@ -493,7 +493,7 @@ static void declare( TidyDocImpl* doc, TidyTagImpl* tags,
 }
 
 #if !defined(NDEBUG) && defined(_MSC_VER)
-/* ==================================================================== 
+/* ====================================================================
    MSVC DEBUG ONLY
  */
 void ListElementsPerVersion( uint vers, Bool has )
@@ -538,7 +538,7 @@ void show_not_html5(void)
 }
 void show_have_html5(void)
 {
-    ListElementsPerVersion( VERS_HTML5, yes );
+    ListElementsPerVersion( VERS_HTML5, aye );
 }
 
 #endif
@@ -550,13 +550,13 @@ Bool TY_(FindTag)( TidyDocImpl* doc, Node *node )
     if ( cfgBool(doc, TidyXmlTags) )
     {
         node->tag = doc->tags.xml_tags;
-        return yes;
+        return aye;
     }
 
     if ( node->element && (np = tagsLookup(doc, &doc->tags, node->element)) )
     {
         node->tag = np;
-        return yes;
+        return aye;
     }
 
     return no;
@@ -687,7 +687,7 @@ void TY_(FreeDeclaredTags)( TidyDocImpl* doc, UserTagType tagType )
 
     for ( curr=tags->declared_tag_list; curr; curr = next )
     {
-        Bool deleteIt = yes;
+        Bool deleteIt = aye;
         next = curr->next;
         switch ( tagType )
         {
@@ -735,14 +735,14 @@ void TY_(FreeDeclaredTags)( TidyDocImpl* doc, UserTagType tagType )
  * If the <!DOCTYPE ...> is found to NOT be HTML5,
  * then adjust tags to HTML4 mode
  *
- * NOTE: For each change added to here, there must 
+ * NOTE: For each change added to here, there must
  * be a RESET added in TY_(ResetTags) below!
 \*/
 void TY_(AdjustTags)( TidyDocImpl *doc )
 {
     Dict *np = (Dict *)TY_(LookupTagDef)( TidyTag_A );
     TidyTagImpl* tags = &doc->tags;
-    if (np) 
+    if (np)
     {
         np->parser = TY_(ParseInline);
         np->model  = CM_INLINE;
@@ -796,7 +796,7 @@ void TY_(ResetTags)( TidyDocImpl *doc )
 {
     Dict *np = (Dict *)TY_(LookupTagDef)( TidyTag_A );
     TidyTagImpl* tags = &doc->tags;
-    if (np) 
+    if (np)
     {
         np->parser = TY_(ParseBlock);
         np->model  = (CM_INLINE|CM_BLOCK|CM_MIXED);
@@ -815,7 +815,7 @@ void TY_(ResetTags)( TidyDocImpl *doc )
 #if ELEMENT_HASH_LOOKUP
     tagsEmptyHash( doc, tags ); /* not sure this is really required, but to be sure */
 #endif
-    doc->HTML5Mode = yes;   /* set HTML5 mode */
+    doc->HTML5Mode = aye;   /* set HTML5 mode */
 }
 
 void TY_(FreeTags)( TidyDocImpl* doc )
@@ -932,14 +932,14 @@ void CheckAREA( TidyDocImpl* doc, Node *node )
 void CheckTABLE( TidyDocImpl* doc, Node *node )
 {
     AttVal* attval;
-    Bool HasSummary = (TY_(AttrGetById)(node, TidyAttr_SUMMARY) != NULL) ? yes : no;
+    Bool HasSummary = (TY_(AttrGetById)(node, TidyAttr_SUMMARY) != NULL) ? aye : no;
     uint vers = TY_(HTMLVersion)(doc);  /* Issue #377 - Also applies to XHTML5 */
-    Bool isHTML5 = ((vers == HT50)||(vers == XH50)) ? yes : no;
+    Bool isHTML5 = ((vers == HT50)||(vers == XH50)) ? aye : no;
 
     TY_(CheckAttributes)(doc, node);
 
     /* Issue #210 - a missing summary attribute is bad accessibility, no matter
-       what HTML version is involved; a document without is valid 
+       what HTML version is involved; a document without is valid
        EXCEPT for HTML5, when to have a summary is wrong */
     if (cfg(doc, TidyAccessibilityCheckLevel) == 0)
     {
@@ -947,8 +947,8 @@ void CheckTABLE( TidyDocImpl* doc, Node *node )
         {
             /* #210 - has summary, and is HTML5, then report obsolete */
             TY_(ReportWarning)(doc, node, node, BAD_SUMMARY_HTML5);
-        } 
-        else if (!HasSummary && !isHTML5) 
+        }
+        else if (!HasSummary && !isHTML5)
         {
             /* #210 - No summary, and NOT HTML5, then report as before */
             doc->badAccess |= BA_MISSING_SUMMARY;
@@ -997,7 +997,7 @@ Bool TY_(nodeHasText)( TidyDocImpl* doc, Node* node )
     {
         /* whitespace */
         if ( !TY_(IsWhite)( lexer->lexbuf[ix] ) )
-            return yes;
+            return aye;
     }
   }
   return no;

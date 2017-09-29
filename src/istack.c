@@ -2,7 +2,7 @@
 
   (c) 1998-2006 (W3C) MIT, ERCIM, Keio University
   See tidy.h for the copyright notice.
-  
+
 */
 
 #include "tidy-int.h"
@@ -50,7 +50,7 @@ static Bool IsNodePushable( Node *node )
     if (nodeIsINS(node) || nodeIsDEL(node))
         return no;
 
-    return yes;
+    return aye;
 }
 
 /*
@@ -171,7 +171,7 @@ Bool TY_(IsPushed)( TidyDocImpl* doc, Node *node )
     for (i = lexer->istacksize - 1; i >= 0; --i)
     {
         if (lexer->istack[i].tag == node->tag)
-            return yes;
+            return aye;
     }
 
     return no;
@@ -189,7 +189,7 @@ Bool TY_(IsPushedLast)( TidyDocImpl* doc, Node *element, Node *node )
 
     if (lexer->istacksize > 0) {
         if (lexer->istack[lexer->istacksize - 1].tag == node->tag) {
-            return yes;
+            return aye;
         }
     }
 
@@ -265,9 +265,9 @@ Node *TY_(InsertedToken)( TidyDocImpl* doc )
 
     node = TY_(NewNode)(doc->allocator, lexer);
     node->type = StartTag;
-    node->implicit = yes;
+    node->implicit = aye;
     node->start = lexer->txtstart;
-    /* #431734 [JTidy bug #226261 (was 126261)] - fix by Gary Peskin 20 Dec 00 */ 
+    /* #431734 [JTidy bug #226261 (was 126261)] - fix by Gary Peskin 20 Dec 00 */
     node->end = lexer->txtend; /* was : lexer->txtstart; */
     istack = lexer->insert;
 
@@ -301,7 +301,7 @@ Node *TY_(InsertedToken)( TidyDocImpl* doc )
    but, like the browser, the second should be retained ...
    Like <b>bold <i>bold and italics</b> italics only</i>
    This function switches the tag positions on the stack,
-   returning 'yes' if both were found in the expected order.
+   returning 'aye' if both were found in the expected order.
 */
 Bool TY_(SwitchInline)( TidyDocImpl* doc, Node* element, Node* node )
 {
@@ -310,7 +310,7 @@ Bool TY_(SwitchInline)( TidyDocImpl* doc, Node* element, Node* node )
          && element && element->tag
          && node && node->tag
          && TY_(IsPushed)( doc, element )
-         && TY_(IsPushed)( doc, node ) 
+         && TY_(IsPushed)( doc, node )
          && ((lexer->istacksize - lexer->istackbase) >= 2) )
     {
         /* we have a chance of succeeding ... */
@@ -337,7 +337,7 @@ Bool TY_(SwitchInline)( TidyDocImpl* doc, Node* element, Node* node )
                     IStack tmp_istack = *istack2;
                     *istack2 = *istack1;
                     *istack1 = tmp_istack;
-                    return yes;
+                    return aye;
                 }
             }
         }
@@ -348,7 +348,7 @@ Bool TY_(SwitchInline)( TidyDocImpl* doc, Node* element, Node* node )
 /*
   We want to push a specific a specific element on the stack,
   but it may not be the last element, which InlineDup()
-  would handle. Return yes, if found and inserted.
+  would handle. Return aye, if found and inserted.
 */
 Bool TY_(InlineDup1)( TidyDocImpl* doc, Node* node, Node* element )
 {
@@ -363,7 +363,7 @@ Bool TY_(InlineDup1)( TidyDocImpl* doc, Node* node, Node* element )
                 /* found our element tag - insert it */
                 lexer->insert = &(lexer->istack[i]);
                 lexer->inode = node;
-                return yes;
+                return aye;
             }
         }
     }

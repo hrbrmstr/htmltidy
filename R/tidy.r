@@ -70,6 +70,7 @@
 #'
 #' cat(tidy_html(txt, option=opts))
 #'
+#' \dontrun{
 #' library(httr)
 #' res <- GET("https://rud.is/test/untidy.html")
 #'
@@ -82,6 +83,7 @@
 #'
 #' # but, you could also just do:
 #' cat(tidy_html(url("https://rud.is/test/untidy.html")))
+#' }
 tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE), verbose=FALSE) {
   UseMethod("tidy_html")
 }
@@ -91,7 +93,7 @@ tidy_html <- function(content, options=list(TidyXhtmlOut=TRUE), verbose=FALSE) {
 tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE),
                               verbose=FALSE) {
   content <- paste0(content, collapse="")
-  .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+  .Call('_htmltidy_do_the_tidy', PACKAGE='htmltidy',
         source=content, options=options, show_errors=verbose)
 }
 
@@ -100,7 +102,7 @@ tidy_html.default <- function(content, options=list(TidyXhtmlOut=TRUE),
 tidy_html.character <- function(content, options=list(TidyXhtmlOut=TRUE),
                               verbose=FALSE) {
   content <- paste0(content, collapse="")
-  .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+  .Call('_htmltidy_do_the_tidy', PACKAGE='htmltidy',
         source=content, options=options, show_errors=verbose)
 }
 
@@ -110,7 +112,7 @@ tidy_html.raw <- function(content, options=list(TidyXhtmlOut=TRUE),
                               verbose=FALSE) {
   content <- content[1]
   content <- iconv(readBin(content, character()), to="UTF-8")
-  out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+  out <- .Call('_htmltidy_do_the_tidy', PACKAGE='htmltidy',
                source=content, options=options, show_errors=verbose)
   charToRaw(out)
 }
@@ -120,7 +122,7 @@ tidy_html.raw <- function(content, options=list(TidyXhtmlOut=TRUE),
 tidy_html.xml_document <- function(content, options=list(TidyXhtmlOut=TRUE),
                               verbose=FALSE) {
   content <- toString(content)
-  out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+  out <- .Call('_htmltidy_do_the_tidy', PACKAGE='htmltidy',
                source=content, options=options, show_errors=verbose)
   xml2::read_html(out)
 }
@@ -130,7 +132,7 @@ tidy_html.xml_document <- function(content, options=list(TidyXhtmlOut=TRUE),
 tidy_html.HTMLInternalDocument <- function(content, options=list(TidyXhtmlOut=TRUE),
                               verbose=FALSE) {
   content <- XML::saveXML(content)
-  out <- .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+  out <- .Call('_htmltidy_do_the_tidy', PACKAGE='htmltidy',
                source=content, options=options, show_errors=verbose)
   XML::htmlParse(out)
 }
@@ -143,7 +145,7 @@ tidy_html.connection <- function(content, options=list(TidyXhtmlOut=TRUE),
   html <- paste0(readLines(content, warn=FALSE), collapse="")
   close(content)
 
-  .Call('htmltidy_tidy_html_int', PACKAGE='htmltidy',
+  .Call('_htmltidy_do_the_tidy', PACKAGE='htmltidy',
         source=html, options=options, show_errors=verbose)
 
 }

@@ -5,16 +5,26 @@
 
 using namespace Rcpp;
 
-// tidy_html_int
-Rcpp::CharacterVector tidy_html_int(std::string source, Rcpp::List options, bool show_errors);
-RcppExport SEXP htmltidy_tidy_html_int(SEXP sourceSEXP, SEXP optionsSEXP, SEXP show_errorsSEXP) {
+// do_the_tidy
+Rcpp::CharacterVector do_the_tidy(std::string source, Rcpp::List options, bool show_errors);
+RcppExport SEXP _htmltidy_do_the_tidy(SEXP sourceSEXP, SEXP optionsSEXP, SEXP show_errorsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type source(sourceSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type options(optionsSEXP);
     Rcpp::traits::input_parameter< bool >::type show_errors(show_errorsSEXP);
-    rcpp_result_gen = Rcpp::wrap(tidy_html_int(source, options, show_errors));
+    rcpp_result_gen = Rcpp::wrap(do_the_tidy(source, options, show_errors));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_htmltidy_do_the_tidy", (DL_FUNC) &_htmltidy_do_the_tidy, 3},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_htmltidy(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
