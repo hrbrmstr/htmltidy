@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+.Utility {
+  font-family: monospace;
+		color: black;
+}
+.NodeName {
+  font-family: monospace;
+	font-weight:bold;
+	color: #800080;
+}
+.AttributeName
+{
+  font-family: monospace;
+	font-weight:bold;
+	color: black;
+}
+.AttributeValue
+{
+  font-family: monospace;
+	color:blue;
+}
+.NodeValue
+{
+  font-family: monospace;
+	color: black;
+}
+.Element {
+  font-family: monospace;
+	border-left-color:lightslategray;
+	border-left-width:thin;
+	border-left-style:solid;
+	padding-top:0;
+	margin-top:6px;
+}
+.Clickable {
+  font-family: monospace;
+	font-weight:900;
+	font-size:large;
+	color: #800080;
+	cursor:pointer;
+
+	vertical-align:middle;
+}

@@ -19,10 +19,12 @@ HTMLWidgets.widget({
         //add CSS overflow scroll to el
         if (param.scroll) { el.style.overflow = "scroll" }
 
-        var view = new Viewer(param.xmlDoc);
-        view.appendTo(el);
+        LoadXMLString(el, param.xmlDoc);
 
-        this.view = view;
+//        var view = new Viewer(param.xmlDoc);
+//        view.appendTo(el);
+//
+//        this.view = view;
 
       },
 
