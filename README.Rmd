@@ -21,13 +21,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-`htmltidy` — Tidy Up and Test XPath Queries on HTML and XML Content
+# htmltidy 
+
+Tidy Up and Test XPath Queries on HTML and XML Content
+
+## Description
 
 Partly inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
 
 It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/) and works on macOS, Linux & Windows.
 
-It also incorporates an `htmlwidget` to view and test XPath queries on HTML/XML content.
+It also incorporates an `htmlwidget` to view and test XPath queries on HTML/XML content and another widget to view an XML document in a collapseable tree view.
+
+## What's inside the tin?
 
 The following functions are implemented:
 
@@ -37,7 +43,7 @@ The following functions are implemented:
 - `html_tree_view`:	HTML/XML tree viewer
 - `xml_tree_view`:	HTML/XML tree viewer
 
-### Installation
+## Installation
 
 ```{r eval=FALSE}
 devtools::install_github("hrbrmstr/htmltidy")
@@ -47,7 +53,7 @@ devtools::install_github("hrbrmstr/htmltidy")
 options(width=120)
 ```
 
-### Usage
+## Usage
 
 ```{r message=FALSE, warning=FALSE}
 library(htmltidy)
@@ -114,7 +120,7 @@ And, show the markup errors:
 invisible(tidy_html(url("https://rud.is/test/untidy.html"), verbose=TRUE))
 ```
 
-### Testing Options
+## Testing Options
 
 ```{r message=FALSE, warning=FALSE}
 
@@ -155,7 +161,13 @@ system.time(tidy_book <- tidy_html(book))
 
 (It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.
 
-### Code of Conduct
+## htmltidy Metrics
+
+```{r echo=FALSE}
+cloc::cloc_pkg_md()
+```
+
+## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). 
 By participating in this project you agree to abide by its terms.

@@ -5,15 +5,18 @@
 \alias{html_tree_view}
 \title{HTML/XML tree viewer}
 \usage{
-xml_tree_view(doc = NULL, scroll = FALSE, width = "100\%",
-  height = NULL)
+xml_tree_view(doc = NULL, mode = c("traditional", "modern"),
+  scroll = FALSE, width = "100\%", height = NULL)
 
-html_tree_view(doc = NULL, scroll = FALSE, width = "100\%",
-  height = NULL)
+html_tree_view(doc = NULL, mode = c("traditional", "modern"),
+  scroll = FALSE, width = "100\%", height = NULL)
 }
 \arguments{
 \item{doc}{\code{xml2} document/node/nodeset, an \code{HTMLInternalDocument}/
 \code{XMLInternalDocument} or atomic character vector of HTML/XML content}
+
+\item{mode}{viewer mode. \code{traditional} uses tag notation; \code{modern} favors readability
+oveer angle brackets.}
 
 \item{scroll}{should the \code{<div>} holding the HTML/XML content scroll
 (\code{TRUE}) or take up the full viewer/browser window (\code{FALSE}).
@@ -32,8 +35,8 @@ HTML/XML in an \code{htmlwidget} pane.
 }
 \note{
 Large HTML or XML content may take some time to render properly. It is suggested
-      that this function be used on as minimal of a subset of HTML/XML as possible
-      or used in a browser context vs an IDE viewer context.
+that this function be used on as minimal of a subset of HTML/XML as possible
+or used in a browser context vs an IDE viewer context.
 }
 \examples{
 if(interactive()) {
@@ -43,5 +46,5 @@ txt <- paste0("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading>",
 }
 }
 \references{
-\href{https://github.com/juliangruber/xml-viewer}{xml-viewer}
+\href{http://www.lexiconista.com/xonomy/}{xonomy xml viewer}
 }

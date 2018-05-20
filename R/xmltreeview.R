@@ -4,8 +4,11 @@
 #' tree viewer for HTML/XML documents, nodes, node sets and plain character
 #' HTML/XML in an \code{htmlwidget} pane.
 #'
+#' @md
 #' @param doc \code{xml2} document/node/nodeset, an \code{HTMLInternalDocument}/
 #'        \code{XMLInternalDocument} or atomic character vector of HTML/XML content
+#' @param mode viewer mode. `traditional` uses tag notation; `modern` favors readability
+#'        oveer angle brackets.
 #' @param scroll should the \code{<div>} holding the HTML/XML content scroll
 #'        (\code{TRUE}) or take up the full viewer/browser window (\code{FALSE}).
 #'        Default is \code{FALSE} (take up the full viewer/browser window). If
@@ -17,14 +20,14 @@
 #'       that this function be used on as minimal of a subset of HTML/XML as possible
 #'       or used in a browser context vs an IDE viewer context.
 #' @export
-#' @references \href{https://github.com/juliangruber/xml-viewer}{xml-viewer}
+#' @references \href{http://www.lexiconista.com/xonomy/}{xonomy xml viewer}
 #' @examples
 #' if(interactive()) {
 #' txt <- paste0("<note><to>Tove</to><from>Jani</from><heading>Reminder</heading>",
 #'               "<body>Don't forget me this weekend!</body></note>")
 #' # xml_tree_view(txt)
 #' }
-xml_tree_view <- function(doc=NULL, scroll=FALSE, width="100%", height=NULL) {
+xml_tree_view <- function(doc=NULL, mode=c("traditional", "modern"), scroll=FALSE, width="100%", height=NULL) {
 
   if (inherits(doc, "character")) {
     doc <- paste0(doc, collapse="")
@@ -37,8 +40,12 @@ xml_tree_view <- function(doc=NULL, scroll=FALSE, width="100%", height=NULL) {
     doc <- XML::saveXML(doc)
   }
 
+  mode <- match.arg(trimws(tolower(mode)), c("traditional", "modern"))
+  mode <- unname(c("traditional"="nerd", "modern"="laic")[mode])
+
   params <- list(
     xmlDoc = doc,
+    mode = mode,
     scroll = scroll
   )
 

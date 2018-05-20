@@ -5,12 +5,12 @@ All R source code and source file src/htmltidy.cpp are released under the GNU AG
 As per https://github.com/htacg/tidy-html5/blob/master/README/LICENSE.md, libtidy source
 code is:
 
-"Copyright (c) 1998-2016 World Wide Web Consortium (Massachusetts Institute of
-Technology, European Research Consortium for Informatics and Mathematics, Keio University).
-All Rights Reserved.
+Copyright (c) 1998-2016 World Wide Web Consortium (Massachusetts Institute of
+Technology, European Research Consortium for Informatics and Mathematics,
+Keio University). All Rights Reserved.
 
 Additional contributions (c) 2001-2016 University of Toronto, Terry Teague, @geoffmcl,
-HTACG, and others.""
+HTACG, and others."
 
 The authors of the libtidy sources also used other source code that is licensed GPL-2.
 
@@ -25,7 +25,16 @@ Both of those files have been marked as modified in the license copyright header
 
 ------
 
-xml-viewer is MIT licensed
+XMLDisplay has the following license:
+
+Copyright (c) 2007 Lev Muchnik <LevMuchnik@gmail.com>. All rights reserved.
+You may copy and modify this script as long as the above copyright notice,
+this condition and the following disclaimer is left intact.
+This software is provided by the author "AS IS" and no warranties are
+implied, including fitness for a particular purpose. In no event shall
+the author be liable for any damages arising in any way out of the use
+of this software, even if advised of the possibility of such damage.
+$Date: 2007-10-03 19:08:15 -0700 (Wed, 03 Oct 2007)
 
 ------
 

@@ -1,4 +1,4 @@
-function $qs(css) { return(document.querySelector(css)) }
+//function $qs(css) { return(document.querySelector(css)) }
 
 HTMLWidgets.widget({
 
@@ -19,12 +19,18 @@ HTMLWidgets.widget({
         //add CSS overflow scroll to el
         if (param.scroll) { el.style.overflow = "scroll" }
 
-        LoadXMLString(el, param.xmlDoc);
+        var docSpec = {
+          unknownElement: {
+            isReadOnly: true
+          },
+          unknownAttribute: {
+            isReadOnly: true
+          }
+        };
 
-//        var view = new Viewer(param.xmlDoc);
-//        view.appendTo(el);
-//
-//        this.view = view;
+        Xonomy.setMode(param.mode);
+        Xonomy.render(param.xmlDoc, el, docSpec);
+        Xonomy.setMode(param.mode);
 
       },
 
@@ -35,3 +41,5 @@ HTMLWidgets.widget({
   }
 
 });
+
+

@@ -1,6 +1,10 @@
  dependencies:
+  - name: jquery
+    version: 1.11.3
+    src: "htmlwidgets/lib/jquery"
+    script: jquery.min.js
   - name: xml-viewer
-    version: 1.3.7
+    version: 3.4.0
     src: htmlwidgets/lib/xml-viewer
-    script: XMLDisplay.js
-    stylesheet: XMLDisplay.css
+    script: xonomy.js
+    stylesheet: xonomy.css

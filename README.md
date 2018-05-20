@@ -1,37 +1,56 @@
 
-[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/htmltidy?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/htmltidy) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/htmltidy)](https://cran.r-project.org/package=htmltidy) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/htmltidy)
+[![Travis-CI Build
+Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstr/htmltidy?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/htmltidy)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/htmltidy)](https://cran.r-project.org/package=htmltidy)
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/htmltidy)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-`htmltidy` — Tidy Up and Test XPath Queries on HTML and XML Content
 
-Partly inspired by [this SO question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r) and because there's a great deal of cruddy HTML out there that needs fixing to use properly when scraping data.
+# htmltidy
 
-It relies on a locally included version of [`libtidy`](http://www.html-tidy.org/) and works on macOS, Linux & Windows.
+Tidy Up and Test XPath Queries on HTML and XML Content
 
-It also incorporates an `htmlwidget` to view and test XPath queries on HTML/XML content.
+## Description
+
+Partly inspired by [this SO
+question](http://stackoverflow.com/questions/37061873/identify-a-weblink-in-bold-in-r)
+and because there’s a great deal of cruddy HTML out there that needs
+fixing to use properly when scraping data.
+
+It relies on a locally included version of
+[`libtidy`](http://www.html-tidy.org/) and works on macOS, Linux &
+Windows.
+
+It also incorporates an `htmlwidget` to view and test XPath queries on
+HTML/XML content and another widget to view an XML document in a
+collapseable tree view.
+
+## What’s inside the tin?
 
 The following functions are implemented:
 
--   `tidy_html`: Tidy or "Pretty Print" HTML/XHTML Documents
--   `html_view`: HTML/XML pretty printer and viewer
--   `xml_view`: HTML/XML pretty printer and viewer
--   `html_tree_view`: HTML/XML tree viewer
--   `xml_tree_view`: HTML/XML tree viewer
+  - `tidy_html`: Tidy or “Pretty Print” HTML/XHTML Documents
+  - `html_view`: HTML/XML pretty printer and viewer
+  - `xml_view`: HTML/XML pretty printer and viewer
+  - `html_tree_view`: HTML/XML tree viewer
+  - `xml_tree_view`: HTML/XML tree viewer
 
-### Installation
+## Installation
 
 ``` r
 devtools::install_github("hrbrmstr/htmltidy")
 ```
 
-### Usage
+## Usage
 
 ``` r
 library(htmltidy)
 
 # current verison
 packageVersion("htmltidy")
-## [1] '0.4.0'
+## [1] '0.5.0'
 
 library(XML)
 library(xml2)
@@ -39,7 +58,7 @@ library(httr)
 library(purrr)
 ```
 
-This is really "un-tidy" content:
+This is really “un-tidy” content:
 
 ``` r
 res <- GET("https://rud.is/test/untidy.html")
@@ -55,7 +74,7 @@ cat(content(res, as="text"))
 ## as is this <span id="sp">portion<div>
 ```
 
-Let's see what `tidy_html()` does to it.
+Let’s see what `tidy_html()` does to it.
 
 It can handle the `response` object directly:
 
@@ -81,7 +100,9 @@ cat(tidy_html(res, list(TidyDocType="html5", TidyWrapLen=200)))
 ## </html>
 ```
 
-But, you'll probably mostly use it on HTML you've identified as gnarly and already have that HTML text content handy:
+But, you’ll probably mostly use it on HTML you’ve identified as gnarly
+and already have that HTML text content
+handy:
 
 ``` r
 cat(tidy_html(content(res, as="text"), list(TidyDocType="html5", TidyWrapLen=200)))
@@ -122,7 +143,8 @@ cat(tidy_html(url("https://rud.is/test/untidy.html"),
 ## </html>
 ```
 
-You'll see that this differs substantially from the mangling `libxml2` does (via `read_html()`):
+You’ll see that this differs substantially from the mangling `libxml2`
+does (via `read_html()`):
 
 ``` r
 pg <- read_html("https://rud.is/test/untidy.html")
@@ -143,7 +165,7 @@ cat(toString(pg))
 ## </html>
 ```
 
-It can also deal with "raw" and parsed objects:
+It can also deal with “raw” and parsed objects:
 
 ``` r
 tidy_html(content(res, as="raw"))
@@ -177,7 +199,8 @@ tidy_html(htmlParse("https://rud.is/test/untidy.html"))
 ## 
 ```
 
-And, show the markup errors:
+And, show the markup
+errors:
 
 ``` r
 invisible(tidy_html(url("https://rud.is/test/untidy.html"), verbose=TRUE))
@@ -194,7 +217,7 @@ invisible(tidy_html(url("https://rud.is/test/untidy.html"), verbose=TRUE))
 ## Tidy found 9 warnings and 0 errors!
 ```
 
-### Testing Options
+## Testing Options
 
 ``` r
 
@@ -235,9 +258,9 @@ cat(tidy_html(txt, option=opts))
 ## </html>
 ```
 
-But, you're probably better off running it on plain HTML source.
+But, you’re probably better off running it on plain HTML source.
 
-Since it's C/C++-backed, it's pretty fast:
+Since it’s C/C++-backed, it’s pretty fast:
 
 ``` r
 book <- readLines("http://singlepageappbook.com/single-page.html")
@@ -245,11 +268,25 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.023   0.001   0.025
+##   0.028   0.001   0.029
 ```
 
-(It's usually between 20 & 25 milliseconds to process those 202 kilobytes of HTML.) Not too shabby.
+(It’s usually between 20 & 25 milliseconds to process those 202
+kilobytes of HTML.) Not too
+shabby.
 
-### Code of Conduct
+## htmltidy Metrics
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+| Lang         | \# Files |  (%) |   LoC |  (%) | Blank lines |  (%) | \# Lines |  (%) |
+| :----------- | -------: | ---: | ----: | ---: | ----------: | ---: | -------: | ---: |
+| C            |       27 | 0.34 | 28646 | 0.81 |        4696 | 0.77 |     4304 | 0.59 |
+| C/C++ Header |       37 | 0.47 |  5799 | 0.16 |        1227 | 0.20 |     2674 | 0.36 |
+| C++          |        4 | 0.05 |   647 | 0.02 |         117 | 0.02 |       64 | 0.01 |
+| R            |       10 | 0.13 |   151 | 0.00 |          38 | 0.01 |      235 | 0.03 |
+| Rmd          |        1 | 0.01 |    53 | 0.00 |          52 | 0.01 |       68 | 0.01 |
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of
+Conduct](CONDUCT.md). By participating in this project you agree to
+abide by its terms.

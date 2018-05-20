@@ -2,26 +2,23 @@
 /* CSS Document */
 .Utility {
   font-family: monospace;
-		color: black;
+	color: black;
 }
 .NodeName {
   font-family: monospace;
 	font-weight:bold;
 	color: #800080;
 }
-.AttributeName
-{
+.AttributeName {
   font-family: monospace;
 	font-weight:bold;
 	color: black;
 }
-.AttributeValue
-{
+.AttributeValue {
   font-family: monospace;
 	color:blue;
 }
-.NodeValue
-{
+.NodeValue {
   font-family: monospace;
 	color: black;
 }
@@ -39,6 +36,5 @@
 	font-size:large;
 	color: #800080;
 	cursor:pointer;
-
 	vertical-align:middle;
 }
