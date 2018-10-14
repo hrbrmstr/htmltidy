@@ -268,7 +268,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.028   0.001   0.029
+##   0.026   0.001   0.027
 ```
 
 (It’s usually between 20 & 25 milliseconds to process those 202
@@ -283,7 +283,7 @@ shabby.
 | C/C++ Header |       37 | 0.47 |  5799 | 0.16 |        1227 | 0.20 |     2674 | 0.36 |
 | C++          |        4 | 0.05 |   647 | 0.02 |         117 | 0.02 |       64 | 0.01 |
 | R            |       10 | 0.13 |   151 | 0.00 |          38 | 0.01 |      235 | 0.03 |
-| Rmd          |        1 | 0.01 |    53 | 0.00 |          52 | 0.01 |       68 | 0.01 |
+| Rmd          |        1 | 0.01 |    53 | 0.00 |          51 | 0.01 |       68 | 0.01 |
 
 ## Code of Conduct
 
