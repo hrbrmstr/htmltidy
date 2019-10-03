@@ -11,28 +11,29 @@
 \alias{tidy_html.connection}
 \title{Tidy or "Pretty Print" HTML/XHTML Documents}
 \usage{
-\method{tidy_html}{response}(content, options = list(TidyXhtmlOut = TRUE),
-  verbose = FALSE)
+\method{tidy_html}{response}(content, options = list(TidyXhtmlOut =
+  TRUE), verbose = FALSE)
 
-tidy_html(content, options = list(TidyXhtmlOut = TRUE), verbose = FALSE)
+tidy_html(content, options = list(TidyXhtmlOut = TRUE),
+  verbose = FALSE)
 
 \method{tidy_html}{default}(content, options = list(TidyXhtmlOut = TRUE),
   verbose = FALSE)
 
-\method{tidy_html}{character}(content, options = list(TidyXhtmlOut = TRUE),
-  verbose = FALSE)
+\method{tidy_html}{character}(content, options = list(TidyXhtmlOut =
+  TRUE), verbose = FALSE)
 
 \method{tidy_html}{raw}(content, options = list(TidyXhtmlOut = TRUE),
   verbose = FALSE)
 
-\method{tidy_html}{xml_document}(content, options = list(TidyXhtmlOut = TRUE),
-  verbose = FALSE)
+\method{tidy_html}{xml_document}(content, options = list(TidyXhtmlOut =
+  TRUE), verbose = FALSE)
 
-\method{tidy_html}{HTMLInternalDocument}(content, options = list(TidyXhtmlOut
-  = TRUE), verbose = FALSE)
+\method{tidy_html}{HTMLInternalDocument}(content,
+  options = list(TidyXhtmlOut = TRUE), verbose = FALSE)
 
-\method{tidy_html}{connection}(content, options = list(TidyXhtmlOut = TRUE),
-  verbose = FALSE)
+\method{tidy_html}{connection}(content, options = list(TidyXhtmlOut =
+  TRUE), verbose = FALSE)
 }
 \arguments{
 \item{content}{accepts a character vector, raw vector or parsed content from the \code{xml2}

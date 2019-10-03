@@ -36,8 +36,8 @@ Description: HTML documents can be beautiful and pristine. They can also be
     <http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html> 
     for more information about 'vkbeautify' and 'XMLDisplay', respectively.
 Copyright: file inst/COPYRIGHTS
-URL: https://github.com/hrbrmstr/htmltidy
-BugReports: https://github.com/hrbrmstr/htmltidy/issues
+URL: https://gitlab.com/hrbrmstr/htmltidy
+BugReports: https://gitlab.com/hrbrmstr/htmltidy/issues
 Depends:
     R (>= 3.2.0)
 License: MIT + file LICENSE
@@ -54,4 +54,4 @@ Imports:
     XML,
     htmlwidgets,
     htmltools
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1
