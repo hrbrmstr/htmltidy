@@ -96,8 +96,19 @@ tidy_html(suppressWarnings(htmlParse("https://rud.is/test/untidy.html")))
 
 And, show the markup errors:
 
-```{r errors-01}
+```{r errors-01, eval=FALSE}
 invisible(tidy_html(url("https://rud.is/test/untidy.html"), verbose=TRUE))
+## line 1 column 1 - Warning: missing <!DOCTYPE> declaration
+## line 1 column 68 - Warning: nested emphasis <b>
+## line 1 column 138 - Warning: missing </span> before <div>
+## line 1 column 68 - Warning: missing </b> before <div>
+## line 1 column 164 - Warning: inserting implicit <span>
+## line 1 column 164 - Warning: missing </span>
+## line 1 column 159 - Warning: missing </div>
+## line 1 column 1 - Warning: inserting missing 'title' element
+## line 1 column 164 - Warning: <span> anchor "sp" already defined
+## Info: Document content looks like XHTML5
+## Tidy found 9 warnings and 0 errors!
 ```
 
 ## Testing Options

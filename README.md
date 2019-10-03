@@ -5,7 +5,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![Signed
 by](https://img.shields.io/badge/Keybase-Verified-brightgreen.svg)](https://keybase.io/hrbrmstr)
 ![Signed commit
-%](https://img.shields.io/badge/Signed_Commits-9.26%25-lightgrey.svg)
+%](https://img.shields.io/badge/Signed_Commits-100%25-lightgrey.svg)
 [![Linux build
 Status](https://travis-ci.org/hrbrmstr/htmltidy.svg?branch=master)](https://travis-ci.org/hrbrmstr/htmltidy)
 [![Windows build
@@ -319,7 +319,7 @@ kilobytes of HTML.) Not too shabby.
 | C/C++ Header |       37 | 0.47 |  5796 | 0.16 |        1227 | 0.20 |     2677 | 0.36 |
 | C++          |        4 | 0.05 |   647 | 0.02 |         117 | 0.02 |       64 | 0.01 |
 | R            |       10 | 0.13 |   151 | 0.00 |          38 | 0.01 |      235 | 0.03 |
-| Rmd          |        1 | 0.01 |    47 | 0.00 |          44 | 0.01 |       59 | 0.01 |
+| Rmd          |        1 | 0.01 |    47 | 0.00 |          44 | 0.01 |       70 | 0.01 |
 
 ## Code of Conduct
 
