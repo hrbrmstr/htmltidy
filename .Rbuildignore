@@ -1,10 +1,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^README\.Rmd$
-^README-.*\.png$
+^README.*$
 ^\.travis\.yml$
 ^CONDUCT\.md$
 ^README\.html$
 ^cran-comments\.md$
 ^appveyor\.yml$
 ^docs$
+^CRAN-RELEASE$

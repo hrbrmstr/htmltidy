@@ -90,8 +90,20 @@ tidy_html(content(res, as="raw"))
 tidy_html(content(res, as="text", encoding="UTF-8"))
 
 tidy_html(content(res, as="parsed", encoding="UTF-8"))
+```
 
+```{r raw-02, eval=FALSE}
 tidy_html(suppressWarnings(htmlParse("https://rud.is/test/untidy.html")))
+## <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+## <html xmlns="http://www.w3.org/1999/xhtml">
+## <head>
+## <meta name="generator" content="HTML Tidy for HTML5 for R version 5.0.0">
+## <title></title>
+## </head>
+## <body>
+## <p>https://rud.is/test/untidy.html</p>
+## </body>
+## </html>
 ```
 
 And, show the markup errors:

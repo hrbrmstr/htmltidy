@@ -223,7 +223,9 @@ tidy_html(content(res, as="parsed", encoding="UTF-8"))
 ## <html xmlns="http://www.w3.org/1999/xhtml">
 ## [1] <head>\n<meta name="generator" content="HTML Tidy for HTML5 for R version 5.0.0">\n<meta http-equiv="Content-Type ...
 ## [2] <body>\n<b>This is some <i>really</i> poorly formatted HTML as is this\n<span id="sp">portion</span></b>\n<div><s ...
+```
 
+``` r
 tidy_html(suppressWarnings(htmlParse("https://rud.is/test/untidy.html")))
 ## <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 ## <html xmlns="http://www.w3.org/1999/xhtml">
@@ -235,7 +237,6 @@ tidy_html(suppressWarnings(htmlParse("https://rud.is/test/untidy.html")))
 ## <p>https://rud.is/test/untidy.html</p>
 ## </body>
 ## </html>
-## 
 ```
 
 And, show the markup errors:
@@ -305,7 +306,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##   0.019   0.000   0.019
+##    0.02    0.00    0.02
 ```
 
 (It’s usually between 20 & 25 milliseconds to process those 202
@@ -319,7 +320,7 @@ kilobytes of HTML.) Not too shabby.
 | C/C++ Header |       37 | 0.47 |  5796 | 0.16 |        1227 | 0.20 |     2677 | 0.36 |
 | C++          |        4 | 0.05 |   647 | 0.02 |         117 | 0.02 |       64 | 0.01 |
 | R            |       10 | 0.13 |   151 | 0.00 |          38 | 0.01 |      235 | 0.03 |
-| Rmd          |        1 | 0.01 |    47 | 0.00 |          44 | 0.01 |       70 | 0.01 |
+| Rmd          |        1 | 0.01 |    47 | 0.00 |          44 | 0.01 |       82 | 0.01 |
 
 ## Code of Conduct
 
