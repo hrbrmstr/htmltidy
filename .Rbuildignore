@@ -8,3 +8,4 @@
 ^appveyor\.yml$
 ^docs$
 ^CRAN-RELEASE$
+^codecov\.yml$

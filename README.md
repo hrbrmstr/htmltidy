@@ -69,6 +69,8 @@ collapseable tree view.
 ## Installation
 
 ``` r
+install.packages("htmltidy", repos = "https://cinc.rud.is")
+# or
 remotes::install_git("https://git.rud.is/hrbrmstr/htmltidy.git")
 # or
 remotes::install_git("https://git.sr.ht/~hrbrmstr/htmltidy")
@@ -306,7 +308,7 @@ sum(map_int(book, nchar))
 ## [1] 207501
 system.time(tidy_book <- tidy_html(book))
 ##    user  system elapsed 
-##    0.02    0.00    0.02
+##   0.019   0.000   0.019
 ```
 
 (It’s usually between 20 & 25 milliseconds to process those 202

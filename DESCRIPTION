@@ -46,7 +46,8 @@ NeedsCompilation: yes
 Suggests:
     testthat,
     httr,
-    rvest
+    rvest,
+    covr
 LinkingTo: Rcpp
 Imports:
     Rcpp,
